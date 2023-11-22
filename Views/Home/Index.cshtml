@@ -1,0 +1,169 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="page-content">
+    <div class="header-bottom">
+        <div class="header-bottom-item">
+            <p class="header-bottom-item-text active" onclick="BottomHeaderMenuSwicher(event)">Головна</p>
+            <div class="header-bottom-item-dot active"></div>
+        </div>
+        <div class="header-bottom-item">
+            <p class="header-bottom-item-text" onclick="BottomHeaderMenuSwicher(event)">Доставка</p>
+            <div class="header-bottom-item-dot"></div>
+        </div>
+        <div class="header-bottom-item">
+            <p class="header-bottom-item-text" onclick="BottomHeaderMenuSwicher(event)">Всі акції</p>
+            <div class="header-bottom-item-dot"></div>
+        </div>
+        <div class="header-bottom-item">
+            <p class="header-bottom-item-text" onclick="BottomHeaderMenuSwicher(event)">Особиста полиця</p>
+            <div class="header-bottom-item-dot"></div>
+        </div>
+    </div>
+    <div style="display:flex; flex-direction:column; height:100%;overflow-x:hidden;">
+        <button class="slider-left-btn" onclick="GoBack()">
+            <svg width="1rem" height="1rem" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M8 11L3 6L8 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+        <button class="slider-right-btn" onclick="GoForward()">
+            <svg width="1rem" height="1rem" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M4 1L9 6L4 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+        <div style="position:relative; max-height:245px;">
+            <div class="slider">
+                <img class="slider-img" src="~/Images/Slider.webp" />
+                <img class="slider-img" src="~/Images/Slider.webp" />
+                <img class="slider-img" src="~/Images/Slider.webp" />
+                <img class="slider-img" src="~/Images/Slider.webp" />
+                <img class="slider-img" src="~/Images/Slider.webp" />
+                <img class="slider-img" src="~/Images/Slider.webp" />
+                <img class="slider-img" src="~/Images/Slider.webp" />
+                <img class="slider-img" src="~/Images/Slider.webp" />
+                <img class="slider-img" src="~/Images/Slider.webp" />
+                <img class="slider-img" src="~/Images/Slider.webp" />
+                <img class="slider-img" src="~/Images/Slider.webp" />
+                <img class="slider-img" src="~/Images/Slider.webp" />
+            </div>
+            <ul class="slider-dots-container">
+            </ul>
+        </div>
+        <div class="main-page-categories">
+            <button class="main-page-category active" onclick="ShowCategory(event)" id="0"><p id="0" class="main-page-category-text" style="display:none;">Акційні пропозиції</p>Акційні пропозиції</button>
+            <button class="main-page-category" onclick="ShowCategory(event)" id="1"><p id="1" class="main-page-category-text" style="display:block;">Акційні пропозиції</p>Акційні пропозиції</button>
+            <button class="main-page-category" onclick="ShowCategory(event)" id="2"><p id="2" class="main-page-category-text" style="display:block;">Акційні пропозиції</p>Акційні пропозиції</button>
+            <button class="main-page-category" onclick="ShowCategory(event)" id="3"><p id="3" class="main-page-category-text" style="display:block;">Акційні пропозиції</p>Акційні пропозиції</button>
+            <button class="main-page-category" onclick="ShowCategory(event)" id="4"><p id="4" class="main-page-category-text" style="display:block;">Акційні пропозиції</p>Акційні пропозиції</button>
+            <button class="main-page-category" onclick="ShowCategory(event)" id="5"><p id="5" class="main-page-category-text" style="display:block;">Акційні пропозиції</p>Акційні пропозиції</button>
+            <button class="main-page-category" onclick="ShowCategory(event)" id="6"><p id="6" class="main-page-category-text" style="display:block;">Акційні пропозиції</p>Акційні пропозиції</button>
+            <button class="main-page-category" onclick="ShowCategory(event)" id="7"><p id="7" class="main-page-category-text" style="display:block;">Акційні пропозиції</p>Акційні пропозиції</button>
+        </div>
+    </div>
+    <p>@Model.Title</p>
+
+
+    <script>
+        const slider = document.querySelector('.slider');
+        const slides = document.querySelectorAll('.slider-img');
+        const categories = Array.from(document.querySelectorAll('.main-page-category'));
+        var dotsContainer = document.querySelector('.slider-dots-container');
+        var dotsArray;
+        var currentIndex = 0;
+        var lastExecutionTime = 0;
+        var autoPlayTimer;
+        console.log(categories);
+
+        function ShowCategory(event) {
+            categories.forEach(function (category) {
+                console.log(event.target);
+                if (category.id === event.target.id) {
+                    text = category.getElementsByTagName('p')[0];
+                    text.style.display = 'none';
+                    category.classList.add('active');
+
+                }
+                else {
+                    category.classList.remove('active');
+                    text = category.getElementsByTagName('p')[0];
+                    text.style.display = 'block';
+                }
+            });
+        }
+
+        function Dots(event) {
+            currentIndex = parseInt(event.target.id.substring(4), 10);
+            updateSlider();
+            dotsArray.forEach(function (dot) {
+                if (event.target.id === dot.id)
+                    dot.classList.add('active-dot');
+                else
+                    dot.classList.remove('active-dot')
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            slider.style.display = 'grid';
+            slider.style.gridTemplateColumns = `repeat(${slides.length}, 100%)`;
+            for (var i = 0; i < slides.length; i++) {
+                var newLiElement = document.createElement('li');
+                newLiElement.className = 'slider-dot';
+                newLiElement.id = `dot-${i}`;
+                newLiElement.addEventListener('click', Dots);
+                dotsContainer.appendChild(newLiElement);
+            }
+            dotsContainer.firstElementChild.classList.add('active-dot');
+            dotsArray = Array.from(dotsContainer.children);
+        });
+
+        addEventListener('resize', function () {
+            currentIndex = (currentIndex) % slides.length;
+            updateSlider();
+        });
+
+        function updateSlider() {
+            const slideWidth = slides[0].clientWidth;
+            slider.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+        }
+
+        function GoForward() {
+            const currentTime = Date.now();
+            if (currentTime - lastExecutionTime >= 500) {
+                currentIndex = (currentIndex + 1) % slides.length;
+                dotsArray.forEach(function (dot) {
+                    if (dot.id === `dot-${currentIndex}`)
+                        dot.classList.add('active-dot');
+                    else
+                        dot.classList.remove('active-dot')
+                });
+                updateSlider();
+                lastExecutionTime = currentTime;
+                restartAutoPlayTimer();
+            }
+        }
+
+        function GoBack() {
+            const currentTime = Date.now();
+            if (currentTime - lastExecutionTime >= 500) {
+                if (currentIndex > 0)
+                    currentIndex = (currentIndex - 1) % slides.length;
+                else currentIndex = slides.length - 1;
+                dotsArray.forEach(function (dot) {
+                    if (dot.id === `dot-${currentIndex}`)
+                        dot.classList.add('active-dot');
+                    else
+                        dot.classList.remove('active-dot')
+                });
+                updateSlider();
+                lastExecutionTime = currentTime;
+                restartAutoPlayTimer();
+            }
+        }
+
+        function restartAutoPlayTimer() {
+            clearTimeout(autoPlayTimer);
+            autoPlayTimer = setTimeout(GoForward, 10000);
+        }
+
+        restartAutoPlayTimer();
+    </script>
+
+
+</div>
