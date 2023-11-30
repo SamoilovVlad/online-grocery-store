@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"] - Shop_Mvc</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <script src="https://kit.fontawesome.com/3ab9474f39.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <header class="header">
@@ -189,7 +190,7 @@
                                     <span id="cartSpan1" class="cart-body-item-info-count-btn-counter-num">1</span>
                                     <span class="cart-body-item-info-count-btn-counter-text">шт</span>
                                 </div>
-                                <svg id="1" onclick="Plus(event)" width="2.000rem" height="2.000rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="1" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                <svg id="1" onclick="Plus(event)" width="2.000rem" height="2.000rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="1" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="1" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
                             </div>
                         </div>
                         <div class="cart-body-item-controls">
@@ -202,7 +203,7 @@
                                 <div class="cart-body-item-controls-price-primary">120.00 грн</div>
                             </div>
                         </div>
-                    </div> 
+                    </div>
                     <div class="cart-body-item" id="2">
                         <img src="/Images/Cheese.webp" />
                         <div class="cart-body-item-info">
@@ -214,7 +215,7 @@
                                     <span id="cartSpan2" class="cart-body-item-info-count-btn-counter-num">1</span>
                                     <span class="cart-body-item-info-count-btn-counter-text">шт</span>
                                 </div>
-                                <svg id="2" onclick="Plus(event)" width="2.000rem" height="2.000rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="2" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                <svg id="2" onclick="Plus(event)" width="2.000rem" height="2.000rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="2" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="2" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
                             </div>
                         </div>
                         <div class="cart-body-item-controls">
@@ -529,271 +530,280 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
-<script>
-    window.addEventListener('resize', removeIcons);
-    window.addEventListener('resize', searchSize);
-    var searchIsFull = false;
-    var isCatalogMenuShowing = false;
-    var isBurgerMenuShowing = false;
-    var isFooterShowing = false;
-    var isCartEmpty = true;
-    var isCartShowing = false;
-    var isDetailsShowing = false;
-    const search = document.getElementById('search');
-    function showCatalogMenu() {
-        if (!isCatalogMenuShowing)
-            catalogMenuShow();
-        else
-            catalogMenuClose();
-    }
-
-    function catalogMenuShow() {
-        var menu = document.getElementsByClassName('catalog-menu')[0];
-        var arrow = document.getElementById('arrowIcon');
-        var btn = document.getElementsByClassName('catalogue-btn')[0];
-        btn.style.backgroundColor = '#4faa6e';
-        arrow.style.transform = 'rotate(180deg)';
-        menu.style.top = '3.5rem';
-        menu.style.opacity = '1';
-        menu.style.visibility = 'visible';
-        isCatalogMenuShowing = true;
-    }
-    function catalogMenuClose() {
-        var menu = document.getElementsByClassName('catalog-menu')[0];
-        var arrow = document.getElementById('arrowIcon');
-        var btn = document.getElementsByClassName('catalogue-btn')[0];
-        btn.style.backgroundColor = '';
-        arrow.style.transform = 'rotate(0deg)';
-        menu.style.top = '3rem';
-        menu.style.opacity = '0';
-        menu.style.visibility = 'hidden';
-        isCatalogMenuShowing = false;
-    }
-
-    document.addEventListener('click', function (event) {
+    <script>
+        window.addEventListener('resize', removeIcons);
+        window.addEventListener('resize', searchSize);
+        var searchIsFull = false;
+        var isCatalogMenuShowing = false;
+        var isBurgerMenuShowing = false;
+        var isFooterShowing = false;
+        var isCartEmpty = true;
+        var isCartShowing = false;
+        var isDetailsShowing = false;
         const search = document.getElementById('search');
-        if (event.target !== search && event.target !== document.getElementById('search_input')) {
-            if (searchIsFull) {
-                var text = document.getElementById('search_input');
-                var searchContainer = document.getElementsByClassName('form-group')[0];
-                searchContainer.style.position = 'block';
-                searchContainer.style.width = '3rem';
-                searchContainer.style.padding = '0';
-                text.style.display = '';
-            }
-        }
-        if (event.target !== document.getElementsByClassName('catalogue-btn')[0] && event.target !== document.getElementById('catalogText') && !document.getElementById('burger-catalog-btn').contains(event.target)) {
-            if (isCatalogMenuShowing) {
+        function showCatalogMenu() {
+            if (!isCatalogMenuShowing)
+                catalogMenuShow();
+            else
                 catalogMenuClose();
+        }
+
+        function catalogMenuShow() {
+            var menu = document.getElementsByClassName('catalog-menu')[0];
+            var arrow = document.getElementById('arrowIcon');
+            var btn = document.getElementsByClassName('catalogue-btn')[0];
+            btn.style.backgroundColor = '#4faa6e';
+            arrow.style.transform = 'rotate(180deg)';
+            menu.style.top = '3.5rem';
+            menu.style.opacity = '1';
+            menu.style.visibility = 'visible';
+            isCatalogMenuShowing = true;
+        }
+        function catalogMenuClose() {
+            var menu = document.getElementsByClassName('catalog-menu')[0];
+            var arrow = document.getElementById('arrowIcon');
+            var btn = document.getElementsByClassName('catalogue-btn')[0];
+            btn.style.backgroundColor = '';
+            arrow.style.transform = 'rotate(0deg)';
+            menu.style.top = '3rem';
+            menu.style.opacity = '0';
+            menu.style.visibility = 'hidden';
+            isCatalogMenuShowing = false;
+        }
+
+        document.addEventListener('click', function (event) {
+            const search = document.getElementById('search');
+            if (event.target !== search && event.target !== document.getElementById('search_input')) {
+                if (searchIsFull) {
+                    var text = document.getElementById('search_input');
+                    var searchContainer = document.getElementsByClassName('form-group')[0];
+                    searchContainer.style.position = 'block';
+                    searchContainer.style.width = '3rem';
+                    searchContainer.style.padding = '0';
+                    text.style.display = '';
+                }
             }
-        }
-        if (event.target !== document.getElementsByClassName('burger-menu')[0] && event.target !== document.getElementsByClassName('menu-btn')[0] && event.target !== document.getElementById('burgerIcon') && isBurgerMenuShowing) {
-            var menu = document.getElementsByClassName('burger-menu')[0];
-            if (!menu.contains(event.target)) {
-                CloseBurgerMenu();
+            if (event.target !== document.getElementsByClassName('catalogue-btn')[0] && event.target !== document.getElementById('catalogText') && !document.getElementById('burger-catalog-btn').contains(event.target)) {
+                if (isCatalogMenuShowing) {
+                    catalogMenuClose();
+                }
             }
+            if (event.target !== document.getElementsByClassName('burger-menu')[0] && event.target !== document.getElementsByClassName('menu-btn')[0] && event.target !== document.getElementById('burgerIcon') && isBurgerMenuShowing) {
+                var menu = document.getElementsByClassName('burger-menu')[0];
+                if (!menu.contains(event.target)) {
+                    CloseBurgerMenu();
+                }
+            }
+            if (event.target === document.getElementsByClassName('overlay')[0] && isCartShowing) {
+                CloseCart();
+            }
+            if (event.target === document.getElementsByClassName('overlay')[0] && isFooterShowing) {
+                CloseFooter();
+            }
+        });
+
+        function ShowFooter() {
+            if (isFooterShowing) {
+                CloseFooter();
+            }
+            else
+                OpenFooter();
         }
-        if (event.target === document.getElementsByClassName('overlay')[0] && isCartShowing) {
-            CloseCart();
-        }
-        if (event.target === document.getElementsByClassName('overlay')[0] && isFooterShowing) {
-            CloseFooter();
-        }
-    });
 
-    function ShowFooter() {
-        if (isFooterShowing) {
-            CloseFooter();
-        }
-        else
-            OpenFooter();
-    }
-
-    function OpenFooter() {
-        var content = document.getElementsByClassName('footer-container')[0];
-        var icon = document.getElementsByClassName('footer-btn-icon')[0];
-        content.classList.add('show');
-        icon.style.transform = "rotate(180deg)";
-        $("body").addClass("overlay");
-        isFooterShowing = true;
-    }
-
-    function MenuCatalogBtn(){
-        CloseBurgerMenu();
-        catalogMenuShow();
-    }
-
-    function CloseFooter() {
-        var content = document.getElementsByClassName('footer-container')[0];
-        var icon = document.getElementsByClassName('footer-btn-icon')[0];
-        content.classList.remove("show");
-        icon.style.transform = "rotate(0deg)";
-        $("body").removeClass("overlay");
-        isFooterShowing = false;
-    }
-
-    function showFullSearch() {
-        if (window.innerWidth <= 1023) {
-            var text = document.getElementById('search_input');
-            var searchContainer = document.getElementsByClassName('form-group')[0];
-
-            text.style.display = 'block';
-            searchContainer.style.position = 'absolute';
-            searchContainer.style.padding = '0.8125rem 1.5rem';
-            searchContainer.style.width = '100%';
-            searchContainer.style.height = '3rem';
-            searchContainer.style.right = '';
-            searchIsFull = true;
-        }
-    }
-
-    function ShowCart() {
-        if (isCartEmpty) {
-            var cart = document.getElementsByClassName('cart')[0];
-            cart.style.right = '0.5rem';
-            cart.style.visibility = "visible";
-            cart.style.opacity = "1";
+        function OpenFooter() {
+            var content = document.getElementsByClassName('footer-container')[0];
+            var icon = document.getElementsByClassName('footer-btn-icon')[0];
+            content.classList.add('show');
+            icon.style.transform = "rotate(180deg)";
             $("body").addClass("overlay");
-            document.getElementsByClassName('footer-container')[0].style.zIndex = '0';
-            isCartShowing = true;
+            isFooterShowing = true;
         }
-        else {
 
+        function MenuCatalogBtn() {
+            CloseBurgerMenu();
+            catalogMenuShow();
         }
-    }
 
-    function CloseCart() {
-        if (isCartEmpty) {
-            var cart = document.getElementsByClassName('cart')[0];
-            cart.style.right = '-2rem';
-            cart.style.visibility = "collapse";
-            cart.style.opacity = "0";
+        function CloseFooter() {
+            var content = document.getElementsByClassName('footer-container')[0];
+            var icon = document.getElementsByClassName('footer-btn-icon')[0];
+            content.classList.remove("show");
+            icon.style.transform = "rotate(0deg)";
             $("body").removeClass("overlay");
-            document.getElementsByClassName('footer-container')[0].style.zIndex = '1100';
-            isCartShowing = false;
+            isFooterShowing = false;
         }
-        else {
 
-        }
-    }
-
-    function searchSize() {
-        if (window.innerWidth > 1023) {
-            if (searchIsFull) {
+        function showFullSearch() {
+            if (window.innerWidth <= 1023) {
                 var text = document.getElementById('search_input');
                 var searchContainer = document.getElementsByClassName('form-group')[0];
-                text.style.display = '';
-                searchContainer.style.position = '';
-                searchContainer.style.padding = '';
-                searchContainer.style.width = '';
-                searchContainer.style.height = '';
+
+                text.style.display = 'block';
+                searchContainer.style.position = 'absolute';
+                searchContainer.style.padding = '0.8125rem 1.5rem';
+                searchContainer.style.width = '100%';
+                searchContainer.style.height = '3rem';
                 searchContainer.style.right = '';
-                searchIsFull = false;
+                searchIsFull = true;
             }
         }
-    }
 
-    function removeIcons() {
-        var winWidth = window.innerWidth;
-        var button = document.querySelector('.catalogue-btn');
-        var svgElements = button.querySelectorAll('svg');
-
-        if (winWidth <= 768) {
-            svgElements.forEach(function (svg) {
-                svg.style.display = 'none';
-            });
-        } else {
-            svgElements.forEach(function (el) {
-                el.style.display = 'block';
-            });
-        }
-    }
-
-    function ShowBurgerMenu() {
-        var menu = document.getElementsByClassName('burger-menu')[0];
-        menu.style.left = '0.5rem';
-        menu.style.visibility = "visible";
-        menu.style.opacity = "1";
-        $("body").addClass("overlay");
-        document.getElementsByClassName('footer-container')[0].style.zIndex = '0';
-        isBurgerMenuShowing = true;
-    }
-
-    function CloseBurgerMenu() {
-        var menu = document.getElementsByClassName('burger-menu')[0];
-        menu.style.left = '-2rem';
-        menu.style.visibility = "collapse";
-        menu.style.opacity = "0";
-        document.getElementsByClassName('footer-container')[0].style.zIndex = '1100';
-        $("body").removeClass("overlay");
-        isBurgerMenuShowing = false;
-    }
-    function BottomHeaderMenuSwicher(event) {
-        var btns = document.getElementsByClassName('header-bottom-item-text');
-        var dots = document.getElementsByClassName('header-bottom-item-dot');
-        for (var i = 0; i < btns.length; i++) {
-            if (event.target === btns[i]) {
-                btns[i].classList.add('active');
-                dots[i].classList.add('active');
+        function ShowCart() {
+            if (isCartEmpty) {
+                var cart = document.getElementsByClassName('cart')[0];
+                cart.style.right = '0.5rem';
+                cart.style.visibility = "visible";
+                cart.style.opacity = "1";
+                $("body").addClass("overlay");
+                document.getElementsByClassName('footer-container')[0].style.zIndex = '0';
+                isCartShowing = true;
             }
             else {
-                btns[i].classList.remove('active');
-                dots[i].classList.remove('active');
+
             }
         }
-    }
+
+        function CloseCart() {
+            if (isCartEmpty) {
+                var cart = document.getElementsByClassName('cart')[0];
+                cart.style.right = '-2rem';
+                cart.style.visibility = "collapse";
+                cart.style.opacity = "0";
+                $("body").removeClass("overlay");
+                document.getElementsByClassName('footer-container')[0].style.zIndex = '1100';
+                isCartShowing = false;
+            }
+            else {
+
+            }
+        }
+
+        function searchSize() {
+            if (window.innerWidth > 1023) {
+                if (searchIsFull) {
+                    var text = document.getElementById('search_input');
+                    var searchContainer = document.getElementsByClassName('form-group')[0];
+                    text.style.display = '';
+                    searchContainer.style.position = '';
+                    searchContainer.style.padding = '';
+                    searchContainer.style.width = '';
+                    searchContainer.style.height = '';
+                    searchContainer.style.right = '';
+                    searchIsFull = false;
+                }
+            }
+        }
+
+        function removeIcons() {
+            var winWidth = window.innerWidth;
+            var button = document.querySelector('.catalogue-btn');
+            var svgElements = button.querySelectorAll('svg');
+
+            if (winWidth <= 768) {
+                svgElements.forEach(function (svg) {
+                    svg.style.display = 'none';
+                });
+            } else {
+                svgElements.forEach(function (el) {
+                    el.style.display = 'block';
+                });
+            }
+        }
+
+        function ShowBurgerMenu() {
+            var menu = document.getElementsByClassName('burger-menu')[0];
+            menu.style.left = '0.5rem';
+            menu.style.visibility = "visible";
+            menu.style.opacity = "1";
+            $("body").addClass("overlay");
+            document.getElementsByClassName('footer-container')[0].style.zIndex = '0';
+            isBurgerMenuShowing = true;
+        }
+
+        function CloseBurgerMenu() {
+            var menu = document.getElementsByClassName('burger-menu')[0];
+            menu.style.left = '-2rem';
+            menu.style.visibility = "collapse";
+            menu.style.opacity = "0";
+            document.getElementsByClassName('footer-container')[0].style.zIndex = '1100';
+            $("body").removeClass("overlay");
+            isBurgerMenuShowing = false;
+        }
+        function BottomHeaderMenuSwicher(event) {
+            var btns = document.getElementsByClassName('header-bottom-item-text');
+            var dots = document.getElementsByClassName('header-bottom-item-dot');
+            for (var i = 0; i < btns.length; i++) {
+                if (event.target === btns[i]) {
+                    btns[i].classList.add('active');
+                    dots[i].classList.add('active');
+                }
+                else {
+                    btns[i].classList.remove('active');
+                    dots[i].classList.remove('active');
+                }
+            }
+        }
 
 
-    document.addEventListener('DOMContentLoaded', function () {
-        var cartInputs = document.getElementsByClassName('num-input');
-        var cartInputsArray = Array.from(cartInputs);
-
-        cartInputsArray.forEach(function (input) {
-            input.addEventListener('input', function () {
-                var id = input.id.match(/\d+/);
-                var span = document.getElementById("cartSpan"+id);
-                span.textContent = input.value;
+        document.addEventListener('DOMContentLoaded', function () {
+            var cartInputsArray = Array.from(document.getElementsByClassName('num-input'));
+            cartInputsArray.forEach(function (input) {
+                input.addEventListener('input', function () {
+                    var id = input.id.match(/\d+/);
+                    var span = document.getElementById("cartSpan" + id);
+                    var productSpan = document.getElementById("productSpan" + id);
+                    var productInput = document.getElementById("productInput" + id);
+                    span.textContent = input.value;
+                    productSpan.textContent = input.value;
+                    productInput.value = productSpan.textContent;
+                });
             });
         });
-    });
 
 
 
-    function Plus(event) {
-        var span = document.getElementById("cartSpan" + event.target.id);
-        var input = document.getElementById("cartInput" + event.target.id);
-        if (span.textContent < 999) {
-            span.textContent -=-1;
-            input.value = span.textContent;
+        function Plus(event) {
+            console.log('ss');
+            var span = document.getElementById("cartSpan" + event.target.id);
+            var input = document.getElementById("cartInput" + event.target.id);
+            var productSpan = document.getElementById("productSpan" + event.target.id);
+            var productInput = document.getElementById("productInput" + event.target.id);
+            if (span.textContent < 999) {
+                span.textContent -= -1;
+                productSpan.textContent = span.textContent;
+                input.value = span.textContent;
+                productInput.value = productSpan.textContent;
+            }
         }
-    }
 
-    function Minus(event) {
-        var span = document.getElementById("cartSpan"+event.target.id);
-        var input = document.getElementById("cartInput"+event.target.id);
-        if (span.textContent > 1) {
-            span.textContent -= 1;
-            input.value = span.textContent;
+        function Minus(event) {
+            var span = document.getElementById("cartSpan" + event.target.id);
+            var input = document.getElementById("cartInput" + event.target.id);
+            var productSpan = document.getElementById("productSpan" + event.target.id);
+            var productInput = document.getElementById("productInput" + event.target.id);
+            if (span.textContent > 1) {
+                span.textContent -= 1;
+                productSpan.textContent = span.textContent;
+                input.value = span.textContent;
+                productInput.value = productSpan.textContent;
+            }
         }
-    }
 
-    function ShowDetails(){
-        var details = document.getElementsByClassName('cart-body-total-details')[0];
-        var arrow = document.getElementById('detailsArrowIcon');
-        if(isDetailsShowing)
-        {
-            details.style.display = 'none';
-            arrow.style.transform = 'rotate(0deg)';
-            isDetailsShowing = false;
+        function ShowDetails() {
+            var details = document.getElementsByClassName('cart-body-total-details')[0];
+            var arrow = document.getElementById('detailsArrowIcon');
+            if (isDetailsShowing) {
+                details.style.display = 'none';
+                arrow.style.transform = 'rotate(0deg)';
+                isDetailsShowing = false;
+            }
+            else {
+                details.style.display = 'flex';
+                arrow.style.transform = 'rotate(180deg)';
+                isDetailsShowing = true;
+            }
+
         }
-        else
-        {
-            details.style.display = 'flex';
-            arrow.style.transform = 'rotate(180deg)';
-            isDetailsShowing = true;
-        }
-        
-    }
-</script>
+    </script>
 </body>
 </html>

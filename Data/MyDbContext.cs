@@ -8,11 +8,5 @@ namespace Shop_Mvc.Data
         public MyDbContext(DbContextOptions<MyDbContext> options) : base(options) { }
         public DbSet<Product> Products { get; set; }
 
-        public List<Product> GetProductBySubcategory(string subcategory)
-        {
-            return Products
-                .Where(p => p.Subcategory == subcategory)
-                .ToList();
-        }
     }
 }

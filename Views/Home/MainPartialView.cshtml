@@ -1,0 +1,367 @@
+﻿@*<div style="display:flex; flex-direction:column; height:100%;overflow-x:hidden;">*@
+<div class="slider-container" style="flex-direction:row">
+    <button class="slider-left-btn" onclick="GoBack()">
+        <svg width="1rem" height="1rem" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M8 11L3 6L8 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    </button>
+    <button class="slider-right-btn" onclick="GoForward()">
+        <svg width="1rem" height="1rem" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M4 1L9 6L4 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    </button>
+    <div style="position:relative; max-height:245px;">
+        <div class="slider">
+            <img class="slider-img" src="~/Images/Slider.webp" />
+            <img class="slider-img" src="~/Images/Slider.webp" />
+            <img class="slider-img" src="~/Images/Slider.webp" />
+            <img class="slider-img" src="~/Images/Slider.webp" />
+            <img class="slider-img" src="~/Images/Slider.webp" />
+            <img class="slider-img" src="~/Images/Slider.webp" />
+            <img class="slider-img" src="~/Images/Slider.webp" />
+            <img class="slider-img" src="~/Images/Slider.webp" />
+            <img class="slider-img" src="~/Images/Slider.webp" />
+            <img class="slider-img" src="~/Images/Slider.webp" />
+            <img class="slider-img" src="~/Images/Slider.webp" />
+            <img class="slider-img" src="~/Images/Slider.webp" />
+        </div>
+        <ul class="slider-dots-container">
+        </ul>
+    </div>
+</div>
+<div class="main-page-categories">
+    <button class="main-page-category active" onclick="ShowCategory(event, 'sdads')" id="0"><p id="0" class="main-page-category-text" style="display:none;">Акційні пропозиції</p>Акційні пропозиції</button>
+    <button class="main-page-category" onclick="ShowCategory(event, '')" id="1"><p id="1" class="main-page-category-text" style="display:block;">Акційні пропозиції</p>Акційні пропозиції</button>
+    <button class="main-page-category" onclick="ShowCategory(event, '')" id="2"><p id="2" class="main-page-category-text" style="display:block;">Акційні пропозиції</p>Акційні пропозиції</button>
+    <button class="main-page-category" onclick="ShowCategory(event, '')" id="3"><p id="3" class="main-page-category-text" style="display:block;">Акційні пропозиції</p>Акційні пропозиції</button>
+    <button class="main-page-category" onclick="ShowCategory(event, '')" id="4"><p id="4" class="main-page-category-text" style="display:block;">Акційні пропозиції</p>Акційні пропозиції</button>
+    <button class="main-page-category" onclick="ShowCategory(event, '')" id="5"><p id="5" class="main-page-category-text" style="display:block;">Акційні пропозиції</p>Акційні пропозиції</button>
+    <button class="main-page-category" onclick="ShowCategory(event, '')" id="6"><p id="6" class="main-page-category-text" style="display:block;">Акційні пропозиції</p>Акційні пропозиції</button>
+    <button class="main-page-category" onclick="ShowCategory(event, '')" id="7"><p id="7" class="main-page-category-text" style="display:block;">Акційні пропозиції</p>Акційні пропозиції</button>
+</div>
+<div class="main-page-products">
+    @Html.Partial("StartProductPartialView")
+    @*<div class="main-page-product" id="1">
+    <div class="main-page-product-favorite">
+    <svg width="1.000rem" height="0.938rem" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M14.1915 7.56097L14.218 7.52031L14.2405 7.47727C14.6216 6.74672 15 5.85591 15 4.9799C15 2.71644 13.5355 1.33759 11.8732 1.07637C10.4691 0.780647 8.956 1.35222 8.01756 2.56858C7.09624 1.31855 5.53247 0.883302 4.17204 1.06957L4.17203 1.06952L4.16182 1.07103C2.48513 1.31826 1 2.70055 1 4.9799C1 5.85591 1.37843 6.74672 1.75955 7.47727L1.782 7.52031L1.80851 7.56097C2.279 8.28247 2.86715 9.13148 3.56752 9.89897C4.82205 11.286 6.35624 12.5732 7.42816 13.3204L8.035 13.7434L8.61708 13.2869C8.64265 13.2668 8.66858 13.2465 8.69484 13.2259C9.69949 12.4384 11.1982 11.2636 12.4324 9.89901C13.1328 9.13152 13.721 8.28248 14.1915 7.56097Z" stroke="currentColor" stroke-width="1"></path></svg>
+    </div>
+    <div class="main-page-product-cart-btn" id="1">
+    <i class="fa-solid fa-cart-shopping" style="color: #ffffff;font-size: 1.5rem;" onclick="AddToCart(event)" id="1"></i>
+    </div>
+    <div class="main-page-product-counter-container">
+    <svg id="1" onclick="Minus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="1" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+    <div class="main-page-product-counter-container-count">
+    <input id="productInput1" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="1" class="num-input-product">
+    <span id="productSpan1" class="cart-body-item-info-count-btn-counter-num">1</span>
+    <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
+    </div>
+    <svg id="1" onclick="Plus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="1" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="1" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+    </div>
+    <div class="main-page-product-promo">
+    <p class="main-page-product-promo-text">32%</p>
+    </div>
+    <img class="main-page-product-img" src="/Images/Cheese.webp" />
+    <span class="main-page-product-title">Сир твердий Комо 300г dfs dfs df sdfsdf ...</span>
+    <span class="main-page-product-mass">300г</span>
+    <div class="main-page-product-bottom">
+    <span class="main-page-product-bottom-price-promo">29.99</span>
+    <span class="main-page-product-bottom-price-brand">300 г</span>
+    </div>
+    <div class="product-overlay"></div>
+    </div>
+    <div class="main-page-product" id="2">
+    <div class="main-page-product-favorite">
+    <svg width="1.000rem" height="0.938rem" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M14.1915 7.56097L14.218 7.52031L14.2405 7.47727C14.6216 6.74672 15 5.85591 15 4.9799C15 2.71644 13.5355 1.33759 11.8732 1.07637C10.4691 0.780647 8.956 1.35222 8.01756 2.56858C7.09624 1.31855 5.53247 0.883302 4.17204 1.06957L4.17203 1.06952L4.16182 1.07103C2.48513 1.31826 1 2.70055 1 4.9799C1 5.85591 1.37843 6.74672 1.75955 7.47727L1.782 7.52031L1.80851 7.56097C2.279 8.28247 2.86715 9.13148 3.56752 9.89897C4.82205 11.286 6.35624 12.5732 7.42816 13.3204L8.035 13.7434L8.61708 13.2869C8.64265 13.2668 8.66858 13.2465 8.69484 13.2259C9.69949 12.4384 11.1982 11.2636 12.4324 9.89901C13.1328 9.13152 13.721 8.28248 14.1915 7.56097Z" stroke="currentColor" stroke-width="1"></path></svg>
+    </div>
+    <div class="main-page-product-cart-btn" id="2">
+    <i class="fa-solid fa-cart-shopping" style="color: #ffffff;font-size: 1.5rem;" onclick="AddToCart(event)" id="2"></i>
+    </div>
+    <div class="main-page-product-counter-container">
+    <svg id="2" onclick="Minus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="2" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+    <div class="main-page-product-counter-container-count">
+    <input id="productInput2" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" class="num-input-product" value="1">
+    <span id="productSpan2" class="cart-body-item-info-count-btn-counter-num">1</span>
+    <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
+    </div>
+    <svg id="2" onclick="Plus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="2" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="2" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+    </div>
+    <div class="main-page-product-promo">
+    <p class="main-page-product-promo-text">32%</p>
+    </div>
+    <img class="main-page-product-img" src="/Images/Cheese.webp" />
+    <span class="main-page-product-title">Сир твердий Комо 300г dfs dfs df sdfsdf ...</span>
+    <span class="main-page-product-mass">300г</span>
+    <div class="main-page-product-bottom">
+    <span class="main-page-product-bottom-price-promo">29.99</span>
+    <span class="main-page-product-bottom-price-brand">300 г</span>
+    </div>
+    <div class="product-overlay"></div>
+    </div>
+    <div class="main-page-product">
+    <div class="main-page-product-favorite">
+    <svg width="1.000rem" height="0.938rem" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M14.1915 7.56097L14.218 7.52031L14.2405 7.47727C14.6216 6.74672 15 5.85591 15 4.9799C15 2.71644 13.5355 1.33759 11.8732 1.07637C10.4691 0.780647 8.956 1.35222 8.01756 2.56858C7.09624 1.31855 5.53247 0.883302 4.17204 1.06957L4.17203 1.06952L4.16182 1.07103C2.48513 1.31826 1 2.70055 1 4.9799C1 5.85591 1.37843 6.74672 1.75955 7.47727L1.782 7.52031L1.80851 7.56097C2.279 8.28247 2.86715 9.13148 3.56752 9.89897C4.82205 11.286 6.35624 12.5732 7.42816 13.3204L8.035 13.7434L8.61708 13.2869C8.64265 13.2668 8.66858 13.2465 8.69484 13.2259C9.69949 12.4384 11.1982 11.2636 12.4324 9.89901C13.1328 9.13152 13.721 8.28248 14.1915 7.56097Z" stroke="currentColor" stroke-width="1"></path></svg>
+    </div>
+    <div class="main-page-product-cart-btn">
+    <i class="fa-solid fa-cart-shopping" style="color: #ffffff;font-size: 1.5rem;"></i>
+    </div>
+    <div class="main-page-product-promo">
+    <p class="main-page-product-promo-text">32%</p>
+    </div>
+    <img class="main-page-product-img" src="/Images/Cheese.webp" />
+    <span class="main-page-product-title">Сир твердий Комо 300г dfs dfs df sdfsdf ...</span>
+    <span class="main-page-product-mass">300г</span>
+    <div class="main-page-product-bottom">
+    <span class="main-page-product-bottom-price-promo">29.99</span>
+    <span class="main-page-product-bottom-price-brand">300 г</span>
+    </div>
+    </div>
+    <div class="main-page-product">
+    <div class="main-page-product-favorite">
+    <svg width="1.000rem" height="0.938rem" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M14.1915 7.56097L14.218 7.52031L14.2405 7.47727C14.6216 6.74672 15 5.85591 15 4.9799C15 2.71644 13.5355 1.33759 11.8732 1.07637C10.4691 0.780647 8.956 1.35222 8.01756 2.56858C7.09624 1.31855 5.53247 0.883302 4.17204 1.06957L4.17203 1.06952L4.16182 1.07103C2.48513 1.31826 1 2.70055 1 4.9799C1 5.85591 1.37843 6.74672 1.75955 7.47727L1.782 7.52031L1.80851 7.56097C2.279 8.28247 2.86715 9.13148 3.56752 9.89897C4.82205 11.286 6.35624 12.5732 7.42816 13.3204L8.035 13.7434L8.61708 13.2869C8.64265 13.2668 8.66858 13.2465 8.69484 13.2259C9.69949 12.4384 11.1982 11.2636 12.4324 9.89901C13.1328 9.13152 13.721 8.28248 14.1915 7.56097Z" stroke="currentColor" stroke-width="1"></path></svg>
+    </div>
+    <div class="main-page-product-cart-btn">
+    <i class="fa-solid fa-cart-shopping" style="color: #ffffff;font-size: 1.5rem;"></i>
+    </div>
+    <div class="main-page-product-promo">
+    <p class="main-page-product-promo-text">32%</p>
+    </div>
+    <img class="main-page-product-img" src="/Images/Cheese.webp" />
+    <span class="main-page-product-title">Сир твердий Комо 300г dfs dfs df sdfsdf ...</span>
+    <span class="main-page-product-mass">300г</span>
+    <div class="main-page-product-bottom">
+    <span class="main-page-product-bottom-price-promo">29.99</span>
+    <span class="main-page-product-bottom-price-brand">300 г</span>
+    </div>
+    </div>
+    <div class="main-page-product">
+    <div class="main-page-product-favorite">
+    <svg width="1.000rem" height="0.938rem" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M14.1915 7.56097L14.218 7.52031L14.2405 7.47727C14.6216 6.74672 15 5.85591 15 4.9799C15 2.71644 13.5355 1.33759 11.8732 1.07637C10.4691 0.780647 8.956 1.35222 8.01756 2.56858C7.09624 1.31855 5.53247 0.883302 4.17204 1.06957L4.17203 1.06952L4.16182 1.07103C2.48513 1.31826 1 2.70055 1 4.9799C1 5.85591 1.37843 6.74672 1.75955 7.47727L1.782 7.52031L1.80851 7.56097C2.279 8.28247 2.86715 9.13148 3.56752 9.89897C4.82205 11.286 6.35624 12.5732 7.42816 13.3204L8.035 13.7434L8.61708 13.2869C8.64265 13.2668 8.66858 13.2465 8.69484 13.2259C9.69949 12.4384 11.1982 11.2636 12.4324 9.89901C13.1328 9.13152 13.721 8.28248 14.1915 7.56097Z" stroke="currentColor" stroke-width="1"></path></svg>
+    </div>
+    <div class="main-page-product-cart-btn">
+    <i class="fa-solid fa-cart-shopping" style="color: #ffffff;font-size: 1.5rem;"></i>
+    </div>
+    <div class="main-page-product-promo">
+    <p class="main-page-product-promo-text">32%</p>
+    </div>
+    <img class="main-page-product-img" src="/Images/Cheese.webp" />
+    <span class="main-page-product-title">Сир твердий Комо 300г dfs dfs df sdfsdf ...</span>
+    <span class="main-page-product-mass">300г</span>
+    <div class="main-page-product-bottom">
+    <span class="main-page-product-bottom-price-promo">29.99</span>
+    <span class="main-page-product-bottom-price-brand">300 г</span>
+    </div>
+    </div>
+    <div class="main-page-product">
+    <div class="main-page-product-favorite">
+    <svg width="1.000rem" height="0.938rem" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M14.1915 7.56097L14.218 7.52031L14.2405 7.47727C14.6216 6.74672 15 5.85591 15 4.9799C15 2.71644 13.5355 1.33759 11.8732 1.07637C10.4691 0.780647 8.956 1.35222 8.01756 2.56858C7.09624 1.31855 5.53247 0.883302 4.17204 1.06957L4.17203 1.06952L4.16182 1.07103C2.48513 1.31826 1 2.70055 1 4.9799C1 5.85591 1.37843 6.74672 1.75955 7.47727L1.782 7.52031L1.80851 7.56097C2.279 8.28247 2.86715 9.13148 3.56752 9.89897C4.82205 11.286 6.35624 12.5732 7.42816 13.3204L8.035 13.7434L8.61708 13.2869C8.64265 13.2668 8.66858 13.2465 8.69484 13.2259C9.69949 12.4384 11.1982 11.2636 12.4324 9.89901C13.1328 9.13152 13.721 8.28248 14.1915 7.56097Z" stroke="currentColor" stroke-width="1"></path></svg>
+    </div>
+    <div class="main-page-product-cart-btn">
+    <i class="fa-solid fa-cart-shopping" style="color: #ffffff;font-size: 1.5rem;"></i>
+    </div>
+    <div class="main-page-product-promo">
+    <p class="main-page-product-promo-text">32%</p>
+    </div>
+    <img class="main-page-product-img" src="/Images/Cheese.webp" />
+    <span class="main-page-product-title">Сир твердий Комо 300г dfs dfs df sdfsdf ...</span>
+    <span class="main-page-product-mass">300г</span>
+    <div class="main-page-product-bottom">
+    <span class="main-page-product-bottom-price-promo">29.99</span>
+    <span class="main-page-product-bottom-price-brand">300 г</span>
+    </div>
+    </div>
+    <div class="main-page-product">
+    <div class="main-page-product-favorite">
+    <svg width="1.000rem" height="0.938rem" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M14.1915 7.56097L14.218 7.52031L14.2405 7.47727C14.6216 6.74672 15 5.85591 15 4.9799C15 2.71644 13.5355 1.33759 11.8732 1.07637C10.4691 0.780647 8.956 1.35222 8.01756 2.56858C7.09624 1.31855 5.53247 0.883302 4.17204 1.06957L4.17203 1.06952L4.16182 1.07103C2.48513 1.31826 1 2.70055 1 4.9799C1 5.85591 1.37843 6.74672 1.75955 7.47727L1.782 7.52031L1.80851 7.56097C2.279 8.28247 2.86715 9.13148 3.56752 9.89897C4.82205 11.286 6.35624 12.5732 7.42816 13.3204L8.035 13.7434L8.61708 13.2869C8.64265 13.2668 8.66858 13.2465 8.69484 13.2259C9.69949 12.4384 11.1982 11.2636 12.4324 9.89901C13.1328 9.13152 13.721 8.28248 14.1915 7.56097Z" stroke="currentColor" stroke-width="1"></path></svg>
+    </div>
+    <div class="main-page-product-cart-btn">
+    <i class="fa-solid fa-cart-shopping" style="color: #ffffff;font-size: 1.5rem;"></i>
+    </div>
+    <div class="main-page-product-promo">
+    <p class="main-page-product-promo-text">32%</p>
+    </div>
+    <img class="main-page-product-img" src="/Images/Cheese.webp" />
+    <span class="main-page-product-title">Сир твердий Комо 300г dfs dfs df sdfsdf ...</span>
+    <span class="main-page-product-mass">300г</span>
+    <div class="main-page-product-bottom">
+    <span class="main-page-product-bottom-price-promo">29.99</span>
+    <span class="main-page-product-bottom-price-brand">300 г</span>
+    </div>
+    </div>
+    <div class="main-page-product">
+    <div class="main-page-product-favorite">
+    <svg width="1.000rem" height="0.938rem" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M14.1915 7.56097L14.218 7.52031L14.2405 7.47727C14.6216 6.74672 15 5.85591 15 4.9799C15 2.71644 13.5355 1.33759 11.8732 1.07637C10.4691 0.780647 8.956 1.35222 8.01756 2.56858C7.09624 1.31855 5.53247 0.883302 4.17204 1.06957L4.17203 1.06952L4.16182 1.07103C2.48513 1.31826 1 2.70055 1 4.9799C1 5.85591 1.37843 6.74672 1.75955 7.47727L1.782 7.52031L1.80851 7.56097C2.279 8.28247 2.86715 9.13148 3.56752 9.89897C4.82205 11.286 6.35624 12.5732 7.42816 13.3204L8.035 13.7434L8.61708 13.2869C8.64265 13.2668 8.66858 13.2465 8.69484 13.2259C9.69949 12.4384 11.1982 11.2636 12.4324 9.89901C13.1328 9.13152 13.721 8.28248 14.1915 7.56097Z" stroke="currentColor" stroke-width="1"></path></svg>
+    </div>
+    <div class="main-page-product-cart-btn">
+    <i class="fa-solid fa-cart-shopping" style="color: #ffffff;font-size: 1.5rem;"></i>
+    </div>
+    <div class="main-page-product-promo">
+    <p class="main-page-product-promo-text">32%</p>
+    </div>
+    <img class="main-page-product-img" src="/Images/Cheese.webp" />
+    <span class="main-page-product-title">Сир твердий Комо 300г dfs dfs df sdfsdf ...</span>
+    <span class="main-page-product-mass">300г</span>
+    <div class="main-page-product-bottom">
+    <span class="main-page-product-bottom-price-promo">29.99</span>
+    <span class="main-page-product-bottom-price-brand">300 г</span>
+    </div>
+    </div>
+    <div class="main-page-product">
+    <div class="main-page-product-favorite">
+    <svg width="1.000rem" height="0.938rem" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M14.1915 7.56097L14.218 7.52031L14.2405 7.47727C14.6216 6.74672 15 5.85591 15 4.9799C15 2.71644 13.5355 1.33759 11.8732 1.07637C10.4691 0.780647 8.956 1.35222 8.01756 2.56858C7.09624 1.31855 5.53247 0.883302 4.17204 1.06957L4.17203 1.06952L4.16182 1.07103C2.48513 1.31826 1 2.70055 1 4.9799C1 5.85591 1.37843 6.74672 1.75955 7.47727L1.782 7.52031L1.80851 7.56097C2.279 8.28247 2.86715 9.13148 3.56752 9.89897C4.82205 11.286 6.35624 12.5732 7.42816 13.3204L8.035 13.7434L8.61708 13.2869C8.64265 13.2668 8.66858 13.2465 8.69484 13.2259C9.69949 12.4384 11.1982 11.2636 12.4324 9.89901C13.1328 9.13152 13.721 8.28248 14.1915 7.56097Z" stroke="currentColor" stroke-width="1"></path></svg>
+    </div>
+    <div class="main-page-product-cart-btn">
+    <i class="fa-solid fa-cart-shopping" style="color: #ffffff;font-size: 1.5rem;"></i>
+    </div>
+    <div class="main-page-product-promo">
+    <p class="main-page-product-promo-text">32%</p>
+    </div>
+    <img class="main-page-product-img" src="/Images/Cheese.webp" />
+    <span class="main-page-product-title">Сир твердий Комо 300г dfs dfs df sdfsdf ...</span>
+    <span class="main-page-product-mass">300г</span>
+    <div class="main-page-product-bottom">
+    <span class="main-page-product-bottom-price-promo">29.99</span>
+    <span class="main-page-product-bottom-price-brand">300 г</span>
+    </div>
+    </div>
+    <div class="main-page-product">
+    <div class="main-page-product-favorite">
+    <svg width="1.000rem" height="0.938rem" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M14.1915 7.56097L14.218 7.52031L14.2405 7.47727C14.6216 6.74672 15 5.85591 15 4.9799C15 2.71644 13.5355 1.33759 11.8732 1.07637C10.4691 0.780647 8.956 1.35222 8.01756 2.56858C7.09624 1.31855 5.53247 0.883302 4.17204 1.06957L4.17203 1.06952L4.16182 1.07103C2.48513 1.31826 1 2.70055 1 4.9799C1 5.85591 1.37843 6.74672 1.75955 7.47727L1.782 7.52031L1.80851 7.56097C2.279 8.28247 2.86715 9.13148 3.56752 9.89897C4.82205 11.286 6.35624 12.5732 7.42816 13.3204L8.035 13.7434L8.61708 13.2869C8.64265 13.2668 8.66858 13.2465 8.69484 13.2259C9.69949 12.4384 11.1982 11.2636 12.4324 9.89901C13.1328 9.13152 13.721 8.28248 14.1915 7.56097Z" stroke="currentColor" stroke-width="1"></path></svg>
+    </div>
+    <div class="main-page-product-cart-btn">
+    <i class="fa-solid fa-cart-shopping" style="color: #ffffff;font-size: 1.5rem;"></i>
+    </div>
+    <div class="main-page-product-promo">
+    <p class="main-page-product-promo-text">32%</p>
+    </div>
+    <img class="main-page-product-img" src="/Images/Cheese.webp" />
+    <span class="main-page-product-title">Сир твердий Комо 300г dfs dfs df sdfsdf ...</span>
+    <span class="main-page-product-mass">300г</span>
+    <div class="main-page-product-bottom">
+    <span class="main-page-product-bottom-price-promo">29.99</span>
+    <span class="main-page-product-bottom-price-brand">300 г</span>
+    </div>
+    </div>
+    <div class="main-page-product">
+    <div class="main-page-product-favorite">
+    <svg width="1.000rem" height="0.938rem" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M14.1915 7.56097L14.218 7.52031L14.2405 7.47727C14.6216 6.74672 15 5.85591 15 4.9799C15 2.71644 13.5355 1.33759 11.8732 1.07637C10.4691 0.780647 8.956 1.35222 8.01756 2.56858C7.09624 1.31855 5.53247 0.883302 4.17204 1.06957L4.17203 1.06952L4.16182 1.07103C2.48513 1.31826 1 2.70055 1 4.9799C1 5.85591 1.37843 6.74672 1.75955 7.47727L1.782 7.52031L1.80851 7.56097C2.279 8.28247 2.86715 9.13148 3.56752 9.89897C4.82205 11.286 6.35624 12.5732 7.42816 13.3204L8.035 13.7434L8.61708 13.2869C8.64265 13.2668 8.66858 13.2465 8.69484 13.2259C9.69949 12.4384 11.1982 11.2636 12.4324 9.89901C13.1328 9.13152 13.721 8.28248 14.1915 7.56097Z" stroke="currentColor" stroke-width="1"></path></svg>
+    </div>
+    <div class="main-page-product-cart-btn">
+    <i class="fa-solid fa-cart-shopping" style="color: #ffffff;font-size: 1.5rem;"></i>
+    </div>
+    <div class="main-page-product-promo">
+    <p class="main-page-product-promo-text">32%</p>
+    </div>
+    <img class="main-page-product-img" src="/Images/Cheese.webp" />
+    <span class="main-page-product-title">Сир твердий Комо 300г dfs dfs df sdfsdf ...</span>
+    <span class="main-page-product-mass">300г</span>
+    <div class="main-page-product-bottom">
+    <span class="main-page-product-bottom-price-promo">29.99</span>
+    <span class="main-page-product-bottom-price-brand">300 г</span>
+    </div>
+    </div>
+    <div class="main-page-product">
+    <div class="main-page-product-favorite">
+    <svg width="1.000rem" height="0.938rem" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M14.1915 7.56097L14.218 7.52031L14.2405 7.47727C14.6216 6.74672 15 5.85591 15 4.9799C15 2.71644 13.5355 1.33759 11.8732 1.07637C10.4691 0.780647 8.956 1.35222 8.01756 2.56858C7.09624 1.31855 5.53247 0.883302 4.17204 1.06957L4.17203 1.06952L4.16182 1.07103C2.48513 1.31826 1 2.70055 1 4.9799C1 5.85591 1.37843 6.74672 1.75955 7.47727L1.782 7.52031L1.80851 7.56097C2.279 8.28247 2.86715 9.13148 3.56752 9.89897C4.82205 11.286 6.35624 12.5732 7.42816 13.3204L8.035 13.7434L8.61708 13.2869C8.64265 13.2668 8.66858 13.2465 8.69484 13.2259C9.69949 12.4384 11.1982 11.2636 12.4324 9.89901C13.1328 9.13152 13.721 8.28248 14.1915 7.56097Z" stroke="currentColor" stroke-width="1"></path></svg>
+    </div>
+    <div class="main-page-product-cart-btn">
+    <i class="fa-solid fa-cart-shopping" style="color: #ffffff;font-size: 1.5rem;"></i>
+    </div>
+    <div class="main-page-product-promo">
+    <p class="main-page-product-promo-text">32%</p>
+    </div>
+    <img class="main-page-product-img" src="/Images/Cheese.webp" />
+    <span class="main-page-product-title">Сир твердий Комо 300г dfs dfs df sdfsdf ...</span>
+    <span class="main-page-product-mass">300г</span>
+    <div class="main-page-product-bottom">
+    <span class="main-page-product-bottom-price-promo">29.99</span>
+    <span class="main-page-product-bottom-price-brand">300 г</span>
+    </div>
+    </div>
+    <div class="main-page-product">
+    <div class="main-page-product-favorite">
+    <svg width="1.000rem" height="0.938rem" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M14.1915 7.56097L14.218 7.52031L14.2405 7.47727C14.6216 6.74672 15 5.85591 15 4.9799C15 2.71644 13.5355 1.33759 11.8732 1.07637C10.4691 0.780647 8.956 1.35222 8.01756 2.56858C7.09624 1.31855 5.53247 0.883302 4.17204 1.06957L4.17203 1.06952L4.16182 1.07103C2.48513 1.31826 1 2.70055 1 4.9799C1 5.85591 1.37843 6.74672 1.75955 7.47727L1.782 7.52031L1.80851 7.56097C2.279 8.28247 2.86715 9.13148 3.56752 9.89897C4.82205 11.286 6.35624 12.5732 7.42816 13.3204L8.035 13.7434L8.61708 13.2869C8.64265 13.2668 8.66858 13.2465 8.69484 13.2259C9.69949 12.4384 11.1982 11.2636 12.4324 9.89901C13.1328 9.13152 13.721 8.28248 14.1915 7.56097Z" stroke="currentColor" stroke-width="1"></path></svg>
+    </div>
+    <div class="main-page-product-cart-btn">
+    <i class="fa-solid fa-cart-shopping" style="color: #ffffff;font-size: 1.5rem;"></i>
+    </div>
+    <div class="main-page-product-promo">
+    <p class="main-page-product-promo-text">32%</p>
+    </div>
+    <img class="main-page-product-img" src="/Images/Cheese.webp" />
+    <span class="main-page-product-title">Сир твердий Комо 300г dfs dfs df sdfsdf ...</span>
+    <span class="main-page-product-mass">300г</span>
+    <div class="main-page-product-bottom">
+    <span class="main-page-product-bottom-price-promo">29.99</span>
+    <span class="main-page-product-bottom-price-brand">300 г</span>
+    </div>
+    </div>
+    <div class="main-page-product">
+    <div class="main-page-product-favorite">
+    <svg width="1.000rem" height="0.938rem" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M14.1915 7.56097L14.218 7.52031L14.2405 7.47727C14.6216 6.74672 15 5.85591 15 4.9799C15 2.71644 13.5355 1.33759 11.8732 1.07637C10.4691 0.780647 8.956 1.35222 8.01756 2.56858C7.09624 1.31855 5.53247 0.883302 4.17204 1.06957L4.17203 1.06952L4.16182 1.07103C2.48513 1.31826 1 2.70055 1 4.9799C1 5.85591 1.37843 6.74672 1.75955 7.47727L1.782 7.52031L1.80851 7.56097C2.279 8.28247 2.86715 9.13148 3.56752 9.89897C4.82205 11.286 6.35624 12.5732 7.42816 13.3204L8.035 13.7434L8.61708 13.2869C8.64265 13.2668 8.66858 13.2465 8.69484 13.2259C9.69949 12.4384 11.1982 11.2636 12.4324 9.89901C13.1328 9.13152 13.721 8.28248 14.1915 7.56097Z" stroke="currentColor" stroke-width="1"></path></svg>
+    </div>
+    <div class="main-page-product-cart-btn">
+    <i class="fa-solid fa-cart-shopping" style="color: #ffffff;font-size: 1.5rem;"></i>
+    </div>
+    <div class="main-page-product-promo">
+    <p class="main-page-product-promo-text">32%</p>
+    </div>
+    <img class="main-page-product-img" src="/Images/Cheese.webp" />
+    <span class="main-page-product-title">Сир твердий Комо 300г dfs dfs df sdfsdf ...</span>
+    <span class="main-page-product-mass">300г</span>
+    <div class="main-page-product-bottom">
+    <span class="main-page-product-bottom-price-promo">29.99</span>
+    <span class="main-page-product-bottom-price-brand">300 г</span>
+    </div>
+    </div>
+    <div class="main-page-product">
+    <div class="main-page-product-favorite">
+    <svg width="1.000rem" height="0.938rem" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M14.1915 7.56097L14.218 7.52031L14.2405 7.47727C14.6216 6.74672 15 5.85591 15 4.9799C15 2.71644 13.5355 1.33759 11.8732 1.07637C10.4691 0.780647 8.956 1.35222 8.01756 2.56858C7.09624 1.31855 5.53247 0.883302 4.17204 1.06957L4.17203 1.06952L4.16182 1.07103C2.48513 1.31826 1 2.70055 1 4.9799C1 5.85591 1.37843 6.74672 1.75955 7.47727L1.782 7.52031L1.80851 7.56097C2.279 8.28247 2.86715 9.13148 3.56752 9.89897C4.82205 11.286 6.35624 12.5732 7.42816 13.3204L8.035 13.7434L8.61708 13.2869C8.64265 13.2668 8.66858 13.2465 8.69484 13.2259C9.69949 12.4384 11.1982 11.2636 12.4324 9.89901C13.1328 9.13152 13.721 8.28248 14.1915 7.56097Z" stroke="currentColor" stroke-width="1"></path></svg>
+    </div>
+    <div class="main-page-product-cart-btn">
+    <i class="fa-solid fa-cart-shopping" style="color: #ffffff;font-size: 1.5rem;"></i>
+    </div>
+    <div class="main-page-product-promo">
+    <p class="main-page-product-promo-text">32%</p>
+    </div>
+    <img class="main-page-product-img" src="/Images/Cheese.webp" />
+    <span class="main-page-product-title">Сир твердий Комо 300г dfs dfs df sdfsdf ...</span>
+    <span class="main-page-product-mass">300г</span>
+    <div class="main-page-product-bottom">
+    <span class="main-page-product-bottom-price-promo">29.99</span>
+    <span class="main-page-product-bottom-price-brand">300 г</span>
+    </div>
+    </div>
+    <div class="main-page-product">
+    <div class="main-page-product-favorite">
+    <svg width="1.000rem" height="0.938rem" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M14.1915 7.56097L14.218 7.52031L14.2405 7.47727C14.6216 6.74672 15 5.85591 15 4.9799C15 2.71644 13.5355 1.33759 11.8732 1.07637C10.4691 0.780647 8.956 1.35222 8.01756 2.56858C7.09624 1.31855 5.53247 0.883302 4.17204 1.06957L4.17203 1.06952L4.16182 1.07103C2.48513 1.31826 1 2.70055 1 4.9799C1 5.85591 1.37843 6.74672 1.75955 7.47727L1.782 7.52031L1.80851 7.56097C2.279 8.28247 2.86715 9.13148 3.56752 9.89897C4.82205 11.286 6.35624 12.5732 7.42816 13.3204L8.035 13.7434L8.61708 13.2869C8.64265 13.2668 8.66858 13.2465 8.69484 13.2259C9.69949 12.4384 11.1982 11.2636 12.4324 9.89901C13.1328 9.13152 13.721 8.28248 14.1915 7.56097Z" stroke="currentColor" stroke-width="1"></path></svg>
+    </div>
+    <div class="main-page-product-cart-btn">
+    <i class="fa-solid fa-cart-shopping" style="color: #ffffff;font-size: 1.5rem;"></i>
+    </div>
+    <div class="main-page-product-promo">
+    <p class="main-page-product-promo-text">32%</p>
+    </div>
+    <img class="main-page-product-img" src="/Images/Cheese.webp" />
+    <span class="main-page-product-title">Сир твердий Комо 300г dfs dfs df sdfsdf ...</span>
+    <span class="main-page-product-mass">300г</span>
+    <div class="main-page-product-bottom">
+    <span class="main-page-product-bottom-price-promo">29.99</span>
+    <span class="main-page-product-bottom-price-brand">300 г</span>
+    </div>
+    </div>
+    <div class="main-page-product">
+    <div class="main-page-product-favorite">
+    <svg width="1.000rem" height="0.938rem" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M14.1915 7.56097L14.218 7.52031L14.2405 7.47727C14.6216 6.74672 15 5.85591 15 4.9799C15 2.71644 13.5355 1.33759 11.8732 1.07637C10.4691 0.780647 8.956 1.35222 8.01756 2.56858C7.09624 1.31855 5.53247 0.883302 4.17204 1.06957L4.17203 1.06952L4.16182 1.07103C2.48513 1.31826 1 2.70055 1 4.9799C1 5.85591 1.37843 6.74672 1.75955 7.47727L1.782 7.52031L1.80851 7.56097C2.279 8.28247 2.86715 9.13148 3.56752 9.89897C4.82205 11.286 6.35624 12.5732 7.42816 13.3204L8.035 13.7434L8.61708 13.2869C8.64265 13.2668 8.66858 13.2465 8.69484 13.2259C9.69949 12.4384 11.1982 11.2636 12.4324 9.89901C13.1328 9.13152 13.721 8.28248 14.1915 7.56097Z" stroke="currentColor" stroke-width="1"></path></svg>
+    </div>
+    <div class="main-page-product-cart-btn">
+    <i class="fa-solid fa-cart-shopping" style="color: #ffffff;font-size: 1.5rem;"></i>
+    </div>
+    <div class="main-page-product-promo">
+    <p class="main-page-product-promo-text">32%</p>
+    </div>
+    <img class="main-page-product-img" src="/Images/Cheese.webp" />
+    <span class="main-page-product-title">Сир твердий Комо 300г dfs dfs df sdfsdf ...</span>
+    <span class="main-page-product-mass">300г</span>
+    <div class="main-page-product-bottom">
+    <span class="main-page-product-bottom-price-promo">29.99</span>
+    <span class="main-page-product-bottom-price-brand">300 г</span>
+    </div>
+    </div>*@
+</div>
+@*</div>*@

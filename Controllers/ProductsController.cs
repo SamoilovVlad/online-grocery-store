@@ -30,9 +30,14 @@ namespace Shop_Mvc.Controllers
         {
             return _productService.GetProductById(id);
         }
-        [HttpGet("category/{category}")]
-        public List<Product> GetProductsByCategory(string category) { 
-            return _productService.GetProductsByCategory(category);
+        [HttpGet("category")]
+        public List<Product> GetProductsByCategory([FromQuery] string category,[FromQuery] int n) { 
+            return _productService.GetProductsByCategory(category, n);
+        }
+        [HttpGet("subcategory")]
+        public List<Product> GetProductsBySubcategory([FromQuery] string subcategory, [FromQuery] int n)
+        {
+            return _productService.GetProductsBySubcategory(subcategory, n);
         }
     }
 }

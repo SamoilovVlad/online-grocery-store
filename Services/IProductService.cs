@@ -8,9 +8,10 @@ namespace Shop_Mvc.Services
 {
     public interface IProductService
     {
-        List<Product> GetAllProducts();
-        Product GetProductById(int id);
-        List<Product> GetProductsByCategory(string category);
+        public List<Product> GetAllProducts();
+        public Product GetProductById(int id);
+        public List<Product> GetProductsByCategory(string category, int n);
+        public List<Product> GetProductsBySubcategory(string subcategory, int n);
 
         public void CreateProduct([FromBody] Product product);
 
@@ -35,9 +36,17 @@ namespace Shop_Mvc.Services
             return product;
         }
 
-        public List<Product> GetProductsByCategory(string category) {
+        public List<Product> GetProductsByCategory(string category, int n) {
             return _context.Products
                 .Where(p => p.Category == category)
+                .Take(n)
+                .ToList();
+        }
+        public List<Product> GetProductsBySubcategory(string subcategory, int n)
+        {
+            return _context.Products
+                .Where(p => p.Subcategory == subcategory)
+                .Take(n)
                 .ToList();
         }
         public void CreateProduct([FromBody] Product product)
@@ -89,6 +98,7 @@ namespace Shop_Mvc.Services
                 _product.Aging_in_barrel = product.Aging_in_barrel;
                 _product.Package_volume = product.Package_volume;
                 _product.Price = product.Price;
+                _product.Image = product.Image;
 
             }
             _context.SaveChanges();

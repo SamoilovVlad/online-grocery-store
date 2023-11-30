@@ -18,9 +18,7 @@ namespace Shop_Mvc.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            //testing MyDbContext methods
-            var item = _productService.GetProductById(37705);
-            return View(item);
+            return View();
         }
         [HttpGet]
         public IActionResult Privacy()
@@ -32,6 +30,50 @@ namespace Shop_Mvc.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+
+        [HttpGet]
+        public IActionResult GetMainPartialView()
+        {
+            return PartialView("MainPartialView");
+        }
+        [HttpGet]
+        public IActionResult GetSecondPartialView()
+        {
+            return PartialView("SecondPartialView");
+        }
+        [HttpGet]
+        public IActionResult GetThirdPartialView()
+        {
+            return PartialView("ThirdPartialView");
+        }
+        [HttpGet]
+        public IActionResult GetFourthPartialView()
+        {
+            return PartialView("FourthPartialView");
+        }
+        [HttpGet]
+        public IActionResult GetStartProductPartialView()
+        {
+            return PartialView("StartProductPartialView");
+        }
+        [HttpGet]
+        public IActionResult GetProductPartialView(string category)
+        {
+            if (category == null)
+            {
+                return GetSecondPartialView();
+            }
+            else return GetStartProductPartialView();
+        }
+        [HttpGet]
+        public IActionResult ProductView(int id)
+        {
+            Product product = _productService.GetProductById(id);
+            List<Product> product_list = _productService.GetProductsBySubcategory(product.Subcategory, 4);
+            ProductViewModel productViewModel = new ProductViewModel(product, product_list);
+            return View("ProductView", productViewModel);
         }
     }
 }
