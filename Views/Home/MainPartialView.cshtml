@@ -1,0 +1,46 @@
+﻿@model MainPartialViewModel
+@*<div style="display:flex; flex-direction:column; height:100%;overflow-x:hidden;">*@
+<header>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+</header>
+<div class="slider-container" style="flex-direction:row">
+    <button class="slider-left-btn" onclick="GoBack()">
+        <svg width="1rem" height="1rem" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M8 11L3 6L8 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    </button>
+    <button class="slider-right-btn" onclick="GoForward()">
+        <svg width="1rem" height="1rem" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M4 1L9 6L4 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    </button>
+    <div style="position:relative; max-height:245px;">
+        <div class="slider" style="display:grid">
+            @{
+                foreach (var img in Model.sliderImages)
+                {
+                    var imagePath = $"img{img.Id}.webp";
+                    <img class="slider-img" src="/SliderImages/@imagePath" />
+                }
+            }
+        </div>
+        <ul class="slider-dots-container">
+        </ul>
+    </div>
+</div>
+<div class="main-page-categories">
+    <button class="main-page-category active" onclick="ShowCategory(event, 'Акційні товари')" id="0"><p id="0" class="main-page-category-text" style="display:none;">Акційні пропозиції</p>Акційні пропозиції</button>
+    <button class="main-page-category" onclick="ShowCategory(event, 'Власні торгові марки')" id="1"><p id="1" class="main-page-category-text" style="display:block;">Вітчизняний виробник</p>Вітчизняний виробник</button>
+    <button class="main-page-category" onclick="ShowCategory(event, 'Вітчизняний виробник')" id="2"><p id="2" class="main-page-category-text" style="display:block;">Власна торгова марка</p>Власна торгова марка</button>
+    <button class="main-page-category" onclick="ShowCategory(event, 'Хліб')" id="3"><p id="3" class="main-page-category-text" style="display:block;">Хліб</p>Хліб</button>
+    <button class="main-page-category" onclick="ShowCategory(event, `М'ясо`)" id="4"><p id="4" class="main-page-category-text" style="display:block;">М'ясо</p>М'ясо</button>
+    <button class="main-page-category" onclick="ShowCategory(event, 'Сири')" id="5"><p id="5" class="main-page-category-text" style="display:block;">Сири</p>Сири</button>
+    <button class="main-page-category" onclick="ShowCategory(event, 'Молочні продукти')" id="6"><p id="6" class="main-page-category-text" style="display:block;">Молочні продукти</p>Молочні продукти</button>
+    <button class="main-page-category" onclick="ShowCategory(event, 'Бокалія')" id="7"><p id="7" class="main-page-category-text" style="display:block;">Бокалія</p>Бокалія</button>
+    <button class="main-page-category" onclick="ShowCategory(event, 'Кава')" id="8"><p id="8" class="main-page-category-text" style="display:block;">Кава</p>Кава</button>
+    <button class="main-page-category" onclick="ShowCategory(event, 'Чай')" id="9"><p id="9" class="main-page-category-text" style="display:block;">Чай</p>Чай</button>
+    <button class="main-page-category" onclick="ShowCategory(event, 'Овочі')" id="10"><p id="10" class="main-page-category-text" style="display:block;">Овочі</p>Овочі</button>
+    <button class="main-page-category" onclick="ShowCategory(event, 'Фрукти')" id="11"><p id="11" class="main-page-category-text" style="display:block;">Фрукти</p>Фрукти</button>
+    <button class="main-page-category" onclick="ShowCategory(event, 'Цукурки')" id="12"><p id="12" class="main-page-category-text" style="display:block;">Цукерки</p>Цукерки</button>
+
+</div>
+<div class="main-page-products">
+    @Html.Partial("StartProductPartialView", Model.products)
+</div>

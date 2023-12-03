@@ -1,4 +1,4 @@
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,13 +11,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddMemoryCache();
 builder.Services.AddDbContext<MyDbContext>(options =>
     options.UseMySql(
         builder.Configuration.GetConnectionString("MyDbContext"),
         new MySqlServerVersion(new Version(8, 0, 23)) 
     )
 );
-builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IDatabaseServise, DatabaseServise>();
 
 
 var app = builder.Build();
@@ -37,9 +38,25 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.UseEndpoints(endpoints => {
+app.UseEndpoints(endpoints =>
+{
     endpoints.MapControllerRoute(
             name: "default",
             pattern: "{controller=Home}/{action=Index}/{id?}");
 });
+
+//app.UseEndpoints(endpoints =>
+//{
+//    endpoints.MapControllerRoute(
+//            name: "default",
+//            pattern: "{controller=Categories}/{action=ProductsView}/{id?}");
+//});
+
+//app.UseEndpoints(endpoints =>
+//{
+//    endpoints.MapControllerRoute(
+//            name: "default",
+//            pattern: "{controller=Categories}/{action=SubcategoriesView}/{id?}");
+//});
+
 app.Run();

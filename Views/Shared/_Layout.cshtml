@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"] - Shop_Mvc</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <script src="https://kit.fontawesome.com/3ab9474f39.js" crossorigin="anonymous"></script>
 </head>
 <body>
+    <div id="skeleton" style="position:absolute; width:100%; height:100%; z-index:10000; background-color:green;"></div>
     <header class="header">
         <div class="header-top">
             <div class="header-left-side">
@@ -21,7 +23,9 @@
                     </svg>
                 </a>
                 <div class="search-container">
-                    <img src="~/Images/logo.png" class="logo">
+                    <a class="logo" asp-controller="Home" asp-action="Index" onclick="AddLoading()">
+                        <img style="cursor:pointer" src="~/Images/logo.png" class="logo">
+                    </a>
                     <button class="catalogue-btn" onclick="showCatalogMenu()">
                         <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" id="catalogIcon">
                             <path d="M547.6 103.8L490.3 13.1C485.2 5 476.1 0 466.4 0H109.6C99.9 0 90.8 5 85.7 13.1L28.3 103.8c-29.6 46.8-3.4 111.9 51.9 119.4c4 .5 8.1 .8 12.1 .8c26.1 0 49.3-11.4 65.2-29c15.9 17.6 39.1 29 65.2 29c26.1 0 49.3-11.4 65.2-29c15.9 17.6 39.1 29 65.2 29c26.2 0 49.3-11.4 65.2-29c16 17.6 39.1 29 65.2 29c4.1 0 8.1-.3 12.1-.8c55.5-7.4 81.8-72.5 52.1-119.4zM499.7 254.9l-.1 0c-5.3 .7-10.7 1.1-16.2 1.1c-12.4 0-24.3-1.9-35.4-5.3V384H128V250.6c-11.2 3.5-23.2 5.4-35.6 5.4c-5.5 0-11-.4-16.3-1.1l-.1 0c-4.1-.6-8.1-1.3-12-2.3V384v64c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V384 252.6c-4 1-8 1.8-12.3 2.3z" />
@@ -66,94 +70,130 @@
             <div class="catalog-menu-wrapper">
                 <ul class="catalog-menu-items">
                     <li class="catalog-menu-item">
-                        <img class="catalog-menu-img" src="~/Images/Sale.webp" />
-                        <a class="catalog-menu-item-link">Акційні товари</a>
-                        <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Кулінарія">
+                            <img class="catalog-menu-img" src="~/Images/Sale.webp" />
+                            <span class="catalog-menu-item-text">Акційні товари</span>
+                            <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        </a>
                     </li>
                     <li class="catalog-menu-item">
-                        <img class="catalog-menu-img" src="~/Images/Donat.webp" />
-                        <a class="catalog-menu-item-link">Солодощі, снеки</a>
-                        <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        <a class="catalog-menu-item-link" onclick="AddLoading()" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Солодощі, снеки">
+                            <img class="catalog-menu-img" src="~/Images/Donat.webp" />
+                            <span class="catalog-menu-item-text">Солодощі, снеки</span>
+                            <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        </a>
                     </li>
                     <li class="catalog-menu-item">
-                        <img class="catalog-menu-img" src="~/Images/Heart.webp" />
-                        <a class="catalog-menu-item-link">Серце</a>
-                        <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Кулінарія">
+                            <img class="catalog-menu-img" src="~/Images/Heart.webp" />
+                            <span class="catalog-menu-item-text">Серце</span>
+                            <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        </a>
                     </li>
                     <li class="catalog-menu-item">
-                        <img class="catalog-menu-img" src="~/Images/Sport.webp" />
-                        <a class="catalog-menu-item-link">Для спротсменів</a>
-                        <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Кулінарія">
+                            <img class="catalog-menu-img" src="~/Images/Sport.webp" />
+                            <span class="catalog-menu-item-text">Для спротсменів</span>
+                            <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        </a>
                     </li>
                     <li class="catalog-menu-item">
-                        <img class="catalog-menu-img" src="~/Images/Pan.webp" />
-                        <a class="catalog-menu-item-link">Кулінарія</a>
-                        <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Кулінарія">
+                            <img class="catalog-menu-img" src="~/Images/Pan.webp" />
+                            <span class="catalog-menu-item-text">Кулінарія</span>
+                            <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        </a>
                     </li>
                     <li class="catalog-menu-item">
-                        <img class="catalog-menu-img" src="~/Images/Apple.webp" />
-                        <a class="catalog-menu-item-link">Овочі та фрукти</a>
-                        <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Овочі, фрукти та горіхи">
+                            <img class="catalog-menu-img" src="~/Images/Apple.webp" />
+                            <span class="catalog-menu-item-text">Овочі, фрукти та горіхи</span>
+                            <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        </a>
                     </li>
                     <li class="catalog-menu-item">
-                        <img class="catalog-menu-img" src="~/Images/Bread.webp" />
-                        <a class="catalog-menu-item-link">Пекарня</a>
-                        <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Пекарня">
+                            <img class="catalog-menu-img" src="~/Images/Bread.webp" />
+                            <span class="catalog-menu-item-text">Пекарня</span>
+                            <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        </a>
                     </li>
                     <li class="catalog-menu-item">
-                        <img class="catalog-menu-img" src="~/Images/Milk.webp" />
-                        <a class="catalog-menu-item-link">Молочне, яйця, сир</a>
-                        <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Молочне, яйця, сир">
+                            <img class="catalog-menu-img" src="~/Images/Milk.webp" />
+                            <span class="catalog-menu-item-text">Молочне, яйця, сир</span>
+                            <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        </a>
                     </li>
                     <li class="catalog-menu-item">
-                        <img class="catalog-menu-img" src="~/Images/Meat.webp" />
-                        <a class="catalog-menu-item-link">М'ясо, риба'</a>
-                        <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="М`ясо, риба">
+                            <img class="catalog-menu-img" src="~/Images/Meat.webp" />
+                            <span class="catalog-menu-item-text">М`ясо, риба</span>
+                            <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        </a>
                     </li>
                     <li class="catalog-menu-item">
-                        <img class="catalog-menu-img" src="~/Images/Bag.webp" />
-                        <a class="catalog-menu-item-link">Бокалія, консерви, спкції</a>
-                        <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Бакалія, консерви, спеції">
+                            <img class="catalog-menu-img" src="~/Images/Bag.webp" />
+                            <span class="catalog-menu-item-text">Бакалія, консерви, спеції</span>
+                            <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        </a>
                     </li>
                     <li class="catalog-menu-item">
-                        <img class="catalog-menu-img" src="~/Images/Child.webp" />
-                        <a class="catalog-menu-item-link">Дитяче</a>
-                        <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Дитяче">
+                            <img class="catalog-menu-img" src="~/Images/Child.webp" />
+                            <span class="catalog-menu-item-text">Дитяче</span>
+                            <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        </a>
                     </li>
                     <li class="catalog-menu-item">
-                        <img class="catalog-menu-img" src="~/Images/Cat.webp" />
-                        <a class="catalog-menu-item-link">Зоотовари</a>
-                        <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Зоотовари">
+                            <img class="catalog-menu-img" src="~/Images/Cat.webp" />
+                            <span class="catalog-menu-item-text">Зоотовари</span>
+                            <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        </a>
                     </li>
                     <li class="catalog-menu-item">
-                        <img class="catalog-menu-img" src="~/Images/Drinks.webp" />
-                        <a class="catalog-menu-item-link">Напої, чай та кава</a>
-                        <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Напої, чай та кава">
+                            <img class="catalog-menu-img" src="~/Images/Drinks.webp" />
+                            <span class="catalog-menu-item-text">Напої, чай та кава</span>
+                            <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        </a>
                     </li>
                     <li class="catalog-menu-item">
-                        <img class="catalog-menu-img" src="~/Images/Winter.webp" />
-                        <a class="catalog-menu-item-link">Заморожені продукти</a>
-                        <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Заморожені продукти">
+                            <img class="catalog-menu-img" src="~/Images/Winter.webp" />
+                            <span class="catalog-menu-item-text">Заморожені продукти</span>
+                            <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        </a>
                     </li>
                     <li class="catalog-menu-item">
-                        <img class="catalog-menu-img" src="~/Images/Alco.webp" />
-                        <a class="catalog-menu-item-link">Алкоголь</a>
-                        <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Алкоголь (доставляємо з 13:00 до 21:00)">
+                            <img class="catalog-menu-img" src="~/Images/Alco.webp" />
+                            <span class="catalog-menu-item-text">Алкоголь</span>
+                            <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        </a>
                     </li>
                     <li class="catalog-menu-item">
-                        <img class="catalog-menu-img" src="~/Images/Style.webp" />
-                        <a class="catalog-menu-item-link">Краса та здоров'я'</a>
-                        <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Краса та здоров`я">
+                            <img class="catalog-menu-img" src="~/Images/Style.webp" />
+                            <span class="catalog-menu-item-text">Краса та здоров'я</span>
+                            <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        </a>
                     </li>
                     <li class="catalog-menu-item">
-                        <img class="catalog-menu-img" src="~/Images/Home.webp" />
-                        <a class="catalog-menu-item-link">Для дому, саду та відпочинку</a>
-                        <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Для дому, саду та відпочинку">
+                            <img class="catalog-menu-img" src="~/Images/Home.webp" />
+                            <span class="catalog-menu-item-text">Для дому, саду та відпочинку</span>
+                            <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        </a>
                     </li>
                     <li class="catalog-menu-item">
-                        <img class="catalog-menu-img" src="~/Images/Cigarettes.webp" />
-                        <a class="catalog-menu-item-link">Тютюнові вироби</a>
-                        <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Тютюнові вироби (ціна вказана без акцизу)">
+                            <img class="catalog-menu-img" src="~/Images/Cigarettes.webp" />
+                            <span class="catalog-menu-item-text">Тютюнові вироби</span>
+                            <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -178,18 +218,18 @@
             </div>
             <div class="cart-body">
                 <div class="cart-body-items">
-                    <div class="cart-body-item" id="1">
+                    <div class="cart-body-item" id="27357">
                         <img src="/Images/Cheese.webp" />
                         <div class="cart-body-item-info">
                             <div class="cart-body-item-info-label">Вваоіп іаівлпіп 180е фіолфіам</div>
                             <div id="1" class="cart-body-item-info-count-btn">
-                                <svg id="1" onclick="Minus(event)" width="2.000rem" height="2.000rem" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="1" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                <svg id="27357" onclick="Minus(event)" width="2.000rem" height="2.000rem" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="27357" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
                                 <div style="height:100%; width:60px; position:relative; display:flex; align-items:center; justify-content:center;">
-                                    <input id="cartInput1" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" class="num-input" value="1">
-                                    <span id="cartSpan1" class="cart-body-item-info-count-btn-counter-num">1</span>
+                                    <input id="cartInput27357" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" class="num-input" value="1">
+                                    <span id="cartSpan27357" class="cart-body-item-info-count-btn-counter-num">1</span>
                                     <span class="cart-body-item-info-count-btn-counter-text">шт</span>
                                 </div>
-                                <svg id="1" onclick="Plus(event)" width="2.000rem" height="2.000rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="1" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                <svg id="27357" onclick="Plus(event)" width="2.000rem" height="2.000rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="27357" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="1" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
                             </div>
                         </div>
                         <div class="cart-body-item-controls">
@@ -202,7 +242,7 @@
                                 <div class="cart-body-item-controls-price-primary">120.00 грн</div>
                             </div>
                         </div>
-                    </div> 
+                    </div>
                     <div class="cart-body-item" id="2">
                         <img src="/Images/Cheese.webp" />
                         <div class="cart-body-item-info">
@@ -214,7 +254,7 @@
                                     <span id="cartSpan2" class="cart-body-item-info-count-btn-counter-num">1</span>
                                     <span class="cart-body-item-info-count-btn-counter-text">шт</span>
                                 </div>
-                                <svg id="2" onclick="Plus(event)" width="2.000rem" height="2.000rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="2" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                <svg id="2" onclick="Plus(event)" width="2.000rem" height="2.000rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="2" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="2" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
                             </div>
                         </div>
                         <div class="cart-body-item-controls">
@@ -487,11 +527,7 @@
             </div>
         </div>
     </header>
-    <div class="container" style="height:calc(100%-48px);">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    @RenderBody()
     <footer class="footer-container">
         <div class="footer-btn" onclick="ShowFooter()">
             <p class="footer-btn-text">Інфо</p>
@@ -529,271 +565,290 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
-<script>
-    window.addEventListener('resize', removeIcons);
-    window.addEventListener('resize', searchSize);
-    var searchIsFull = false;
-    var isCatalogMenuShowing = false;
-    var isBurgerMenuShowing = false;
-    var isFooterShowing = false;
-    var isCartEmpty = true;
-    var isCartShowing = false;
-    var isDetailsShowing = false;
-    const search = document.getElementById('search');
-    function showCatalogMenu() {
-        if (!isCatalogMenuShowing)
-            catalogMenuShow();
-        else
-            catalogMenuClose();
-    }
+    <script>
 
-    function catalogMenuShow() {
-        var menu = document.getElementsByClassName('catalog-menu')[0];
-        var arrow = document.getElementById('arrowIcon');
-        var btn = document.getElementsByClassName('catalogue-btn')[0];
-        btn.style.backgroundColor = '#4faa6e';
-        arrow.style.transform = 'rotate(180deg)';
-        menu.style.top = '3.5rem';
-        menu.style.opacity = '1';
-        menu.style.visibility = 'visible';
-        isCatalogMenuShowing = true;
-    }
-    function catalogMenuClose() {
-        var menu = document.getElementsByClassName('catalog-menu')[0];
-        var arrow = document.getElementById('arrowIcon');
-        var btn = document.getElementsByClassName('catalogue-btn')[0];
-        btn.style.backgroundColor = '';
-        arrow.style.transform = 'rotate(0deg)';
-        menu.style.top = '3rem';
-        menu.style.opacity = '0';
-        menu.style.visibility = 'hidden';
-        isCatalogMenuShowing = false;
-    }
-
-    document.addEventListener('click', function (event) {
+        window.addEventListener('resize', removeIcons);
+        window.addEventListener('resize', searchSize);
+        var searchIsFull = false;
+        var isCatalogMenuShowing = false;
+        var isBurgerMenuShowing = false;
+        var isFooterShowing = false;
+        var isCartEmpty = true;
+        var isCartShowing = false;
+        var isDetailsShowing = false;
         const search = document.getElementById('search');
-        if (event.target !== search && event.target !== document.getElementById('search_input')) {
-            if (searchIsFull) {
-                var text = document.getElementById('search_input');
-                var searchContainer = document.getElementsByClassName('form-group')[0];
-                searchContainer.style.position = 'block';
-                searchContainer.style.width = '3rem';
-                searchContainer.style.padding = '0';
-                text.style.display = '';
-            }
-        }
-        if (event.target !== document.getElementsByClassName('catalogue-btn')[0] && event.target !== document.getElementById('catalogText') && !document.getElementById('burger-catalog-btn').contains(event.target)) {
-            if (isCatalogMenuShowing) {
+        function showCatalogMenu() {
+            if (!isCatalogMenuShowing)
+                catalogMenuShow();
+            else
                 catalogMenuClose();
+        }
+
+        function catalogMenuShow() {
+            var menu = document.getElementsByClassName('catalog-menu')[0];
+            var arrow = document.getElementById('arrowIcon');
+            var btn = document.getElementsByClassName('catalogue-btn')[0];
+            btn.style.backgroundColor = '#4faa6e';
+            arrow.style.transform = 'rotate(180deg)';
+            menu.style.top = '3.5rem';
+            menu.style.opacity = '1';
+            menu.style.visibility = 'visible';
+            isCatalogMenuShowing = true;
+        }
+        function catalogMenuClose() {
+            var menu = document.getElementsByClassName('catalog-menu')[0];
+            var arrow = document.getElementById('arrowIcon');
+            var btn = document.getElementsByClassName('catalogue-btn')[0];
+            btn.style.backgroundColor = '';
+            arrow.style.transform = 'rotate(0deg)';
+            menu.style.top = '3rem';
+            menu.style.opacity = '0';
+            menu.style.visibility = 'hidden';
+            isCatalogMenuShowing = false;
+        }
+
+        document.addEventListener('click', function (event) {
+            const search = document.getElementById('search');
+            if (event.target !== search && event.target !== document.getElementById('search_input')) {
+                if (searchIsFull) {
+                    var text = document.getElementById('search_input');
+                    var searchContainer = document.getElementsByClassName('form-group')[0];
+                    searchContainer.style.position = 'block';
+                    searchContainer.style.width = '3rem';
+                    searchContainer.style.padding = '0';
+                    text.style.display = '';
+                }
             }
-        }
-        if (event.target !== document.getElementsByClassName('burger-menu')[0] && event.target !== document.getElementsByClassName('menu-btn')[0] && event.target !== document.getElementById('burgerIcon') && isBurgerMenuShowing) {
-            var menu = document.getElementsByClassName('burger-menu')[0];
-            if (!menu.contains(event.target)) {
-                CloseBurgerMenu();
+            if (event.target !== document.getElementsByClassName('catalogue-btn')[0] && event.target !== document.getElementById('catalogText') && !document.getElementById('burger-catalog-btn').contains(event.target)) {
+                if (isCatalogMenuShowing) {
+                    catalogMenuClose();
+                }
             }
+            if (event.target !== document.getElementsByClassName('burger-menu')[0] && event.target !== document.getElementsByClassName('menu-btn')[0] && event.target !== document.getElementById('burgerIcon') && isBurgerMenuShowing) {
+                var menu = document.getElementsByClassName('burger-menu')[0];
+                if (!menu.contains(event.target)) {
+                    CloseBurgerMenu();
+                }
+            }
+            if (event.target === document.getElementsByClassName('overlay')[0] && isCartShowing) {
+                CloseCart();
+            }
+            if (event.target === document.getElementsByClassName('overlay')[0] && isFooterShowing) {
+                CloseFooter();
+            }
+        });
+
+        function ShowFooter() {
+            if (isFooterShowing) {
+                CloseFooter();
+            }
+            else
+                OpenFooter();
         }
-        if (event.target === document.getElementsByClassName('overlay')[0] && isCartShowing) {
-            CloseCart();
-        }
-        if (event.target === document.getElementsByClassName('overlay')[0] && isFooterShowing) {
-            CloseFooter();
-        }
-    });
 
-    function ShowFooter() {
-        if (isFooterShowing) {
-            CloseFooter();
-        }
-        else
-            OpenFooter();
-    }
-
-    function OpenFooter() {
-        var content = document.getElementsByClassName('footer-container')[0];
-        var icon = document.getElementsByClassName('footer-btn-icon')[0];
-        content.classList.add('show');
-        icon.style.transform = "rotate(180deg)";
-        $("body").addClass("overlay");
-        isFooterShowing = true;
-    }
-
-    function MenuCatalogBtn(){
-        CloseBurgerMenu();
-        catalogMenuShow();
-    }
-
-    function CloseFooter() {
-        var content = document.getElementsByClassName('footer-container')[0];
-        var icon = document.getElementsByClassName('footer-btn-icon')[0];
-        content.classList.remove("show");
-        icon.style.transform = "rotate(0deg)";
-        $("body").removeClass("overlay");
-        isFooterShowing = false;
-    }
-
-    function showFullSearch() {
-        if (window.innerWidth <= 1023) {
-            var text = document.getElementById('search_input');
-            var searchContainer = document.getElementsByClassName('form-group')[0];
-
-            text.style.display = 'block';
-            searchContainer.style.position = 'absolute';
-            searchContainer.style.padding = '0.8125rem 1.5rem';
-            searchContainer.style.width = '100%';
-            searchContainer.style.height = '3rem';
-            searchContainer.style.right = '';
-            searchIsFull = true;
-        }
-    }
-
-    function ShowCart() {
-        if (isCartEmpty) {
-            var cart = document.getElementsByClassName('cart')[0];
-            cart.style.right = '0.5rem';
-            cart.style.visibility = "visible";
-            cart.style.opacity = "1";
+        function OpenFooter() {
+            var content = document.getElementsByClassName('footer-container')[0];
+            var icon = document.getElementsByClassName('footer-btn-icon')[0];
+            content.classList.add('show');
+            icon.style.transform = "rotate(180deg)";
             $("body").addClass("overlay");
-            document.getElementsByClassName('footer-container')[0].style.zIndex = '0';
-            isCartShowing = true;
+            isFooterShowing = true;
         }
-        else {
 
+        function MenuCatalogBtn() {
+            CloseBurgerMenu();
+            catalogMenuShow();
         }
-    }
 
-    function CloseCart() {
-        if (isCartEmpty) {
-            var cart = document.getElementsByClassName('cart')[0];
-            cart.style.right = '-2rem';
-            cart.style.visibility = "collapse";
-            cart.style.opacity = "0";
+        function CloseFooter() {
+            var content = document.getElementsByClassName('footer-container')[0];
+            var icon = document.getElementsByClassName('footer-btn-icon')[0];
+            content.classList.remove("show");
+            icon.style.transform = "rotate(0deg)";
             $("body").removeClass("overlay");
-            document.getElementsByClassName('footer-container')[0].style.zIndex = '1100';
-            isCartShowing = false;
+            isFooterShowing = false;
         }
-        else {
 
-        }
-    }
-
-    function searchSize() {
-        if (window.innerWidth > 1023) {
-            if (searchIsFull) {
+        function showFullSearch() {
+            if (window.innerWidth <= 1023) {
                 var text = document.getElementById('search_input');
                 var searchContainer = document.getElementsByClassName('form-group')[0];
-                text.style.display = '';
-                searchContainer.style.position = '';
-                searchContainer.style.padding = '';
-                searchContainer.style.width = '';
-                searchContainer.style.height = '';
+
+                text.style.display = 'block';
+                searchContainer.style.position = 'absolute';
+                searchContainer.style.padding = '0.8125rem 1.5rem';
+                searchContainer.style.width = '100%';
+                searchContainer.style.height = '3rem';
                 searchContainer.style.right = '';
-                searchIsFull = false;
+                searchIsFull = true;
             }
         }
-    }
 
-    function removeIcons() {
-        var winWidth = window.innerWidth;
-        var button = document.querySelector('.catalogue-btn');
-        var svgElements = button.querySelectorAll('svg');
-
-        if (winWidth <= 768) {
-            svgElements.forEach(function (svg) {
-                svg.style.display = 'none';
-            });
-        } else {
-            svgElements.forEach(function (el) {
-                el.style.display = 'block';
-            });
-        }
-    }
-
-    function ShowBurgerMenu() {
-        var menu = document.getElementsByClassName('burger-menu')[0];
-        menu.style.left = '0.5rem';
-        menu.style.visibility = "visible";
-        menu.style.opacity = "1";
-        $("body").addClass("overlay");
-        document.getElementsByClassName('footer-container')[0].style.zIndex = '0';
-        isBurgerMenuShowing = true;
-    }
-
-    function CloseBurgerMenu() {
-        var menu = document.getElementsByClassName('burger-menu')[0];
-        menu.style.left = '-2rem';
-        menu.style.visibility = "collapse";
-        menu.style.opacity = "0";
-        document.getElementsByClassName('footer-container')[0].style.zIndex = '1100';
-        $("body").removeClass("overlay");
-        isBurgerMenuShowing = false;
-    }
-    function BottomHeaderMenuSwicher(event) {
-        var btns = document.getElementsByClassName('header-bottom-item-text');
-        var dots = document.getElementsByClassName('header-bottom-item-dot');
-        for (var i = 0; i < btns.length; i++) {
-            if (event.target === btns[i]) {
-                btns[i].classList.add('active');
-                dots[i].classList.add('active');
+        function ShowCart() {
+            if (isCartEmpty) {
+                var cart = document.getElementsByClassName('cart')[0];
+                cart.style.right = '0.5rem';
+                cart.style.visibility = "visible";
+                cart.style.opacity = "1";
+                $("body").addClass("overlay");
+                document.getElementsByClassName('footer-container')[0].style.zIndex = '0';
+                isCartShowing = true;
             }
             else {
-                btns[i].classList.remove('active');
-                dots[i].classList.remove('active');
+
             }
         }
-    }
+
+        function CloseCart() {
+            if (isCartEmpty) {
+                var cart = document.getElementsByClassName('cart')[0];
+                cart.style.right = '-2rem';
+                cart.style.visibility = "collapse";
+                cart.style.opacity = "0";
+                $("body").removeClass("overlay");
+                document.getElementsByClassName('footer-container')[0].style.zIndex = '1100';
+                isCartShowing = false;
+            }
+            else {
+
+            }
+        }
+
+        function searchSize() {
+            if (window.innerWidth > 1023) {
+                if (searchIsFull) {
+                    var text = document.getElementById('search_input');
+                    var searchContainer = document.getElementsByClassName('form-group')[0];
+                    text.style.display = '';
+                    searchContainer.style.position = '';
+                    searchContainer.style.padding = '';
+                    searchContainer.style.width = '';
+                    searchContainer.style.height = '';
+                    searchContainer.style.right = '';
+                    searchIsFull = false;
+                }
+            }
+        }
+
+        function removeIcons() {
+            var winWidth = window.innerWidth;
+            var button = document.querySelector('.catalogue-btn');
+            var svgElements = button.querySelectorAll('svg');
+
+            if (winWidth <= 768) {
+                svgElements.forEach(function (svg) {
+                    svg.style.display = 'none';
+                });
+            } else {
+                svgElements.forEach(function (el) {
+                    el.style.display = 'block';
+                });
+            }
+        }
+
+        function ShowBurgerMenu() {
+            var menu = document.getElementsByClassName('burger-menu')[0];
+            menu.style.left = '0.5rem';
+            menu.style.visibility = "visible";
+            menu.style.opacity = "1";
+            $("body").addClass("overlay");
+            document.getElementsByClassName('footer-container')[0].style.zIndex = '0';
+            isBurgerMenuShowing = true;
+        }
+
+        function CloseBurgerMenu() {
+            var menu = document.getElementsByClassName('burger-menu')[0];
+            menu.style.left = '-2rem';
+            menu.style.visibility = "collapse";
+            menu.style.opacity = "0";
+            document.getElementsByClassName('footer-container')[0].style.zIndex = '1100';
+            $("body").removeClass("overlay");
+            isBurgerMenuShowing = false;
+        }
+        function BottomHeaderMenuSwicher(event) {
+            var btns = document.getElementsByClassName('header-bottom-item-text');
+            var dots = document.getElementsByClassName('header-bottom-item-dot');
+            for (var i = 0; i < btns.length; i++) {
+                if (event.target === btns[i]) {
+                    btns[i].classList.add('active');
+                    dots[i].classList.add('active');
+                }
+                else {
+                    btns[i].classList.remove('active');
+                    dots[i].classList.remove('active');
+                }
+            }
+        }
 
 
-    document.addEventListener('DOMContentLoaded', function () {
-        var cartInputs = document.getElementsByClassName('num-input');
-        var cartInputsArray = Array.from(cartInputs);
-
-        cartInputsArray.forEach(function (input) {
-            input.addEventListener('input', function () {
-                var id = input.id.match(/\d+/);
-                var span = document.getElementById("cartSpan"+id);
-                span.textContent = input.value;
+        document.addEventListener('DOMContentLoaded', function () {
+            var cartInputsArray = Array.from(document.getElementsByClassName('num-input'));
+            cartInputsArray.forEach(function (input) {
+                input.addEventListener('input', function () {
+                    var id = input.id.match(/\d+/);
+                    var span = document.getElementById("cartSpan" + id);
+                    var productSpan = document.getElementById("productSpan" + id);
+                    var productInput = document.getElementById("productInput" + id);
+                    span.textContent = input.value;
+                    productSpan.textContent = input.value;
+                    productInput.value = productSpan.textContent;
+                });
             });
         });
-    });
 
+        //function AddToCart(event) {
+        //    var product = document.querySelector(`.other-products-item-cart[id="${event.target.id}"]`);
+        //    var overlay = product.getElementsByClassName('product-overlay')[0];
+        //    product.classList.add('added');
+        //    overlay.classList.add('green');
+        //};
 
-
-    function Plus(event) {
-        var span = document.getElementById("cartSpan" + event.target.id);
-        var input = document.getElementById("cartInput" + event.target.id);
-        if (span.textContent < 999) {
-            span.textContent -=-1;
-            input.value = span.textContent;
+        function Plus(event) {
+            var span = document.getElementById("cartSpan" + event.target.id);
+            var input = document.getElementById("cartInput" + event.target.id);
+            var productSpan = document.getElementById("productSpan" + event.target.id);
+            var productInput = document.getElementById("productInput" + event.target.id);
+            if (span.textContent < 999) {
+                span.textContent -= -1;
+                productSpan.textContent = span.textContent;
+                input.value = span.textContent;
+                productInput.value = productSpan.textContent;
+            }
         }
-    }
 
-    function Minus(event) {
-        var span = document.getElementById("cartSpan"+event.target.id);
-        var input = document.getElementById("cartInput"+event.target.id);
-        if (span.textContent > 1) {
-            span.textContent -= 1;
-            input.value = span.textContent;
+        function Minus(event) {
+            var span = document.getElementById("cartSpan" + event.target.id);
+            var input = document.getElementById("cartInput" + event.target.id);
+            var productSpan = document.getElementById("productSpan" + event.target.id);
+            var productInput = document.getElementById("productInput" + event.target.id);
+            if (span.textContent > 1) {
+                span.textContent -= 1;
+                productSpan.textContent = span.textContent;
+                input.value = span.textContent;
+                productInput.value = productSpan.textContent;
+            }
         }
-    }
 
-    function ShowDetails(){
-        var details = document.getElementsByClassName('cart-body-total-details')[0];
-        var arrow = document.getElementById('detailsArrowIcon');
-        if(isDetailsShowing)
-        {
-            details.style.display = 'none';
-            arrow.style.transform = 'rotate(0deg)';
-            isDetailsShowing = false;
+        function ShowDetails() {
+            var details = document.getElementsByClassName('cart-body-total-details')[0];
+            var arrow = document.getElementById('detailsArrowIcon');
+            if (isDetailsShowing) {
+                details.style.display = 'none';
+                arrow.style.transform = 'rotate(0deg)';
+                isDetailsShowing = false;
+            }
+            else {
+                details.style.display = 'flex';
+                arrow.style.transform = 'rotate(180deg)';
+                isDetailsShowing = true;
+            }
+
         }
-        else
-        {
-            details.style.display = 'flex';
-            arrow.style.transform = 'rotate(180deg)';
-            isDetailsShowing = true;
-        }
-        
-    }
-</script>
+
+        function AddLoading() {
+            $('#skeleton').show();
+        };
+
+    </script>
 </body>
 </html>

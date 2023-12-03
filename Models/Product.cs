@@ -14,7 +14,7 @@
         public string? Basis { get; set; }
         public string? Temperature { get; set; }
         public string? Composition { get; set; }
-        public string? Description { get; set; } 
+        public string? Description { get; set; }
         public string? Expiration_date { get; set; }
         public string? Storage_conditions { get; set; }
         public string? Caloric { get; set; }
@@ -42,6 +42,9 @@
         public string? Wine_classification { get; set; }
         public string? Aging_in_barrel { get; set; }
         public string? Package_volume { get; set; }
-        public double? Price { get; set; }
+        public decimal? Price { get; set; }
+        //public string Image { get; set; }
+
+
     }
 }

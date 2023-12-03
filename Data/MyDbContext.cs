@@ -7,6 +7,9 @@ namespace Shop_Mvc.Data
     {
         public MyDbContext(DbContextOptions<MyDbContext> options) : base(options) { }
         public DbSet<Product> Products { get; set; }
+        public DbSet<SliderImage> SliderImages { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Subcategory> Subcategories { get; set; }
 
         public List<Product> GetProductBySubcategory(string subcategory)
         {
@@ -14,5 +17,6 @@ namespace Shop_Mvc.Data
                 .Where(p => p.Subcategory == subcategory)
                 .ToList();
         }
+
     }
 }

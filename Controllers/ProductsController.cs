@@ -11,28 +11,28 @@ namespace Shop_Mvc.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly IProductService _productService;
-        public ProductsController(IProductService productService)
+        private readonly IDatabaseServise _DatabaseServise;
+        public ProductsController(IDatabaseServise DatabaseServise)
         {
-            _productService = productService;
+            _DatabaseServise = DatabaseServise;
         }
         // GET: api/<ProductsController>
         //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         [HttpGet]
-        public List<Product> Get()
+        public IEnumerable<Product> Get()
         {
-            return _productService.GetAllProducts();
+            return _DatabaseServise.GetAllProducts();
         }
 
         // GET api/<ProductsController>/5
         [HttpGet("{id}")]
         public Product Get(int id)
         {
-            return _productService.GetProductById(id);
+            return _DatabaseServise.GetProductById(id);
         }
-        [HttpGet("category/{category}")]
-        public List<Product> GetProductsByCategory(string category) { 
-            return _productService.GetProductsByCategory(category);
-        }
+        //[HttpGet("category/{category}")]
+        //public List<Product> GetProductsByCategory(string category) { 
+        //    return _DatabaseServise.GetProductsByCategory(category);
+        //}
     }
 }
