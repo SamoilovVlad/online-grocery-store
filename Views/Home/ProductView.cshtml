@@ -1,0 +1,352 @@
+﻿@model Shop_Mvc.Models.ProductViewModel
+
+@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    string base64Image = $"data:image/png;base64,{Convert.ToBase64String(Model.Product.Image!)}";
+}
+
+<div class="product-link">
+    <a class="product-link-item" asp-action="Index" asp-controller="Home">Store</a>
+    <a class="product-link-item" asp-action="CategoryView" asp-controller="Home">@Html.DisplayFor(model => model.Product.Category)</a>
+    <a class="product-link-item" asp-action="SubcategoryView" asp-controller="Home">@Html.DisplayFor(model => model.Product.Subcategory)</a>
+    <a class="product-link-item-last" asp-action="ProductView" asp-controller="Home">@Html.DisplayFor(model => model.Product.Title)</a>
+</div>
+<div class="product-container">
+    <div class="product-container-main">
+        <a class="come-back-btn">
+            <i class="fa-solid fa-chevron-left" style="color: #000000; margin-right:5px;"></i>
+            <p class="back-txt">Назад</p>
+        </a>
+        <div class="product-card">
+            <div class="product-container-main-body">
+                <img class="product-image" src="@base64Image">
+                <div class="product-info">
+                    <h1 class="product-info-title">@Html.DisplayFor(model => model.Product.Title)</h1>
+                    <h2 class="product-info-price">@Html.DisplayFor(model => model.Product.Price) гривень за шт</h2>
+                    <div class="product-info-buttons">
+                        <a class="product-info-add-to-cart-btn"><i class="fa-solid fa-cart-arrow-down" style="color: #ffffff; margin-right: 5px;"></i><p style="font-weight:400;">Додати в кошик</p></a>
+                        <a class="product-info-add-to-favorites-btn"><i class="fa-regular fa-heart" style="color: #000000;"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card-divider"></div>
+            <div class="product-about-container">
+                <p class="product-about-container-title">Про товар</p>
+                <ul class="product-about-container-main">
+                    @if (!string.IsNullOrWhiteSpace(Model.Product.Brand))
+                    {
+                        <li class="additional-param-item">
+                            <p class="distinct-param-text">Бренд:</p>
+                            <p>@Model.Product.Brand</p>
+                        </li>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Product.Country))
+                    {
+                        <li class="additional-param-item">
+                            <p class="distinct-param-text">Країна:</p>
+                            <p>@Model.Product.Country</p>
+                        </li>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Product.Method))
+                    {
+                        <li class="additional-param-item">
+                            <p class="distinct-param-text">Метод:</p>
+                            <p>@Model.Product.Method</p>
+                        </li>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Product.Basis))
+                    {
+                        <li class="additional-param-item">
+                            <p class="distinct-param-text">Основа:</p>
+                            <p>@Model.Product.Basis</p>
+                        </li>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Product.Temperature))
+                    {
+                        <li class="additional-param-item">
+                            <p class="distinct-param-text">Температура:</p>
+                            <p>@Model.Product.Temperature</p>
+                        </li>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Product.Expiration_date))
+                    {
+                        <li class="additional-param-item">
+                            <p class="distinct-param-text">Термін придатності:</p>
+                            <p>@Model.Product.Expiration_date</p>
+                        </li>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Product.Storage_conditions))
+                    {
+                        <li class="additional-param-item">
+                            <p class="distinct-param-text">Умови зберігання:</p>
+                            <p>@Model.Product.Storage_conditions</p>
+                        </li>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Product.Caloric))
+                    {
+                        <li class="additional-param-item">
+                            <p class="distinct-param-text">Калорійність:</p>
+                            <p>@Model.Product.Caloric</p>
+                        </li>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Product.Carbohydrate))
+                    {
+                        <li class="additional-param-item">
+                            <p class="distinct-param-text">Вміст вуглеводів:</p>
+                            <p>@Model.Product.Carbohydrate</p>
+                        </li>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Product.Fat))
+                    {
+                        <li class="additional-param-item">
+                            <p class="distinct-param-text">Вміст жирів:</p>
+                            <p>@Model.Product.Fat</p>
+                        </li>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Product.Protein))
+                    {
+                        <li class="additional-param-item">
+                            <p class="distinct-param-text">Вміст білків:</p>
+                            <p>@Model.Product.Protein</p>
+                        </li>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Product.Allergen))
+                    {
+                        <li class="additional-param-item">
+                            <p class="distinct-param-text">Алергени:</p>
+                            <p>@Model.Product.Allergen</p>
+                        </li>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Product.Refuel))
+                    {
+                        <li class="additional-param-item">
+                            <p class="distinct-param-text">Поповнення:</p>
+                            <p>@Model.Product.Refuel</p>
+                        </li>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Model.Product.Quantity_in_package))
+                    {
+                        <li class="additional-param-item">
+                            <p class="distinct-param-text">Кількість у пакеті:</p>
+                            <p>@Model.Product.Quantity_in_package</p>
+                        </li>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Product.Energy_value))
+                    {
+                        <li class="additional-param-item">
+                            <p class="distinct-param-text">Енергетична цінність:</p>
+                            <p>@Model.Product.Energy_value</p>
+                        </li>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Product.Sort))
+                    {
+                        <li class="additional-param-item">
+                            <p class="distinct-param-text">Сорт:</p>
+                            <p>@Model.Product.Sort</p>
+                        </li>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Product.Features))
+                    {
+                        <li class="additional-param-item">
+                            <p class="distinct-param-text">Особливості:</p>
+                            <p>@Model.Product.Features</p>
+                        </li>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Product.For_children_with))
+                    {
+                        <li class="additional-param-item">
+                            <p class="distinct-param-text">Для дітей з:</p>
+                            <p>@Model.Product.For_children_with</p>
+                        </li>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Product.Microelements))
+                    {
+                        <li class="additional-param-item">
+                            <p class="distinct-param-text">Мікроелементи:</p>
+                            <p>@Model.Product.Microelements</p>
+                        </li>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Product.Vitamins))
+                    {
+                        <li class="additional-param-item">
+                            <p class="distinct-param-text">Вітаміни:</p>
+                            <p>@Model.Product.Vitamins</p>
+                        </li>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Product.Type_of_cheese))
+                    {
+                        <li class="additional-param-item">
+                            <p class="distinct-param-text">Тип сиру:</p>
+                            <p>@Model.Product.Type_of_cheese</p>
+                        </li>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Product.Type_of_sausage))
+                    {
+                        <li class="additional-param-item">
+                            <p class="distinct-param-text">Тип ковбаси:</p>
+                            <p>@Model.Product.Type_of_sausage</p>
+                        </li>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Product.Method_of_processing))
+                    {
+                        <li class="additional-param-item">
+                            <p class="distinct-param-text">Метод обробки:</p>
+                            <p>@Model.Product.Method_of_processing</p>
+                        </li>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Product.By_composition))
+                    {
+                        <li class="additional-param-item">
+                            <p class="distinct-param-text">За складом:</p>
+                            <p>@Model.Product.By_composition</p>
+                        </li>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Product.Quantity_box_package))
+                    {
+                        <li class="additional-param-item">
+                            <p class="distinct-param-text">Кількість в коробці/упаковці:</p>
+                            <p>@Model.Product.Quantity_box_package</p>
+                        </li>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Product.Diaper_size))
+                    {
+                        <li class="additional-param-item">
+                            <p class="distinct-param-text">Розмір підгузника:</p>
+                            <p>@Model.Product.Diaper_size</p>
+                        </li>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Product.Alcohol))
+                    {
+                        <li class="additional-param-item">
+                            <p class="distinct-param-text">Спирт:</p>
+                            <p>@Model.Product.Alcohol</p>
+                        </li>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Product.Temperature_wine_serving))
+                    {
+                        <li class="additional-param-item">
+                            <p class="distinct-param-text">Температура подачі вина:</p>
+                            <p>@Model.Product.Temperature_wine_serving</p>
+                        </li>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Model.Product.Region))
+                    {
+                        <li class="additional-param-item">
+                            <p class="distinct-param-text">Регіон:</p>
+                            <p>@Model.Product.Region</p>
+                        </li>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Product.Wine_classification))
+                    {
+                        <li class="additional-param-item">
+                            <p class="distinct-param-text">Класифікація вина:</p>
+                            <p>@Model.Product.Wine_classification</p>
+                        </li>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Product.Aging_in_barrel))
+                    {
+                        <li class="additional-param-item">
+                            <p class="distinct-param-text">Витримка в бочці:</p>
+                            <p>@Model.Product.Aging_in_barrel</p>
+                        </li>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Product.Package_volume))
+                    {
+                        <li class="additional-param-item">
+                            <p class="distinct-param-text">Об'єм упаковки:</p>
+                            <p>@Model.Product.Package_volume</p>
+                        </li>
+                    }
+                </ul>
+                <div class="product-about-container-secondary">
+                    @if (!string.IsNullOrWhiteSpace(Model.Product.Composition))
+                    {
+                        <div class="composition-section">
+                            <p class="product-about-container-secondary-title">Склад</p>
+                            <p class="product-about-container-secondary-text">@Html.DisplayFor(model => model.Product.Composition)</p>
+                        </div>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Model.Product.Description))
+                    {
+                        <div class="description-section">
+                            <p class="product-about-container-secondary-title">Опис</p>
+                            <p class="product-about-container-secondary-text">@Html.DisplayFor(model => model.Product.Description)</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="product-container-right">
+        <h1>Схожі продукти</h1>
+        <div class="product-list">
+            @foreach (var product in Model.Product_list)
+            {
+                string base64Image2 = $"data:image/jpeg;base64,{Convert.ToBase64String(product.Image!)}";
+                <div class="main-page-product">
+                    <div class="main-page-product-favorite">
+                        <svg width="1.000rem" height="0.938rem" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M14.1915 7.56097L14.218 7.52031L14.2405 7.47727C14.6216 6.74672 15 5.85591 15 4.9799C15 2.71644 13.5355 1.33759 11.8732 1.07637C10.4691 0.780647 8.956 1.35222 8.01756 2.56858C7.09624 1.31855 5.53247 0.883302 4.17204 1.06957L4.17203 1.06952L4.16182 1.07103C2.48513 1.31826 1 2.70055 1 4.9799C1 5.85591 1.37843 6.74672 1.75955 7.47727L1.782 7.52031L1.80851 7.56097C2.279 8.28247 2.86715 9.13148 3.56752 9.89897C4.82205 11.286 6.35624 12.5732 7.42816 13.3204L8.035 13.7434L8.61708 13.2869C8.64265 13.2668 8.66858 13.2465 8.69484 13.2259C9.69949 12.4384 11.1982 11.2636 12.4324 9.89901C13.1328 9.13152 13.721 8.28248 14.1915 7.56097Z" stroke="currentColor" stroke-width="1"></path></svg>
+                    </div>
+                    <div class="main-page-product-cart-btn">
+                        <i class="fa-solid fa-cart-shopping" style="color: #ffffff;font-size: 1.5rem;"></i>
+                    </div>
+                    @if (!string.IsNullOrWhiteSpace(product.Promo))
+                    {
+                        <div class="main-page-product-promo">
+                            <p class="main-page-product-promo-text">@product.Promo</p>
+                        </div>
+                    }
+                    <img class="main-page-product-img" src="@base64Image2" />
+                    <span class="main-page-product-title">Сир твердий Комо 300г dfs dfs df sdfsdf ...</span>
+                    <span class="main-page-product-mass">300г</span>
+                    <div class="main-page-product-bottom">
+                        <span class="main-page-product-bottom-price-promo">@product.Price грн</span>
+                        <span class="main-page-product-bottom-price-brand">@product.Brand</span>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Product.id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,4 +1,7 @@
-﻿namespace Shop_Mvc.Models
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Reflection;
+
+namespace Shop_Mvc.Models
 {
     public class Product
     {
@@ -43,7 +46,7 @@
         public string? Aging_in_barrel { get; set; }
         public string? Package_volume { get; set; }
         public decimal? Price { get; set; }
-        //public string Image { get; set; }
+
 
 
     }

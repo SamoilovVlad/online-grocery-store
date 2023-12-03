@@ -11,12 +11,6 @@ namespace Shop_Mvc.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Subcategory> Subcategories { get; set; }
 
-        public List<Product> GetProductBySubcategory(string subcategory)
-        {
-            return Products
-                .Where(p => p.Subcategory == subcategory)
-                .ToList();
-        }
 
     }
 }
