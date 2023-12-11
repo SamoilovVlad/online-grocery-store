@@ -650,6 +650,7 @@
             var content = document.getElementsByClassName('footer-container')[0];
             var icon = document.getElementsByClassName('footer-btn-icon')[0];
             content.classList.add('show');
+            content.style.zIndex = '1200';
             icon.style.transform = "rotate(180deg)";
             $("body").addClass("overlay");
             isFooterShowing = true;
@@ -667,6 +668,10 @@
             icon.style.transform = "rotate(0deg)";
             $("body").removeClass("overlay");
             isFooterShowing = false;
+
+            setTimeout(function () {
+                content.style.zIndex = '1100';
+            }, 500);
         }
 
         function showFullSearch() {

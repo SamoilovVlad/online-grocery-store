@@ -28,16 +28,16 @@ namespace Shop_Mvc.Controllers
         [HttpGet("{id}")]
         public Product Get(int id)
         {
-            return _productService.GetProductById(id);
+            return _DatabaseServise.GetProductById(id);
         }
         [HttpGet("category")]
-        public List<Product> GetProductsByCategory([FromQuery] string category,[FromQuery] int n) { 
-            return _productService.GetProductsByCategory(category, n);
+        public IEnumerable<Product> GetProductsByCategory([FromQuery] string category,[FromQuery] int n) { 
+            return _DatabaseServise.GetProductsByCategory(category, n);
         }
         [HttpGet("subcategory")]
-        public List<Product> GetProductsBySubcategory([FromQuery] string subcategory, [FromQuery] int n)
+        public IEnumerable<Product> GetProductsBySubcategory([FromQuery] string subcategory, [FromQuery] int n)
         {
-            return _productService.GetProductsBySubcategory(subcategory, n);
+            return _DatabaseServise.GetProductsBySubcategory(subcategory, n);
         }
         //[HttpGet("category/{category}")]
         //public List<Product> GetProductsByCategory(string category) { 

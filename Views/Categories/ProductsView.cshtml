@@ -1,19 +1,304 @@
-﻿<div class="products-view-container">
+﻿@model ProductsViewModel
+
+<div class="products-view-container">
     <div class="navigation-container">
         <a class="nav-link active">Novus</a>
         <p class="nav-link-arrow"> > </p>
-        <a class="nav-link">Кулінарія</a>
+        <a class="nav-link">@Model.products.First().Category</a>
         <p class="nav-link-arrow"> > </p>
-        <a class="nav-link">Хліб</a>
+        <a class="nav-link">@Model.products.First().Subcategory</a>
+    </div>
+    <div class="products-header-container">
+        <div class="products-header-inner">
+            <h1 class="products-header">@Model.products.First().Subcategory</h1>
+            <div class="products-filter-container-round-count">@Model.productsCount</div>
+        </div>
     </div>
     <div class="products-filter-container">
+        <div class="filter-left-side">
+            <h1 class="products-filter-container-label">@Model.products.First().Subcategory</h1>
+            <div class="products-filter-container-round-count">@Model.productsCount</div>
+        </div>
+        <div class="filter-right-side">
+            <div id="checkBox" onclick="CheckBoxPromoProducts()" style="display:flex; align-items:center;">
+                <div class="check-box" style="margin-right:0.5rem;"></div>
+                <span class="filter-btn-text" style="margin-right:0.5rem;">Акційні товари</span>
+            </div>
+            <div class="filter-btn" onclick="OpenCloseFilters()">
+                <span class="filter-btn-text">Стандартно</span>
+                <span class="filter-btn-icon"><svg style="position:fixed;" width="0.750rem" height="0.750rem" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M11 4L6 9L1 4" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+            </div>
+            <div class="filter-drop-down-list">
+                <span class="filter-drop-down-list-text" id="1" onclick="SortBy(event)" style="font-weight: 700;">Стандартно</span>
+                <span class="filter-drop-down-list-text" id="2" onclick="SortBy(event)">Спочатку акційні</span>
+                <span class="filter-drop-down-list-text" id="3" onclick="SortBy(event)">Спочатку дорожче</span>
+                <span class="filter-drop-down-list-text" id="4" onclick="SortBy(event)">Спочатку дешевше</span>
+                <span class="filter-drop-down-list-text" id="5" onclick="SortBy(event)">За знижкою</span>
+            </div>
+        </div>
+    </div>
+    <div class="products-view-products-container">
+        @{
+            foreach (var product in Model.products)
+            {
+                <a class="products-view-product" id="@product.id">
+                    <div class="product-overlay" style="z-index:3"></div>
+                    <div class="main-page-product-cart-btn" id="@product.id">
+                        <i class="fa-solid fa-cart-shopping" style="color: #ffffff;font-size: 1.5rem;" onclick="AddToCart(event)" id="@product.id"></i>
+                    </div>
+                    <div class="main-page-product-favorite">
+                        <svg width="1.000rem" height="0.938rem" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M14.1915 7.56097L14.218 7.52031L14.2405 7.47727C14.6216 6.74672 15 5.85591 15 4.9799C15 2.71644 13.5355 1.33759 11.8732 1.07637C10.4691 0.780647 8.956 1.35222 8.01756 2.56858C7.09624 1.31855 5.53247 0.883302 4.17204 1.06957L4.17203 1.06952L4.16182 1.07103C2.48513 1.31826 1 2.70055 1 4.9799C1 5.85591 1.37843 6.74672 1.75955 7.47727L1.782 7.52031L1.80851 7.56097C2.279 8.28247 2.86715 9.13148 3.56752 9.89897C4.82205 11.286 6.35624 12.5732 7.42816 13.3204L8.035 13.7434L8.61708 13.2869C8.64265 13.2668 8.66858 13.2465 8.69484 13.2259C9.69949 12.4384 11.1982 11.2636 12.4324 9.89901C13.1328 9.13152 13.721 8.28248 14.1915 7.56097Z" stroke="currentColor" stroke-width="1"></path></svg>
+                    </div>
+                    @{
+                        var imagePath = $"/Product_Images/product_{product.id}.jpg";
+                        <img class="" style="width=100%; object-fit:contain; object-position:center; height:55%" src="@imagePath" />
+                    }
+                    <span class="main-page-product-title" style="word-break:break-word; white-space:pre-wrap; margin-top:10px;">@product.Title</span>
+                    <span class="main-page-product-mass">@product.Brand</span>
+                    <div class="main-page-product-bottom">
+                        <span class="main-page-product-bottom-price">@product.Price грн</span>
+                        <span class="main-page-product-bottom-price-brand">@product.Country</span>
+                    </div>
 
+                    <div class="main-page-product-counter-container">
+                        <svg id="@product.id" onclick="Minus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="@product.id" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                        <div class="main-page-product-counter-container-count">
+                            <input id="productInput@(product.id)" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="1" class="num-input-product">
+                            <span id="productSpan@(product.id)" class="cart-body-item-info-count-btn-counter-num">1</span>
+                            <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
+                        </div>
+                        <svg id="@product.id" onclick="Plus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="@product.id" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="@product.id" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                    </div>
+                </a>
+            }
+        }
+    </div>
+    <div class="pagenated-btn-container">
+        <a class="pagenated-btn-arrow">
+            <svg width="0.750rem" height="0.750rem" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M8 11L3 6L8 1" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </a>
+        <a class="pagenated-btn-first" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="1" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory">1</a>
+        @if (Model.currentPage == 1)
+        {
+            <a class="pagenated-btn" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="1" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory"></a>
+            <a class="pagenated-btn" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="2" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory"></a>
+            <a class="pagenated-btn" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="3" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory"></a>
+
+        }
+        else if(Model.currentPage == Model.currentPage && Model.currentPage == 2)
+        {
+            <a class="pagenated-btn" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="@(Model.currentPage - 1)" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory"></a>
+            <a class="pagenated-btn" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="@(Model.currentPage)" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory"></a>
+            <a class="pagenated-btn" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="@Model.currentPage" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory"></a>
+
+        }
+        else if (Model.currentPage == Model.pageNumber)
+        {
+            <a class="pagenated-btn" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="@(Model.currentPage - 2)" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory"></a>
+            <a class="pagenated-btn" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="@(Model.currentPage - 1)" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory"></a>
+            <a class="pagenated-btn" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="@Model.currentPage" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory"></a>
+
+        }
+        else
+        {
+            <a class="pagenated-btn" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="@(Model.currentPage - 1)" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory"></a>
+            <a class="pagenated-btn" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="@Model.currentPage" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory"></a>
+            <a class="pagenated-btn" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="@(Model.currentPage + 1)" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory"></a>
+        }
+        <a class="pagenated-btn-last" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="@Model.pageNumber" asp-route-isOnlySales="false" asp-route-sortedBy="Стандартно" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory">@Model.pageNumber</a>
+
+        <a class="pagenated-btn-arrow">
+            <svg style="transform: rotate(180deg)" width="0.750rem" height="0.750rem" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M8 11L3 6L8 1" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </a>
     </div>
 </div>
 
 
 <script>
+    var isFilterOpen = false;
+    var isCheckBox = @Model.onlySales.ToString().ToLower();
+    var pageNumber = @Model.pageNumber;
+    var currentPage = @Model.currentPage;
+    var midleBtns = document.getElementsByClassName('pagenated-btn');
+    midleBtns = Array.from(midleBtns);
+    var firstBtn = document.getElementsByClassName('pagenated-btn-first')[0];
+    var lastBtn = document.getElementsByClassName('pagenated-btn-last')[0];
+    var arrowBtns = document.getElementsByClassName('pagenated-btn-arrow');
+    arrowBtns = Array.from(arrowBtns);
+
+    //function LOAD() {
+    //    $('#skeleton').show();
+
+    //    setTimeout(function () {
+    //        $('#skeleton').hide();
+    //        location.reload();
+    //    }, 3000);
+    //}
+
     document.addEventListener('DOMContentLoaded', function () {
+        SetPagenatedBtns();
+        SetPageNumbers();
+        SetPagenatedArrowBtns();
         $('#skeleton').hide();
     });
+
+    function SetPagenatedArrowBtns() {
+        if (currentPage == 1)
+            arrowBtns[0].style.color = 'gray';
+        else arrowBtns[0].style.color = '#222324';
+
+        if (currentPage == pageNumber)
+            arrowBtns[1].style.color = 'gray';
+        else arrowBtns[1].style.color = '#222324';
+    };
+
+    function SetPagenatedBtns() {
+        if (pageNumber > 3) {
+            for (var i = 0; i < midleBtns.length; i++)
+                midleBtns[i].style.display = 'flex';
+
+            arrowBtns[0].style.display = 'flex';
+            arrowBtns[1].style.display = 'flex';
+
+            lastBtn.style.display = "flex";
+
+            if (currentPage > 2) {
+
+                if (currentPage == pageNumber) {
+                    firstBtn.style.display = "flex";
+                    midleBtns[1].textContent = currentPage - 1;
+                    midleBtns[0].textContent = currentPage - 2;
+                    midleBtns[2].textContent = currentPage;
+
+                    midleBtns[2].classList.add('pagenated-btn-active');
+                }
+                else {
+                    firstBtn.style.display = "flex";
+                    midleBtns[1].textContent = currentPage;
+                    midleBtns[0].textContent = currentPage - 1;
+                    midleBtns[2].textContent = currentPage + 1;
+
+                    midleBtns[1].classList.add('pagenated-btn-active');
+                }
+            }
+            else
+                midleBtns[currentPage - 1].classList.add('pagenated-btn-active');
+            if (pageNumber - currentPage < 2)
+                lastBtn.style.display = 'none';
+        }
+        else if (pageNumber > 1 && pageNumber < 4) {
+            for (var i = 0; i < pageNumber; i++)
+                midleBtns[i].style.display = 'flex';
+            arrowBtns[0].style.display = 'flex';
+            arrowBtns[1].style.display = 'flex';
+            midleBtns[currentPage - 1].classList.add('pagenated-btn-active');
+        }
+        lastBtn.textContent = pageNumber;
+    };
+
+    function SetPageNumbers() {
+        if (currentPage == 1) {
+            midleBtns[0].textContent = 1;
+            midleBtns[1].textContent = 2;
+            midleBtns[2].textContent = 3;
+        }
+        else if(pageNumber == currentPage && currentPage == 2)
+        {
+            midleBtns[0].textContent = currentPage - 1;
+            midleBtns[1].textContent = currentPage;
+            midleBtns[2].textContent = currentPage + 1;
+        }
+        else if (currentPage > 1 && currentPage < pageNumber) {
+            midleBtns[0].textContent = currentPage - 1;
+            midleBtns[1].textContent = currentPage;
+            midleBtns[2].textContent = currentPage + 1;
+        }
+        else {
+            midleBtns[0].textContent = currentPage - 2;
+            midleBtns[1].textContent = currentPage - 1;
+            midleBtns[2].textContent = currentPage;
+        }
+    }
+
+    //function GetPage(event) {
+    //    var subcategoryName = document.getElementsByClassName('products-header')[0].textContent.trim();
+    //    var pageNum = event.target.textContent;
+    //    const pageSize = 40;
+    //    var sortedBy = document.getElementsByClassName('filter-btn-text')[0].textContent.trim();
+
+    //    const url = `/Categories/ProductsView?currentPage=${pageNum}&isOnlySales=${isCheckBox}&sortedBy=${encodeURIComponent(sortedBy)}&pageSize=${pageSize}&subcategoryName=${encodeURIComponent(subcategoryName)}`;
+
+    //    fetch(url)
+    //        .then(response => {
+    //            if (!response.ok) {
+    //                throw new Error(`HTTP error! Status: ${response.status}`);
+    //            }
+    //            console.log('All is OK');
+    //        })
+    //        .catch(error => {
+    //            console.error('Error:', error);
+    //        });
+    //};
+
+
+    function OpenCloseFilters() {
+        var list = document.getElementsByClassName('filter-drop-down-list')[0];
+        var icon = document.getElementsByClassName('filter-btn-icon')[0];
+        if (!isFilterOpen) {
+            list.style.top = '50px';
+            list.style.opacity = 1;
+            list.style.visibility = 'visible';
+            icon.style.transform = 'rotate(180deg)';
+            isFilterOpen = true;
+        }
+        else {
+            list.style.top = '40px';
+            list.style.opacity = 0;
+            list.style.visibility = 'collapse';
+            icon.style.transform = 'rotate(0)';
+            isFilterOpen = false;
+        }
+    }
+
+    function SortBy(event) {
+        var list = document.getElementsByClassName('filter-drop-down-list')[0];
+        var spanElements = list.querySelectorAll('.filter-drop-down-list-text');
+        spanElements = Array.from(spanElements);
+        var choosenFilter = document.getElementsByClassName('filter-btn-text')[1];
+
+
+        choosenFilter.textContent = event.target.textContent;
+
+        for (const span of spanElements) {
+            if (event.target.id == span.id)
+                span.style.fontWeight = '700';
+            else
+                span.style.fontWeight = '400';
+        }
+
+        OpenCloseFilters();
+    }
+
+    function CheckBoxPromoProducts() {
+        var checkBox = document.getElementsByClassName('check-box')[0];
+        if (isCheckBox) {
+            checkBox.style.backgroundImage = "none";
+            checkBox.style.borderColor = "gray";
+            isCheckBox = false;
+        }
+        else {
+            checkBox.style.backgroundImage = "url('https://cdn.iconscout.com/icon/premium/png-256-thumb/accept-154-892430.png')";
+            checkBox.style.borderColor = "green";
+            isCheckBox = true;
+        }
+    };
+
+    function AddToCart(event) {
+        var product = document.querySelector(`.products-view-product[id="${event.target.id}"]`);
+        console.log(product);
+        var overlay = product.getElementsByClassName('product-overlay')[0];
+        product.classList.add('added');
+        overlay.classList.add('green');
+    };
+
 </script>

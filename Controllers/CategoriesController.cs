@@ -31,9 +31,22 @@ namespace Shop_Mvc.Controllers
         }
 
         [HttpGet]
-        public IActionResult ProductsView() 
+        public IActionResult ProductsView(int currentPage, bool isOnlySales, string sortedBy, int pageSize, string subcategoryName) 
         {
-            return View(); 
+            var products = _DatabaseServise.GetProductsBySubcategory(subcategoryName, pageSize, (currentPage - 1) * pageSize);
+            var productsCount = _DatabaseServise.GetProductsBySubcategory(subcategoryName).Count();
+
+            var model = new ProductsViewModel()
+            {
+                products = products,
+                productsCount = productsCount,
+                pageNumber = (int)Math.Ceiling((double) productsCount / pageSize),
+                pageSize = pageSize,
+                currentPage = currentPage,
+                onlySales = isOnlySales,
+                sortedBy = sortedBy,
+            };
+            return View(model); 
         }
     }
 }

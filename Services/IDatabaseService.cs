@@ -16,7 +16,7 @@ namespace Shop_Mvc.Services
         public IEnumerable<SliderImage> GetAllSliderImages();
         public IEnumerable<Product> GetProductsByCountry(string country, int count = 0);
         public IEnumerable<Product> GetProductsByCategory(string category, int count = 0);
-        public IEnumerable<Product> GetProductsBySubcategory(string subcategory, int count = 0);
+        public IEnumerable<Product> GetProductsBySubcategory(string subcategory, int count = 0, int skip = 0);
         public IEnumerable<Product> GetProductsByBrand(string brand, int count = 0);
         public IEnumerable<Product> GetPromoProducts(int count = 0);
         public IEnumerable<Product> GetProductsByTitle(string title, int count = 0);
@@ -70,13 +70,28 @@ namespace Shop_Mvc.Services
             return products;
         }
 
-        public IEnumerable<Product> GetProductsBySubcategory(string subcategory, int count = 0)
+        public IEnumerable<Product> GetProductsBySubcategory(string subcategory, int count = 0, int skip = 0)
         {
             IEnumerable<Product> products;
             if (count == 0)
-                products = _context.Products.Where(p => p.Subcategory == subcategory);
+                products = _context.Products
+                    .Where(p => p.Subcategory == subcategory);
             else
-                products = _context.Products.Where(p => p.Subcategory == subcategory).Take(count);
+            {
+                if (skip != 0)
+                {
+                    products = _context.Products
+                        .Where(p => p.Subcategory == subcategory)
+                        .Skip(skip)
+                        .Take(count);
+                }
+                else
+                {
+                    products = _context.Products
+                        .Where(p => p.Subcategory == subcategory)
+                        .Take(count);
+                }
+            }
             return products;
         }
 

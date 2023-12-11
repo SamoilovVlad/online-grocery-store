@@ -242,5 +242,15 @@ namespace Shop_Mvc.Controllers
 
             }
         }
+
+        [HttpGet]
+        public IActionResult ProductView(int id)
+        {
+            Product product = _DatabaseServise.GetProductById(id);
+            IEnumerable<Product> product_list = _DatabaseServise.GetProductsBySubcategory(product.Subcategory, 4);
+            ProductViewModel productViewModel = new ProductViewModel(product, product_list);
+            return View("ProductView", productViewModel);
+        }
+
     }
 }
