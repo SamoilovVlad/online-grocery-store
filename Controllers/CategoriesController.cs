@@ -31,7 +31,7 @@ namespace Shop_Mvc.Controllers
         }
 
         [HttpGet]
-        public IActionResult ProductsView(int currentPage, bool isOnlySales, string sortedBy, int pageSize, string subcategoryName) 
+        public IActionResult ProductsView(string subcategoryName, int currentPage = 1, bool isOnlySales = false, string sortedBy = "Стандартно", int pageSize = 40) 
         {
             var products = _DatabaseServise.GetProductsBySubcategory(subcategoryName, pageSize, (currentPage - 1) * pageSize);
             var productsCount = _DatabaseServise.GetProductsBySubcategory(subcategoryName).Count();

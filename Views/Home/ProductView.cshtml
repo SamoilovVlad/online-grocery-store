@@ -10,10 +10,11 @@
 
 <div class="product-link">
     <a class="product-link-item" asp-action="Index" asp-controller="Home">Store</a>
-    <a class="product-link-item" asp-action="CategoryView" asp-controller="Home">@Html.DisplayFor(model => model.Product.Category)</a>
-    <a class="product-link-item" asp-action="SubcategoryView" asp-controller="Home">@Html.DisplayFor(model => model.Product.Subcategory)</a>
+    <a class="product-link-item" asp-action="SubcategoriesView" asp-controller="Categories" asp-route-categoryName="@Model.Product.Category">@Html.DisplayFor(model => model.Product.Category)</a>
+    <a class="product-link-item" asp-action="ProductsView" asp-controller="Categories" asp-route-subcategoryName="@Model.Product.Subcategory">@Html.DisplayFor(model => model.Product.Subcategory)</a>
     <a class="product-link-item-last" asp-action="ProductView" asp-controller="Home">@Html.DisplayFor(model => model.Product.Title)</a>
 </div>
+
 <div class="product-container">
     <div class="product-container-main">
         <a class="come-back-btn">
@@ -315,7 +316,7 @@
             @foreach (var product in Model.Product_list)
             {
                 <div class="other-products-item responsive" >
-                    <a class="other-products-item-cart" id="@product.id">
+                    <a class="other-products-item-cart" id="@product.id" asp-controller="Home" asp-action="ProductVIew" asp-route-id="@product.id">
                         @{
                             if (product.Promo != null)
                             {

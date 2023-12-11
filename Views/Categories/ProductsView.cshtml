@@ -41,7 +41,7 @@
         @{
             foreach (var product in Model.products)
             {
-                <a class="products-view-product" id="@product.id">
+                <a class="products-view-product" id="@product.id" asp-controller="Home" asp-action="ProductVIew" asp-route-id="@product.id">
                     <div class="product-overlay" style="z-index:3"></div>
                     <div class="main-page-product-cart-btn" id="@product.id">
                         <i class="fa-solid fa-cart-shopping" style="color: #ffffff;font-size: 1.5rem;" onclick="AddToCart(event)" id="@product.id"></i>

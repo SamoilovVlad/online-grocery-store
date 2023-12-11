@@ -1627,6 +1627,8 @@ ul {
     flex-direction: column;
     cursor: pointer;
     overflow: hidden;
+    text-decoration: none;
+    color: inherit;
 }
 
     .main-page-product:hover .main-page-product-favorite {
@@ -2011,6 +2013,8 @@ ul {
     border-radius: 0.25rem;
     height: calc(100% - 28px);
     cursor: pointer;
+    text-decoration: none;
+    color: inherit;
 }
 
     .other-products-item-cart:hover .main-page-product-favorite {
@@ -2237,6 +2241,8 @@ ul {
     cursor: pointer;
     background-color: #fff;
     border-radius: 0.25rem;
+    text-decoration: none;
+    color: inherit;
 }
 
     .products-view-product:hover .main-page-product-favorite {
@@ -2418,7 +2424,7 @@ ul {
 }
 
 .come-back-btn {
-    margin-bottom: 24px;
+    margin-bottom: 28px;
     display: flex;
 }
 
@@ -2541,6 +2547,8 @@ ul {
 
 .composition-section {
     max-width: 50%;
+    min-width: 50%;
+    margin-right: 20px;
 }
 
 .description-section {
