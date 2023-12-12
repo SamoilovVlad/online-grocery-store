@@ -16,10 +16,14 @@ namespace Shop_Mvc.Services
         public IEnumerable<SliderImage> GetAllSliderImages();
         public IEnumerable<Product> GetProductsByCountry(string country, int count = 0);
         public IEnumerable<Product> GetProductsByCategory(string category, int count = 0);
-        public IEnumerable<Product> GetProductsBySubcategory(string subcategory, int count = 0, int skip = 0);
+        public IEnumerable<Product> GetProductsBySubcategory(string subcategory, int count = 0, int skip = 0, bool isPromo = false);
+        public IEnumerable<Product> GetProductsBySubcategoryWithPromo(string subcategory, int count = 0, int skip = 0);
         public IEnumerable<Product> GetProductsByBrand(string brand, int count = 0);
         public IEnumerable<Product> GetPromoProducts(int count = 0);
         public IEnumerable<Product> GetProductsByTitle(string title, int count = 0);
+        public IEnumerable<Product> GetProductsBySubcategoryOrderByPriceDescending(string subcategory, int count = 0, int skip = 0, bool isPromo = false);
+        public IEnumerable<Product> GetProductsBySubcategoryOrderByPrice(string subcategory, int count = 0, int skip = 0, bool isPromo = false);
+        public IEnumerable<Product> GetProductsBySubcategoryPromoFirstly(string subcategory, int count = 0, int skip = 0, bool isPromo = false);
         public Task<IEnumerable<Product>> GetProductsByCountryAsync(string country, int count = 0);
         public Task<IEnumerable<Product>> GetProductsByCategoryAsync(string category, int count = 0);
         public Task<IEnumerable<Product>> GetProductsBySubcategoryAsync(string subcategory, int count = 0);
@@ -32,6 +36,7 @@ namespace Shop_Mvc.Services
         public void Delete(int id);
         public Category GetProductCategory(string categoryName);
         public IEnumerable<Subcategory> GetAllSubcategoriesByProductCategoryName(string categoryName);
+        public Subcategory GetSubcategoryByName(string subcategoryName);
     }
     public class DatabaseServise : IDatabaseServise
     {
@@ -70,25 +75,32 @@ namespace Shop_Mvc.Services
             return products;
         }
 
-        public IEnumerable<Product> GetProductsBySubcategory(string subcategory, int count = 0, int skip = 0)
+        public IEnumerable<Product> GetProductsBySubcategory(string subcategory, int count = 0, int skip = 0, bool isPromo = false)
         {
             IEnumerable<Product> products;
-            if (count == 0)
-                products = _context.Products
-                    .Where(p => p.Subcategory == subcategory);
-            else
+            if (!isPromo)
             {
-                if (skip != 0)
+                if (count == 0)
+                    products = _context.Products
+                        .Where(p => p.Subcategory == subcategory);
+                else
                 {
                     products = _context.Products
                         .Where(p => p.Subcategory == subcategory)
                         .Skip(skip)
                         .Take(count);
                 }
+            }
+            else
+            {
+                if (count == 0)
+                    products = _context.Products
+                        .Where(p => p.Subcategory == subcategory && p.Promo != null);
                 else
                 {
                     products = _context.Products
-                        .Where(p => p.Subcategory == subcategory)
+                        .Where(p => p.Subcategory == subcategory && p.Promo != null)
+                        .Skip(skip)
                         .Take(count);
                 }
             }
@@ -135,6 +147,140 @@ namespace Shop_Mvc.Services
             return products;
         }
 
+        public IEnumerable<Product> GetProductsBySubcategoryWithPromo(string subcategory, int count = 0, int skip = 0)
+        {
+            IEnumerable<Product> products;
+            if (count == 0)
+                products = _context.Products
+                    .Where(p => p.Subcategory == subcategory && p.Promo != null);
+            else
+            {
+                if (skip != 0)
+                {
+                    products = _context.Products
+                        .Where(p => p.Subcategory == subcategory && p.Promo != null)
+                        .Skip(skip)
+                        .Take(count);
+                }
+                else
+                {
+                    products = _context.Products
+                        .Where(p => p.Subcategory == subcategory && p.Promo != null)
+                        .Take(count);
+                }
+            }
+            return products;
+        }
+
+        public IEnumerable<Product> GetProductsBySubcategoryOrderByPriceDescending(string subcategory, int count = 0, int skip = 0, bool isPromo = false)
+        {
+            IEnumerable<Product> products;
+
+            if (!isPromo)
+            {
+                if (count == 0)
+                    products = _context.Products
+                        .Where(p => p.Subcategory == subcategory).OrderByDescending(p => p.Price);
+                else
+                {
+
+                    products = _context.Products
+                        .Where(p => p.Subcategory == subcategory).OrderByDescending(p => p.Price)
+                        .Skip(skip)
+                        .Take(count);
+                }
+            }
+            else
+            {
+                if (count == 0)
+                    products = _context.Products
+                        .Where(p => p.Subcategory == subcategory && p.Promo != null)
+                        .OrderByDescending(p => p.Price);
+                else
+                {
+
+                    products = _context.Products
+                        .Where(p => p.Subcategory == subcategory && p.Promo != null)
+                        .OrderByDescending(p => p.Price)
+                        .Skip(skip)
+                        .Take(count);
+                }
+            }
+            return products;
+        }
+
+        public IEnumerable<Product> GetProductsBySubcategoryOrderByPrice(string subcategory, int count = 0, int skip = 0, bool isPromo = false)
+        {
+            IEnumerable<Product> products;
+
+            if (!isPromo)
+            {
+
+                if (count == 0)
+                    products = _context.Products
+                        .Where(p => p.Subcategory == subcategory).OrderBy(p => p.Price);
+                else
+                {
+                    products = _context.Products
+                        .Where(p => p.Subcategory == subcategory).OrderBy(p => p.Price)
+                        .Skip(skip)
+                        .Take(count);
+
+                }
+            }
+            else
+            {
+                if (count == 0)
+                    products = _context.Products
+                        .Where(p => p.Subcategory == subcategory && p.Promo != null).OrderBy(p => p.Price);
+                else
+                {
+
+                    products = _context.Products
+                        .Where(p => p.Subcategory == subcategory && p.Promo != null).OrderBy(p => p.Price)
+                        .Skip(skip)
+                        .Take(count);
+                }
+            }
+            return products;
+        }
+
+        public IEnumerable<Product> GetProductsBySubcategoryPromoFirstly(string subcategory, int count = 0, int skip = 0, bool isPromo = false)
+        {
+            IEnumerable<Product> products;
+
+            if (!isPromo)
+            {
+
+                if (count == 0)
+                    products = _context.Products
+                        .Where(p => p.Subcategory == subcategory).OrderByDescending(p => !string.IsNullOrEmpty(p.Promo));
+                else
+                {
+                    products = _context.Products
+                        .Where(p => p.Subcategory == subcategory).OrderByDescending(p => !string.IsNullOrEmpty(p.Promo))
+                        .Skip(skip)
+                        .Take(count);
+
+                }
+            }
+            else
+            {
+                if (count == 0)
+                    products = _context.Products
+                        .Where(p => p.Subcategory == subcategory && p.Promo != null).OrderByDescending(p => !string.IsNullOrEmpty(p.Promo));
+                else
+                {
+
+                    products = _context.Products
+                        .Where(p => p.Subcategory == subcategory && p.Promo != null).OrderByDescending(p => !string.IsNullOrEmpty(p.Promo))
+                        .Skip(skip)
+                        .Take(count);
+                }
+            }
+            return products;
+        }
+       
         public async Task<IEnumerable<Product>> GetProductsByCountryAsync(string country, int count = 0)
         {
             using (var _context = new MyDbContext(_dbContextOptions))
@@ -149,6 +295,11 @@ namespace Shop_Mvc.Services
                 return await products.ToListAsync();
             }
         }
+
+        public Subcategory GetSubcategoryByName(string subcategoryName) => _context.Subcategories
+            .Where(s => s.SubcategoryName == subcategoryName)
+            .First();
+
 
         public async Task<IEnumerable<Product>> GetProductsByCategoryAsync(string category, int count = 0)
         {

@@ -2076,6 +2076,7 @@ ul {
     margin: 0 1.5rem;
     border-radius: 0.25rem;
     align-items: center;
+    
 }
 
 .filter-left-side {
@@ -2087,6 +2088,7 @@ ul {
     align-items: center;
     position: relative;
     margin-left: auto;
+    text-decoration: none;
 }
 
 .products-filter-container-label {
@@ -2206,6 +2208,7 @@ ul {
     line-height: 120%;
     color: #5b5d62;
     background: #fff;
+    text-decoration:none;
 }
 
     .filter-drop-down-list-text:hover {

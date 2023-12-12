@@ -31,22 +31,56 @@ namespace Shop_Mvc.Controllers
         }
 
         [HttpGet]
-        public IActionResult ProductsView(int currentPage, bool isOnlySales, string sortedBy, int pageSize, string subcategoryName) 
+        public IActionResult ProductsView(int currentPage, bool isOnlySales, string sortedBy, int pageSize, string subcategoryName)
         {
-            var products = _DatabaseServise.GetProductsBySubcategory(subcategoryName, pageSize, (currentPage - 1) * pageSize);
-            var productsCount = _DatabaseServise.GetProductsBySubcategory(subcategoryName).Count();
+            IEnumerable<Product> products;
+
+            products = SortBy(sortedBy,subcategoryName, isOnlySales, 0 ,0);
+            int count = products.Count();
+            products = products.Skip((currentPage-1)*pageSize).Take(pageSize);
+            
 
             var model = new ProductsViewModel()
             {
                 products = products,
-                productsCount = productsCount,
-                pageNumber = (int)Math.Ceiling((double) productsCount / pageSize),
+                productsCount = count,
+                pageNumber = (int)Math.Ceiling((double)count / pageSize),
                 pageSize = pageSize,
                 currentPage = currentPage,
                 onlySales = isOnlySales,
                 sortedBy = sortedBy,
             };
-            return View(model); 
+            return View(model);
         }
+
+        private IEnumerable<Product>SortBy(string sortBy, string subcategory, bool isPromo, int count = 0, int skip = 0)
+        {
+            switch (sortBy) 
+            {
+                case "Стандарт":
+                    return _DatabaseServise.GetProductsBySubcategory(subcategory, count, skip, isPromo);
+                case "Спочатку дорожче":
+                    return _DatabaseServise.GetProductsBySubcategoryOrderByPriceDescending(subcategory, count, skip, isPromo);
+                case "Спочатку дешевше":
+                    return _DatabaseServise.GetProductsBySubcategoryOrderByPrice(subcategory, count, skip, isPromo);
+                case "Спочатку акційні":
+                    return _DatabaseServise.GetProductsBySubcategoryPromoFirstly(subcategory, count, skip, isPromo);
+                case "За знижкою":
+                    var data = _DatabaseServise.GetProductsBySubcategoryPromoFirstly(subcategory, count, skip, isPromo);
+                    data = data
+                               .OrderBy(p => p.Promo != null ? ParsePromoValue(p.Promo) : 0);
+                    return data;
+                default: return _DatabaseServise.GetProductsBySubcategory(subcategory, count, skip, isPromo);
+            }
+        }
+        private int ParsePromoValue(string promo)
+        {
+            if (int.TryParse(promo.Trim('%'), out int value))
+            {
+                return value;
+            }
+            return 0;
+        }
+
     }
 }

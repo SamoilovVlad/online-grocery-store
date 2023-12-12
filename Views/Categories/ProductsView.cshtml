@@ -20,20 +20,20 @@
             <div class="products-filter-container-round-count">@Model.productsCount</div>
         </div>
         <div class="filter-right-side">
-            <div id="checkBox" onclick="CheckBoxPromoProducts()" style="display:flex; align-items:center;">
+            <a id="checkBox" onclick="CheckBoxPromoProducts()" style="display:flex; align-items:center; text-decoration:none;" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="1" asp-route-isOnlySales="@(!Model.onlySales)" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory">
                 <div class="check-box" style="margin-right:0.5rem;"></div>
-                <span class="filter-btn-text" style="margin-right:0.5rem;">Акційні товари</span>
-            </div>
+                <span class="filter-btn-text" style="margin-right:0.5rem; text-decoration:none;">Акційні товари</span>
+            </a>
             <div class="filter-btn" onclick="OpenCloseFilters()">
-                <span class="filter-btn-text">Стандартно</span>
+                <span class="filter-btn-text">@Model.sortedBy</span>
                 <span class="filter-btn-icon"><svg style="position:fixed;" width="0.750rem" height="0.750rem" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M11 4L6 9L1 4" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
             </div>
             <div class="filter-drop-down-list">
-                <span class="filter-drop-down-list-text" id="1" onclick="SortBy(event)" style="font-weight: 700;">Стандартно</span>
-                <span class="filter-drop-down-list-text" id="2" onclick="SortBy(event)">Спочатку акційні</span>
-                <span class="filter-drop-down-list-text" id="3" onclick="SortBy(event)">Спочатку дорожче</span>
-                <span class="filter-drop-down-list-text" id="4" onclick="SortBy(event)">Спочатку дешевше</span>
-                <span class="filter-drop-down-list-text" id="5" onclick="SortBy(event)">За знижкою</span>
+                <a class="filter-drop-down-list-text" id="1" onclick="SortBy(event)" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="1" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="Cтандартно" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory">Cтандартно</a>
+                <a class="filter-drop-down-list-text" id="2" onclick="SortBy(event)" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="1" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="Спочатку акційні" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory">Спочатку акційні</a>
+                <a class="filter-drop-down-list-text" id="3" onclick="SortBy(event)" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="1" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="Спочатку дорожче" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory">Спочатку дорожче</a>
+                <a class="filter-drop-down-list-text" id="4" onclick="SortBy(event)" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="1" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="Спочатку дешевше" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory">Спочатку дешевше</a>
+                <a class="filter-drop-down-list-text" id="5" onclick="SortBy(event)" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="1" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="За знижкою" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory">За знижкою</a>
             </div>
         </div>
     </div>
@@ -43,6 +43,14 @@
             {
                 <a class="products-view-product" id="@product.id">
                     <div class="product-overlay" style="z-index:3"></div>
+                    @{
+                        if(product.Promo!=null)
+                        {
+                            <div class="main-page-product-promo" style="z-index:2">
+                                <p class="main-page-product-promo-text">@product.Promo</p>
+                            </div>
+                        }
+                    }
                     <div class="main-page-product-cart-btn" id="@product.id">
                         <i class="fa-solid fa-cart-shopping" style="color: #ffffff;font-size: 1.5rem;" onclick="AddToCart(event)" id="@product.id"></i>
                     </div>
@@ -51,12 +59,22 @@
                     </div>
                     @{
                         var imagePath = $"/Product_Images/product_{product.id}.jpg";
-                        <img class="" style="width=100%; object-fit:contain; object-position:center; height:55%" src="@imagePath" />
+                        <img style="width:100%; object-fit:contain; object-position:center; height:55%" src="@imagePath" />
                     }
                     <span class="main-page-product-title" style="word-break:break-word; white-space:pre-wrap; margin-top:10px;">@product.Title</span>
                     <span class="main-page-product-mass">@product.Brand</span>
                     <div class="main-page-product-bottom">
-                        <span class="main-page-product-bottom-price">@product.Price грн</span>
+                        @{
+                            if (product.Promo != null)
+                            {
+                                <span class="main-page-product-bottom-price-promo">@product.Price грн</span>
+                            }
+                            else
+                            {
+                                <span class="main-page-product-bottom-price">@product.Price грн</span>
+                            }
+                        }
+                        
                         <span class="main-page-product-bottom-price-brand">@product.Country</span>
                     </div>
 
@@ -74,9 +92,18 @@
         }
     </div>
     <div class="pagenated-btn-container">
-        <a class="pagenated-btn-arrow">
-            <svg width="0.750rem" height="0.750rem" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M8 11L3 6L8 1" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-        </a>
+        @if (Model.currentPage > 1)
+        {
+            <a class="pagenated-btn-arrow" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="@(Model.currentPage + 1)" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory">
+                <svg width="0.750rem" height="0.750rem" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M8 11L3 6L8 1" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </a>
+        }
+        else
+        {
+            <a class="pagenated-btn-arrow">
+                <svg width="0.750rem" height="0.750rem" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M8 11L3 6L8 1" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </a>
+        }
         <a class="pagenated-btn-first" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="1" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory">1</a>
         @if (Model.currentPage == 1)
         {
@@ -105,18 +132,27 @@
             <a class="pagenated-btn" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="@Model.currentPage" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory"></a>
             <a class="pagenated-btn" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="@(Model.currentPage + 1)" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory"></a>
         }
-        <a class="pagenated-btn-last" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="@Model.pageNumber" asp-route-isOnlySales="false" asp-route-sortedBy="Стандартно" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory">@Model.pageNumber</a>
+        <a class="pagenated-btn-last" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="@Model.pageNumber" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory">@Model.pageNumber</a>
 
-        <a class="pagenated-btn-arrow">
-            <svg style="transform: rotate(180deg)" width="0.750rem" height="0.750rem" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M8 11L3 6L8 1" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-        </a>
+        @if (Model.currentPage < Model.pageNumber)
+        {
+            <a class="pagenated-btn-arrow" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="@(Model.currentPage + 1)" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory">
+                <svg style="transform: rotate(180deg)" width="0.750rem" height="0.750rem" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M8 11L3 6L8 1" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </a>
+        }
+        else
+        {
+            <a class="pagenated-btn-arrow">
+                <svg style="transform: rotate(180deg)" width="0.750rem" height="0.750rem" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M8 11L3 6L8 1" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </a>
+        }
     </div>
 </div>
 
 
 <script>
     var isFilterOpen = false;
-    var isCheckBox = @Model.onlySales.ToString().ToLower();
+    var isCheckBox = !@Model.onlySales.ToString().ToLower();
     var pageNumber = @Model.pageNumber;
     var currentPage = @Model.currentPage;
     var midleBtns = document.getElementsByClassName('pagenated-btn');
@@ -124,6 +160,8 @@
     var firstBtn = document.getElementsByClassName('pagenated-btn-first')[0];
     var lastBtn = document.getElementsByClassName('pagenated-btn-last')[0];
     var arrowBtns = document.getElementsByClassName('pagenated-btn-arrow');
+    var choosenFilter = document.getElementsByClassName('filter-drop-down-list-text');
+    choosenFilter = Array.from(choosenFilter);
     arrowBtns = Array.from(arrowBtns);
 
     //function LOAD() {
@@ -136,9 +174,21 @@
     //}
 
     document.addEventListener('DOMContentLoaded', function () {
+        CheckBoxPromoProducts()
         SetPagenatedBtns();
         SetPageNumbers();
         SetPagenatedArrowBtns();
+        //for(var i = 0; i < choosenFilter.length; i++)
+        //{
+        //    console.log(choosenFilter[i].textContent.trim().toLowerCase());
+        //    console.log(decodeURIComponent('@Html.Raw(Model.sortedBy)').trim().toLowerCase());
+        //    console.log(choosenFilter[i].textContent.trim().toLowerCase() === decodeURIComponent('@Html.Raw(Model.sortedBy)').trim().toLowerCase());
+
+        //    if (choosenFilter[i].textContent.trim().toLowerCase() === decodeURIComponent('@Html.Raw(Model.sortedBy)').trim().toLowerCase()) {
+        //        console.log(decodeURIComponent('@Html.Raw(Model.sortedBy)'))
+        //        choosenFilter[i].style.fontWeight = '700';
+        //    }
+        //}
         $('#skeleton').hide();
     });
 
