@@ -51,12 +51,12 @@ namespace Shop_Mvc.Services
 
         public IEnumerable<SliderImage> GetAllSliderImages()
         {
-            return _context.SliderImages.ToList();
+            return _context.SliderImages.AsEnumerable();
         }
 
         public IEnumerable<Product> GetAllProducts()
         {
-            List<Product> products = _context.Products.ToList();
+            IEnumerable<Product> products = _context.Products.AsEnumerable();
             return products;
         }
         public Product GetProductById(int id)

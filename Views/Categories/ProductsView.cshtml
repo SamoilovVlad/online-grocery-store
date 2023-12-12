@@ -41,7 +41,7 @@
         @{
             foreach (var product in Model.products)
             {
-                <a class="products-view-product" id="@product.id">
+                <a class="products-view-product" id="@product.id" onclick="ShowProductMenu('@product.id', '@product.Title', '@product.Price')">
                     <div class="product-overlay" style="z-index:3"></div>
                     @{
                         if(product.Promo!=null)
@@ -88,6 +88,33 @@
                         <svg id="@product.id" onclick="Plus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="@product.id" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="@product.id" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
                     </div>
                 </a>
+
+                <div class="product-menu">
+                    <svg id="close-icon-product-menu" onclick="CloseProductMenu()" xmlns="http://www.w3.org/2000/svg" height="1.5rem" viewBox="0 0 384 512">
+                        <style type="text/css">
+                            #close-icon-product-menu {
+                                fill: #000000;
+                                margin-left: auto;
+                                cursor: pointer;
+                            }</style>
+                        <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
+                    </svg>
+                    <div id="ImageContainer">
+                        <img src="@imagePath">
+                    </div>
+                    <div class="product-menu-title-section">
+                        <div id="productTitle">@product.Title</div>
+                        <a class="product-menu-add-to-favorites-btn"><i class="fa-regular fa-heart" style="color: #000000;"></i></a>
+                    </div>
+                    <div class="product-menu-price-section">
+                        <div id="productPrice">@product.Price</div>
+                        <p id="price-text">грн за кг</p>
+                    </div>
+                    <div class="product-menu-buttons">
+                        <a class="product-menu-add-to-cart-btn"><p style="font-weight:400;">Додати в кошик</p></a>
+                        <a class="product-menu-more-info-btn" asp-controller="Home" asp-action="ProductView" asp-route-id="@product.id"><p style="font-weight:400;">Детальніше</p></a>
+                    </div>
+                </div>
             }
         }
     </div>
@@ -112,7 +139,7 @@
             <a class="pagenated-btn" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="3" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory"></a>
 
         }
-        else if(Model.currentPage == Model.currentPage && Model.currentPage == 2)
+        else if (Model.currentPage == Model.currentPage && Model.currentPage == 2)
         {
             <a class="pagenated-btn" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="@(Model.currentPage - 1)" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory"></a>
             <a class="pagenated-btn" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="@(Model.currentPage)" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory"></a>
@@ -148,6 +175,8 @@
         }
     </div>
 </div>
+
+
 
 
 <script>
@@ -191,6 +220,42 @@
         //}
         $('#skeleton').hide();
     });
+
+    function ShowProductMenu(id, title, price) {
+        var menu = document.getElementsByClassName('product-menu')[0];
+        menu.style.right = '0.5rem';
+        menu.style.visibility = "visible";
+        menu.style.opacity = "1";
+        $("body").addClass("overlay");
+        document.getElementsByClassName('footer-container')[0].style.zIndex = '0';
+        isProductMenuShowing = true;
+
+        //var imgElement = document.createElement('img');
+        //imgElement.src = `/Product_Images/product_${id}.jpg`;
+        //imgElement.id = 'productImage';
+        //imgElement.style.width = '262px';
+        //imgElement.style.height = '208px';
+
+        //var existingImg = document.getElementById('productImage');
+        //if (existingImg) {
+        //    existingImg.remove();
+        //}
+
+        //document.getElementById('productTitle').innerText = title;
+        //document.getElementById('productPrice').innerText = price;
+        //document.getElementById('ImageContainer').appendChild(imgElement);
+
+    }
+
+    function CloseProductMenu() {
+        var menu = document.getElementsByClassName('product-menu')[0];
+        menu.style.right = '-2rem';
+        menu.style.visibility = "collapse";
+        menu.style.opacity = "0";
+        document.getElementsByClassName('footer-container')[0].style.zIndex = '1100';
+        $("body").removeClass("overlay");
+        isProductMenuShowing = false;
+    }
 
     function SetPagenatedArrowBtns() {
         if (currentPage == 1)
@@ -252,8 +317,7 @@
             midleBtns[1].textContent = 2;
             midleBtns[2].textContent = 3;
         }
-        else if(pageNumber == currentPage && currentPage == 2)
-        {
+        else if (pageNumber == currentPage && currentPage == 2) {
             midleBtns[0].textContent = currentPage - 1;
             midleBtns[1].textContent = currentPage;
             midleBtns[2].textContent = currentPage + 1;

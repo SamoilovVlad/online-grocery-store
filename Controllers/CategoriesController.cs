@@ -31,7 +31,7 @@ namespace Shop_Mvc.Controllers
         }
 
         [HttpGet]
-        public IActionResult ProductsView(int currentPage, bool isOnlySales, string sortedBy, int pageSize, string subcategoryName)
+        public IActionResult ProductsView(string subcategoryName, int currentPage = 1, bool isOnlySales = false, string sortedBy = "Стандартно", int pageSize = 40) 
         {
             IEnumerable<Product> products;
 
