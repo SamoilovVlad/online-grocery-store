@@ -7,6 +7,7 @@ using Microsoft.Extensions.Caching.Memory;
 using System.Net.WebSockets;
 using System.Threading.Tasks;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace Shop_Mvc.Controllers
 {
@@ -15,21 +16,27 @@ namespace Shop_Mvc.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IDatabaseServise _DatabaseServise;
         private readonly IMemoryCache _memoryCache;
-        public HomeController(ILogger<HomeController> logger, IDatabaseServise DatabaseServise, IMemoryCache memoryCache)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public HomeController(ILogger<HomeController> logger, IDatabaseServise DatabaseServise, IMemoryCache memoryCache, IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
             _DatabaseServise = DatabaseServise;
             _memoryCache = memoryCache;
+            _httpContextAccessor = httpContextAccessor;
         }
         [HttpGet]
         public async Task<IActionResult> IndexAsync()
         {
             var stopwatch = Stopwatch.StartNew();
-            var model = _memoryCache.Get("IndexViewModel_key") as IndexViewModel;
 
-            if (model == null)
-            {
-                model = new IndexViewModel();
+            var cartProduct = GetProductsFromCookie();
+            //var model = _memoryCache.Get("IndexViewModel_key") as IndexViewModel;
+            //if (model != null && cartProduct != null)
+            //    model.cartProducts = cartProduct;
+
+            //if (model == null)
+            //{
+                var model = new IndexViewModel();
 
                 var task = Task.Run(() => _DatabaseServise.GetAllSliderImagesAsync());
 
@@ -130,30 +137,34 @@ namespace Shop_Mvc.Controllers
                 {
                     AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1)
                 });
-                model.promoProducts = promoProducts;
+
+
+
+                model.promoProducts = SetFieldIsInCart(promoProducts,cartProduct);
                 model.sliderImages = sliderImages;
                 model.mainPartialViewModel = mainPartialViewModel;
-                model.domesticManufacturerProducts = domesticManufacturerProducts;
-                model.ownBrandProducts = ownBrandProducts;
-                model.breadProducts = breadProducts;
-                model.meatProducts = meatProducts;
-                model.cheeseProducts = cheeseProducts;
-                model.milkProducts = milkProducts;
-                model.gobletProducts = gobletProducts;
-                model.coffeeProducts = coffeeProducts;
-                model.teaProducts = teaProducts;
-                model.vegetableProducts = vegetableProducts;
-                model.fruitProducts = fruitProducts;
-                model.sweetProducts = sweetProducts;
+                model.domesticManufacturerProducts = SetFieldIsInCart(domesticManufacturerProducts, cartProduct);
+                model.ownBrandProducts = SetFieldIsInCart(ownBrandProducts, cartProduct);
+                model.breadProducts = SetFieldIsInCart(breadProducts,cartProduct);
+                model.meatProducts = SetFieldIsInCart(meatProducts,cartProduct);
+                model.cheeseProducts = SetFieldIsInCart(cheeseProducts,cartProduct);
+                model.milkProducts = SetFieldIsInCart(milkProducts,cartProduct);
+                model.gobletProducts = SetFieldIsInCart(gobletProducts,cartProduct);
+                model.coffeeProducts = SetFieldIsInCart(coffeeProducts,cartProduct);
+                model.teaProducts = SetFieldIsInCart(teaProducts,cartProduct);
+                model.vegetableProducts = SetFieldIsInCart(vegetableProducts,cartProduct);
+                model.fruitProducts = SetFieldIsInCart(fruitProducts,cartProduct);
+                model.sweetProducts = SetFieldIsInCart(sweetProducts,cartProduct);
+                model.cartProducts = cartProduct;
 
-                _memoryCache.Set("IndexViewModel_key", model, new MemoryCacheEntryOptions
-                {
-                    AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1)
-                });
-            }
-            stopwatch.Stop();
-            var executionTime = stopwatch.Elapsed;
-            _logger.LogInformation($"IndexAsync execution time: {executionTime}");
+                //_memoryCache.Set("IndexViewModel_key", model, new MemoryCacheEntryOptions
+                //{
+                //    AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1)
+                //});
+            //}
+            //stopwatch.Stop();
+            //var executionTime = stopwatch.Elapsed;
+            //_logger.LogInformation($"IndexAsync execution time: {executionTime}");
             return View("Index", model);
         }
 
@@ -178,7 +189,10 @@ namespace Shop_Mvc.Controllers
 
         public IActionResult GetStartProductPartialView()
         {
-            return PartialView("StartProductPartialView", _memoryCache.Get("PromoProducts_key") as List<Product>);
+            var products = _memoryCache.Get("PromoProducts_key") as IEnumerable<Product>;
+            var cartProducts = GetProductsFromCookie();
+            products = SetFieldIsInCart(products, cartProducts);
+            return PartialView("StartProductsPartialView", products);
         }
 
         public IActionResult GetSecondPartialView()
@@ -196,58 +210,144 @@ namespace Shop_Mvc.Controllers
         }
         public IActionResult GetProductPartialView(string name)
         {
-            var products = new List<Product>();
+            IEnumerable<Product> products;
             switch (name)
             {
                 case "Акційні товари":
-                    products = _memoryCache.Get("PromoProducts_key") as List<Product>;
-                    return PartialView("StartProductPartialView", products);
+                    {
+                        products = _memoryCache.Get("PromoProducts_key") as IEnumerable<Product>;
+                        var cartProducts = GetProductsFromCookie();
+                        products = SetFieldIsInCart(products, cartProducts);
+                        return PartialView("StartProductPartialView", products);
+                    }
                 case "Власні торгові марки":
-                    products = _memoryCache.Get("OwnBrandProducts_key") as List<Product>;
-                    return PartialView("StartProductPartialView", products);
+                    {
+                        products = _memoryCache.Get("OwnBrandProducts_key") as List<Product>;
+                        var cartProducts = GetProductsFromCookie();
+                        products = SetFieldIsInCart(products, cartProducts);
+                        return PartialView("StartProductPartialView", products);
+                    }
                 case "Вітчизняний виробник":
-                    products = _memoryCache.Get("DomesticManufacturerProducts_key") as List<Product>;
-                    return PartialView("StartProductPartialView", products);
+                    {
+                        products = _memoryCache.Get("DomesticManufacturerProducts_key") as List<Product>;
+                        var cartProducts = GetProductsFromCookie();
+                        products = SetFieldIsInCart(products, cartProducts);
+                        return PartialView("StartProductPartialView", products);
+                    }
                 case "Хліб":
-                    products = _memoryCache.Get("BreadProducts_key") as List<Product>;
-                    return PartialView("StartProductPartialView", products);
+                    {
+                        products = _memoryCache.Get("BreadProducts_key") as List<Product>;
+                        var cartProducts = GetProductsFromCookie();
+                        products = SetFieldIsInCart(products, cartProducts);
+                        return PartialView("StartProductPartialView", products);
+                    }
                 case "М'ясо":
-                    products = _memoryCache.Get("MeatProducts_key") as List<Product>;
-                    return PartialView("StartProductPartialView", products);
+                    {
+                        products = _memoryCache.Get("MeatProducts_key") as List<Product>;
+                        var cartProducts = GetProductsFromCookie();
+                        products = SetFieldIsInCart(products, cartProducts);
+                        return PartialView("StartProductPartialView", products);
+                    }
                 case "Сири":
-                    products = _memoryCache.Get("CheeseProducts_key") as List<Product>;
-                    return PartialView("StartProductPartialView", products);
+                    {
+                        products = _memoryCache.Get("CheeseProducts_key") as List<Product>;
+                        var cartProducts = GetProductsFromCookie();
+                        products = SetFieldIsInCart(products, cartProducts);
+                        return PartialView("StartProductPartialView", products);
+                    }
                 case "Молочні продукти":
-                    products = _memoryCache.Get("MilkProducts_key") as List<Product>;
-                    return PartialView("StartProductPartialView", products);
+                    {
+                        products = _memoryCache.Get("MilkProducts_key") as List<Product>;
+                        var cartProducts = GetProductsFromCookie();
+                        products = SetFieldIsInCart(products, cartProducts);
+                        return PartialView("StartProductPartialView", products);
+                    }
                 case "Бокалія":
-                    products = _memoryCache.Get("GobletProducts_key") as List<Product>;
-                    return PartialView("StartProductPartialView", products);
+                    {
+                        products = _memoryCache.Get("GobletProducts_key") as List<Product>;
+                        var cartProducts = GetProductsFromCookie();
+                        products = SetFieldIsInCart(products, cartProducts);
+                        return PartialView("StartProductPartialView", products);
+                    }
                 case "Кава":
-                    products = _memoryCache.Get("CoffeeProducts_key") as List<Product>;
-                    return PartialView("StartProductPartialView", products);
+                    {
+                        products = _memoryCache.Get("CoffeeProducts_key") as List<Product>;
+                        var cartProducts = GetProductsFromCookie();
+                        products = SetFieldIsInCart(products, cartProducts);
+                        return PartialView("StartProductPartialView", products);
+                    }
                 case "Чай":
-                    products = _memoryCache.Get("TeaProducts_key") as List<Product>;
-                    return PartialView("StartProductPartialView", products);
+                    {
+                        products = _memoryCache.Get("TeaProducts_key") as List<Product>;
+                        var cartProducts = GetProductsFromCookie();
+                        products = SetFieldIsInCart(products, cartProducts);
+                        return PartialView("StartProductPartialView", products);
+                    }
                 case "Овочі":
-                    products = _memoryCache.Get("VegetableProducts_key") as List<Product>;
-                    return PartialView("StartProductPartialView", products);
+                    {
+                        products = _memoryCache.Get("VegetableProducts_key") as List<Product>;
+                        var cartProducts = GetProductsFromCookie();
+                        products = SetFieldIsInCart(products, cartProducts);
+                        return PartialView("StartProductPartialView", products);
+                    }
                 case "Фрукти":
-                    products = _memoryCache.Get("FruitProducts_key") as List<Product>;
-                    return PartialView("StartProductPartialView", products);
+                    {
+                        products = _memoryCache.Get("FruitProducts_key") as List<Product>;
+                        var cartProducts = GetProductsFromCookie();
+                        products = SetFieldIsInCart(products, cartProducts);
+                        return PartialView("StartProductPartialView", products);
+                    }
                 case "Цукурки":
-                    products = _memoryCache.Get("SweetProducts_key") as List<Product>;
-                    return PartialView("StartProductPartialView", products);
-                default: return PartialView("StartProductPartialView", products);
+                    {
+                        products = _memoryCache.Get("SweetProducts_key") as IEnumerable<Product>;
+                        var cartProducts = GetProductsFromCookie();
+                        products = SetFieldIsInCart(products, cartProducts);
+                        return PartialView("StartProductPartialView", products);
+                    }
+                default: return PartialView("StartProductPartialView", new List<Product>());
 
             }
         }
+
+        public List<CartProduct> GetProductsFromCookie()
+        {
+            var cookieValue = _httpContextAccessor.HttpContext.Request.Cookies["MyCookie"];
+
+            if (!string.IsNullOrEmpty(cookieValue))
+            {
+                var products = JsonConvert.DeserializeObject<List<CartProduct>>(cookieValue);
+
+                return products;
+            }
+            return new List<CartProduct>();
+        }
+
+        private IEnumerable<Product> SetFieldIsInCart(IEnumerable<Product> products, List<CartProduct> cartProducts)
+        {
+            var commonIds = cartProducts.Select(p => p.id).ToList();
+
+            for (var i = 0; i<commonIds.Count; i++)
+            {
+                var id = commonIds[i];
+                foreach (var product in products.Where(p => p.id == id))
+                {
+                    product.inCart = cartProducts[i];
+                }
+            }
+            return products;
+        }
+
+
+
+
+
 
         [HttpGet]
         public IActionResult ProductView(int id)
         {
             Product product = _DatabaseServise.GetProductById(id);
             IEnumerable<Product> product_list = _DatabaseServise.GetProductsBySubcategory(product.Subcategory, 4);
+            product_list = SetFieldIsInCart(product_list, GetProductsFromCookie());
             ProductViewModel productViewModel = new ProductViewModel(product, product_list);
             return View("ProductView", productViewModel);
         }

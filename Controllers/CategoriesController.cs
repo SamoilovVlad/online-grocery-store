@@ -3,7 +3,7 @@ using Shop_Mvc.Models;
 using System.Diagnostics;
 using Shop_Mvc.Data;
 using Shop_Mvc.Services;
-
+using Newtonsoft.Json;
 
 namespace Shop_Mvc.Controllers
 {
@@ -11,20 +11,24 @@ namespace Shop_Mvc.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IDatabaseServise _DatabaseServise;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CategoriesController(ILogger<HomeController> logger, IDatabaseServise databaseServise)
+        public CategoriesController(ILogger<HomeController> logger, IDatabaseServise databaseServise, IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
             _DatabaseServise = databaseServise;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpGet]
         public IActionResult SubcategoriesView(string categoryName)
         {
+            var promoProducts = SetFieldIsInCart(_DatabaseServise.GetPromoProducts(6), GetProductsFromCookie());
+
             var model = new SubcategoriesViewModel()
             {
                 Category = _DatabaseServise.GetProductCategory(categoryName),
-                promoProducts = _DatabaseServise.GetPromoProducts(6),
+                promoProducts = promoProducts,
                 Subcategories = _DatabaseServise.GetAllSubcategoriesByProductCategoryName(categoryName)
             };
             return View(model);
@@ -37,7 +41,7 @@ namespace Shop_Mvc.Controllers
 
             products = SortBy(sortedBy,subcategoryName, isOnlySales, 0 ,0);
             int count = products.Count();
-            products = products.Skip((currentPage-1)*pageSize).Take(pageSize);
+            products = SetFieldIsInCart(products.Skip((currentPage - 1) * pageSize).Take(pageSize), GetProductsFromCookie());
             
 
             var model = new ProductsViewModel()
@@ -80,6 +84,34 @@ namespace Shop_Mvc.Controllers
                 return value;
             }
             return 0;
+        }
+
+        private IEnumerable<Product> SetFieldIsInCart(IEnumerable<Product> products, List<CartProduct> cartProducts)
+        {
+            var commonIds = cartProducts.Select(p => p.id).ToList();
+
+            for (var i = 0; i < commonIds.Count; i++)
+            {
+                var id = commonIds[i];
+                foreach (var product in products.Where(p => p.id == id))
+                {
+                    product.inCart = cartProducts[i];
+                }
+            }
+            return products;
+        }
+
+        public List<CartProduct> GetProductsFromCookie()
+        {
+            var cookieValue = _httpContextAccessor.HttpContext.Request.Cookies["MyCookie"];
+
+            if (!string.IsNullOrEmpty(cookieValue))
+            {
+                var products = JsonConvert.DeserializeObject<List<CartProduct>>(cookieValue);
+
+                return products;
+            }
+            return new List<CartProduct>();
         }
 
     }

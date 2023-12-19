@@ -8,7 +8,8 @@
     <script src="https://kit.fontawesome.com/3ab9474f39.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div id="skeleton" style="position:absolute; width:100%; height:100%; z-index:10000; background-color:green;"></div>
+    <div id="loader-green" class="loader"></div>
+    <div id="loader-black" class="loader"></div>
     <header class="header">
         <div class="header-top">
             <div class="header-left-side">
@@ -70,126 +71,126 @@
             <div class="catalog-menu-wrapper">
                 <ul class="catalog-menu-items">
                     <li class="catalog-menu-item">
-                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Кулінарія">
+                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Кулінарія" onclick="ShowLoader()">
                             <img class="catalog-menu-img" src="~/Images/Sale.webp" />
                             <span class="catalog-menu-item-text">Акційні товари</span>
                             <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
                         </a>
                     </li>
                     <li class="catalog-menu-item">
-                        <a class="catalog-menu-item-link" onclick="AddLoading()" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Солодощі, снеки">
+                        <a class="catalog-menu-item-link" onclick="ShowLoader();" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Солодощі, снеки">
                             <img class="catalog-menu-img" src="~/Images/Donat.webp" />
                             <span class="catalog-menu-item-text">Солодощі, снеки</span>
                             <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
                         </a>
                     </li>
                     <li class="catalog-menu-item">
-                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Кулінарія">
+                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Кулінарія" onclick="ShowLoader();">
                             <img class="catalog-menu-img" src="~/Images/Heart.webp" />
                             <span class="catalog-menu-item-text">Серце</span>
                             <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
                         </a>
                     </li>
                     <li class="catalog-menu-item">
-                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Кулінарія">
+                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Кулінарія" onclick="ShowLoader();">
                             <img class="catalog-menu-img" src="~/Images/Sport.webp" />
                             <span class="catalog-menu-item-text">Для спротсменів</span>
                             <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
                         </a>
                     </li>
                     <li class="catalog-menu-item">
-                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Кулінарія">
+                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Кулінарія" onclick="ShowLoader();">
                             <img class="catalog-menu-img" src="~/Images/Pan.webp" />
                             <span class="catalog-menu-item-text">Кулінарія</span>
                             <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
                         </a>
                     </li>
                     <li class="catalog-menu-item">
-                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Овочі, фрукти та горіхи">
+                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Овочі, фрукти та горіхи" onclick="ShowLoader();">
                             <img class="catalog-menu-img" src="~/Images/Apple.webp" />
                             <span class="catalog-menu-item-text">Овочі, фрукти та горіхи</span>
                             <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
                         </a>
                     </li>
                     <li class="catalog-menu-item">
-                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Пекарня">
+                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Пекарня" onclick="ShowLoader();">
                             <img class="catalog-menu-img" src="~/Images/Bread.webp" />
                             <span class="catalog-menu-item-text">Пекарня</span>
                             <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
                         </a>
                     </li>
                     <li class="catalog-menu-item">
-                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Молочне, яйця, сир">
+                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Молочне, яйця, сир" onclick="ShowLoader();">
                             <img class="catalog-menu-img" src="~/Images/Milk.webp" />
                             <span class="catalog-menu-item-text">Молочне, яйця, сир</span>
                             <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
                         </a>
                     </li>
                     <li class="catalog-menu-item">
-                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="М`ясо, риба">
+                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="М`ясо, риба" onclick="ShowLoader();">
                             <img class="catalog-menu-img" src="~/Images/Meat.webp" />
                             <span class="catalog-menu-item-text">М`ясо, риба</span>
                             <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
                         </a>
                     </li>
                     <li class="catalog-menu-item">
-                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Бакалія, консерви, спеції">
+                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Бакалія, консерви, спеції" onclick="ShowLoader();">
                             <img class="catalog-menu-img" src="~/Images/Bag.webp" />
                             <span class="catalog-menu-item-text">Бакалія, консерви, спеції</span>
                             <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
                         </a>
                     </li>
                     <li class="catalog-menu-item">
-                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Дитяче">
+                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Дитяче" onclick="ShowLoader();">
                             <img class="catalog-menu-img" src="~/Images/Child.webp" />
                             <span class="catalog-menu-item-text">Дитяче</span>
                             <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
                         </a>
                     </li>
                     <li class="catalog-menu-item">
-                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Зоотовари">
+                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Зоотовари" onclick="ShowLoader();">
                             <img class="catalog-menu-img" src="~/Images/Cat.webp" />
                             <span class="catalog-menu-item-text">Зоотовари</span>
                             <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
                         </a>
                     </li>
                     <li class="catalog-menu-item">
-                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Напої, чай та кава">
+                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Напої, чай та кава" onclick="ShowLoader();">
                             <img class="catalog-menu-img" src="~/Images/Drinks.webp" />
                             <span class="catalog-menu-item-text">Напої, чай та кава</span>
                             <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
                         </a>
                     </li>
                     <li class="catalog-menu-item">
-                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Заморожені продукти">
+                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Заморожені продукти" onclick="ShowLoader();">
                             <img class="catalog-menu-img" src="~/Images/Winter.webp" />
                             <span class="catalog-menu-item-text">Заморожені продукти</span>
                             <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
                         </a>
                     </li>
                     <li class="catalog-menu-item">
-                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Алкоголь (доставляємо з 13:00 до 21:00)">
+                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Алкоголь (доставляємо з 13:00 до 21:00)" onclick="ShowLoader();">
                             <img class="catalog-menu-img" src="~/Images/Alco.webp" />
                             <span class="catalog-menu-item-text">Алкоголь</span>
                             <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
                         </a>
                     </li>
                     <li class="catalog-menu-item">
-                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Краса та здоров`я">
+                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Краса та здоров`я" onclick="ShowLoader();">
                             <img class="catalog-menu-img" src="~/Images/Style.webp" />
                             <span class="catalog-menu-item-text">Краса та здоров'я</span>
                             <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
                         </a>
                     </li>
                     <li class="catalog-menu-item">
-                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Для дому, саду та відпочинку">
+                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Для дому, саду та відпочинку" onclick="ShowLoader();">
                             <img class="catalog-menu-img" src="~/Images/Home.webp" />
                             <span class="catalog-menu-item-text">Для дому, саду та відпочинку</span>
                             <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
                         </a>
                     </li>
                     <li class="catalog-menu-item">
-                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Тютюнові вироби (ціна вказана без акцизу)">
+                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Тютюнові вироби (ціна вказана без акцизу)" onclick="ShowLoader();">
                             <img class="catalog-menu-img" src="~/Images/Cigarettes.webp" />
                             <span class="catalog-menu-item-text">Тютюнові вироби</span>
                             <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
@@ -203,99 +204,49 @@
                 <p class="cart-empty-header-text">Кошик</p>
                 <svg width="1.000rem" height="1.000rem" viewBox="0 0 16 16" fill="none" onclick="CloseCart()" xmlns="http://www.w3.org/2000/svg" style="cursor:pointer;" class=""><path d="M2 2L14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M14 2L2 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
             </div>
-            <div class="cart-empty-body" style="display:none">
+            <div class="cart-empty-body" style="display:none;">
                 <svg style="align-self:center;" width="5.438rem" height="6.938rem" viewBox="0 0 87 111" fill="none" xmlns="http://www.w3.org/2000/svg" class="cart-empty__icon"><path d="M47.2939 43.0395C43.4322 41.5659 40.9507 38.9064 39.8492 35.061C38.7478 31.2156 39.136 26.8326 41.0137 21.9121C42.8913 16.9915 45.5218 13.4642 48.9049 11.3301C52.2881 9.19605 55.9105 8.86583 59.7723 10.3395C63.6028 11.8012 66.0688 14.4548 67.1702 18.3001C68.2716 22.1455 67.8835 26.5285 66.0058 31.4491C64.1281 36.3696 61.4977 39.897 58.1145 42.031C54.7314 44.1651 51.1245 44.5012 47.2939 43.0395ZM48.8983 38.8352C51.4832 39.8216 53.8922 39.4922 56.1256 37.8469C58.4019 36.1825 60.2472 33.4972 61.6614 29.7912C63.0756 26.0852 63.4824 22.8689 62.8817 20.1422C62.324 17.3963 60.7528 15.5301 58.1679 14.5438C55.583 13.5574 53.1524 13.8964 50.8761 15.5609C48.6116 17.1942 46.7723 19.8639 45.3581 23.5699C43.9439 27.2759 43.5156 30.5019 44.0733 33.2478C44.6739 35.9745 46.2823 37.8369 48.8983 38.8352Z" fill="#3C9C30"></path><rect x="14.3589" y="34.5059" width="68.4175" height="21.9612" fill="white"></rect><path d="M5.4375 28.9629H15.9097L24.4688 77.9004H70.6875L76.125 39.8379H29.9062" stroke="#C8CBCE" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="25.3125" cy="97.2129" r="6" fill="#C8CBCE"></circle><circle cx="68.8125" cy="97.2129" r="6" fill="#C8CBCE"></circle></svg>
                 <div class="cart-empty-body-content">
                     <p class="cart-empty-body-content-maintext">Ваш кошик порожній</p>
                     <p class="cart-empty-body-content-text">Для вибору відповідних товарів перейдіть в необхідну категорію</p>
                 </div>
-                <button class="burger-menu-body-left-side-btn" style="align-self:center; margin:0; width:236.5px; margin-top:2rem;">
+                <button class="burger-menu-body-left-side-btn" onclick="catalogMenuShow()" id="cartBtn" style="align-self:center; margin:0; width:236.5px; margin-top:2rem;">
                     <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" id="catalogIcon">
                         <path d="M547.6 103.8L490.3 13.1C485.2 5 476.1 0 466.4 0H109.6C99.9 0 90.8 5 85.7 13.1L28.3 103.8c-29.6 46.8-3.4 111.9 51.9 119.4c4 .5 8.1 .8 12.1 .8c26.1 0 49.3-11.4 65.2-29c15.9 17.6 39.1 29 65.2 29c26.1 0 49.3-11.4 65.2-29c15.9 17.6 39.1 29 65.2 29c26.2 0 49.3-11.4 65.2-29c16 17.6 39.1 29 65.2 29c4.1 0 8.1-.3 12.1-.8c55.5-7.4 81.8-72.5 52.1-119.4zM499.7 254.9l-.1 0c-5.3 .7-10.7 1.1-16.2 1.1c-12.4 0-24.3-1.9-35.4-5.3V384H128V250.6c-11.2 3.5-23.2 5.4-35.6 5.4c-5.5 0-11-.4-16.3-1.1l-.1 0c-4.1-.6-8.1-1.3-12-2.3V384v64c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V384 252.6c-4 1-8 1.8-12.3 2.3z" />
                     </svg>
-                    <p style="margin:0;">Каталог товарів</p>
+                    <p style="margin:0;" id="cartBtnText">Каталог товарів</p>
                 </button>
             </div>
             <div class="cart-body">
                 <div class="cart-body-items">
-                    <div class="cart-body-item" id="27357">
-                        <img src="/Images/Cheese.webp" />
-                        <div class="cart-body-item-info">
-                            <div class="cart-body-item-info-label">Вваоіп іаівлпіп 180е фіолфіам</div>
-                            <div id="1" class="cart-body-item-info-count-btn">
-                                <svg id="27357" onclick="Minus(event)" width="2.000rem" height="2.000rem" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="27357" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
-                                <div style="height:100%; width:60px; position:relative; display:flex; align-items:center; justify-content:center;">
-                                    <input id="cartInput27357" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" class="num-input" value="1">
-                                    <span id="cartSpan27357" class="cart-body-item-info-count-btn-counter-num">1</span>
-                                    <span class="cart-body-item-info-count-btn-counter-text">шт</span>
-                                </div>
-                                <svg id="27357" onclick="Plus(event)" width="2.000rem" height="2.000rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="27357" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="1" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
-                            </div>
-                        </div>
-                        <div class="cart-body-item-controls">
-                            <div class="cart-body-item-controls-icons">
-                                <svg width="1.000rem" height="1.000rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="cart-body-item-controls-icons-icon"><path d="M14.5455 7.63692C14.548 8.59682 14.3237 9.54374 13.8909 10.4006C13.3778 11.4273 12.5889 12.2909 11.6127 12.8946C10.6365 13.4983 9.51145 13.8183 8.36364 13.8187C7.40373 13.8212 6.45681 13.597 5.6 13.1642L1.45455 14.546L2.83636 10.4006C2.40359 9.54374 2.17932 8.59682 2.18182 7.63692C2.18226 6.4891 2.50226 5.36408 3.10598 4.38786C3.70969 3.41164 4.57328 2.62278 5.6 2.10964C6.45681 1.67687 7.40373 1.4526 8.36364 1.4551H8.72727C10.2432 1.53873 11.6749 2.17856 12.7485 3.25209C13.822 4.32561 14.4618 5.75739 14.5455 7.27328V7.63692Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                                <svg width="1.000rem" height="1.000rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="cart-body-item-controls-icons-icon"><path d="M2 4H3.33333H14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M4.99976 4V2.66667C4.99976 2.31305 5.14023 1.64005 5.39028 1.39C5.64033 1.13995 5.97947 1 6.33309 1L9.66642 1C10.02 1 10.3592 1.13995 10.6092 1.39C10.8593 1.64005 10.9998 2.31305 10.9998 2.66667V4M12.9998 4V13.6667C12.9998 14.0203 12.8593 14.3594 12.6092 14.6095C12.3592 14.8595 12.02 15 11.6664 15H4.33309C3.97947 15 3.64033 14.8595 3.39028 14.6095C3.14023 14.3594 2.99976 14.0203 2.99976 13.6667V4H12.9998Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M6.5 7.5V11.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.5 7.5V11.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                            </div>
-                            <div class="cart-body-item-controls-price">
-                                <div class="cart-body-item-controls-price-secondary">120.00 грн за шт</div>
-                                <div class="cart-body-item-controls-price-primary">120.00 грн</div>
-                            </div>
-                        </div>
+                </div>
+            </div>
+            <div class="cart-body-total">
+                <div class="cart-body-total-header" onclick="ShowDetails()">
+                    <p style="margin:0;">Детальніше</p>
+                    <svg id="detailsArrowIcon" width="0.750rem" height="0.750rem" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M11 8.5L6 3.5L1 8.5" stroke="currentColor"></path></svg>
+                </div>
+                <div class="cart-body-total-details">
+                    <div class="cart-body-total-details-item">
+                        <p class="cart-body-total-details-item-left">Товари</p>
+                        <p class="cart-body-total-details-item-right">156.78 грн</p>
                     </div>
-                    <div class="cart-body-item" id="2">
-                        <img src="/Images/Cheese.webp" />
-                        <div class="cart-body-item-info">
-                            <div class="cart-body-item-info-label">Вваоіп іаівлпіп 180е фіолфіам</div>
-                            <div id="2" class="cart-body-item-info-count-btn">
-                                <svg id="2" onclick="Minus(event)" width="2.000rem" height="2.000rem" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="2" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
-                                <div style="height:100%; width:60px; position:relative; display:flex; align-items:center; justify-content:center;">
-                                    <input id="cartInput2" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" class="num-input" value="1">
-                                    <span id="cartSpan2" class="cart-body-item-info-count-btn-counter-num">1</span>
-                                    <span class="cart-body-item-info-count-btn-counter-text">шт</span>
-                                </div>
-                                <svg id="2" onclick="Plus(event)" width="2.000rem" height="2.000rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="2" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="2" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
-                            </div>
-                        </div>
-                        <div class="cart-body-item-controls">
-                            <div class="cart-body-item-controls-icons">
-                                <svg width="1.000rem" height="1.000rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="cart-body-item-controls-icons-icon"><path d="M14.5455 7.63692C14.548 8.59682 14.3237 9.54374 13.8909 10.4006C13.3778 11.4273 12.5889 12.2909 11.6127 12.8946C10.6365 13.4983 9.51145 13.8183 8.36364 13.8187C7.40373 13.8212 6.45681 13.597 5.6 13.1642L1.45455 14.546L2.83636 10.4006C2.40359 9.54374 2.17932 8.59682 2.18182 7.63692C2.18226 6.4891 2.50226 5.36408 3.10598 4.38786C3.70969 3.41164 4.57328 2.62278 5.6 2.10964C6.45681 1.67687 7.40373 1.4526 8.36364 1.4551H8.72727C10.2432 1.53873 11.6749 2.17856 12.7485 3.25209C13.822 4.32561 14.4618 5.75739 14.5455 7.27328V7.63692Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                                <svg width="1.000rem" height="1.000rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="cart-body-item-controls-icons-icon"><path d="M2 4H3.33333H14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M4.99976 4V2.66667C4.99976 2.31305 5.14023 1.64005 5.39028 1.39C5.64033 1.13995 5.97947 1 6.33309 1L9.66642 1C10.02 1 10.3592 1.13995 10.6092 1.39C10.8593 1.64005 10.9998 2.31305 10.9998 2.66667V4M12.9998 4V13.6667C12.9998 14.0203 12.8593 14.3594 12.6092 14.6095C12.3592 14.8595 12.02 15 11.6664 15H4.33309C3.97947 15 3.64033 14.8595 3.39028 14.6095C3.14023 14.3594 2.99976 14.0203 2.99976 13.6667V4H12.9998Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M6.5 7.5V11.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.5 7.5V11.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                            </div>
-                            <div class="cart-body-item-controls-price">
-                                <div class="cart-body-item-controls-price-secondary">120.00 грн за шт</div>
-                                <div class="cart-body-item-controls-price-primary">120.00 грн</div>
-                            </div>
-                        </div>
+                    <div class="cart-body-total-details-item">
+                        <p class="cart-body-total-details-item-left">Акції</p>
+                        <p class="cart-body-total-details-item-right">16.46 грн</p>
                     </div>
                 </div>
-                <div class="cart-body-total">
-                    <div class="cart-body-total-header" onclick="ShowDetails()">
-                        <p style="margin:0;">Детальніше</p>
-                        <svg id="detailsArrowIcon" width="0.750rem" height="0.750rem" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M11 8.5L6 3.5L1 8.5" stroke="currentColor"></path></svg>
+                <div class="cart-body-total-footer">
+                    <div class="cart-body-total-footer-price">
+                        <div class="cart-body-total-footer-price-top">Всього:</div>
+                        <div class="cart-body-total-footer-price-bottom">217.34 грн</div>
                     </div>
-                    <div class="cart-body-total-details">
-                        <div class="cart-body-total-details-item">
-                            <p class="cart-body-total-details-item-left">Товари</p>
-                            <p class="cart-body-total-details-item-right">156.78 грн</p>
-                        </div>
-                        <div class="cart-body-total-details-item">
-                            <p class="cart-body-total-details-item-left">Акції</p>
-                            <p class="cart-body-total-details-item-right">16.46 грн</p>
-                        </div>
-                    </div>
-                    <div class="cart-body-total-footer">
-                        <div class="cart-body-total-footer-price">
-                            <div class="cart-body-total-footer-price-top">Всього:</div>
-                            <div class="cart-body-total-footer-price-bottom">217.34 грн</div>
-                        </div>
-                        <button class="burger-menu-body-left-side-btn" style="margin:0;">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" id="catalogIcon">
-                                <path d="M547.6 103.8L490.3 13.1C485.2 5 476.1 0 466.4 0H109.6C99.9 0 90.8 5 85.7 13.1L28.3 103.8c-29.6 46.8-3.4 111.9 51.9 119.4c4 .5 8.1 .8 12.1 .8c26.1 0 49.3-11.4 65.2-29c15.9 17.6 39.1 29 65.2 29c26.1 0 49.3-11.4 65.2-29c15.9 17.6 39.1 29 65.2 29c26.2 0 49.3-11.4 65.2-29c16 17.6 39.1 29 65.2 29c4.1 0 8.1-.3 12.1-.8c55.5-7.4 81.8-72.5 52.1-119.4zM499.7 254.9l-.1 0c-5.3 .7-10.7 1.1-16.2 1.1c-12.4 0-24.3-1.9-35.4-5.3V384H128V250.6c-11.2 3.5-23.2 5.4-35.6 5.4c-5.5 0-11-.4-16.3-1.1l-.1 0c-4.1-.6-8.1-1.3-12-2.3V384v64c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V384 252.6c-4 1-8 1.8-12.3 2.3z" />
-                            </svg>
-                            <p style="margin:0;">Підтвердити</p>
-                        </button>
-                    </div>
+                    <button class="burger-menu-body-left-side-btn" style="margin:0;">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" id="catalogIcon">
+                            <path d="M547.6 103.8L490.3 13.1C485.2 5 476.1 0 466.4 0H109.6C99.9 0 90.8 5 85.7 13.1L28.3 103.8c-29.6 46.8-3.4 111.9 51.9 119.4c4 .5 8.1 .8 12.1 .8c26.1 0 49.3-11.4 65.2-29c15.9 17.6 39.1 29 65.2 29c26.1 0 49.3-11.4 65.2-29c15.9 17.6 39.1 29 65.2 29c26.2 0 49.3-11.4 65.2-29c16 17.6 39.1 29 65.2 29c4.1 0 8.1-.3 12.1-.8c55.5-7.4 81.8-72.5 52.1-119.4zM499.7 254.9l-.1 0c-5.3 .7-10.7 1.1-16.2 1.1c-12.4 0-24.3-1.9-35.4-5.3V384H128V250.6c-11.2 3.5-23.2 5.4-35.6 5.4c-5.5 0-11-.4-16.3-1.1l-.1 0c-4.1-.6-8.1-1.3-12-2.3V384v64c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V384 252.6c-4 1-8 1.8-12.3 2.3z" />
+                        </svg>
+                        <p style="margin:0;">Підтвердити</p>
+                    </button>
                 </div>
             </div>
         </div>
@@ -567,8 +518,32 @@
     @await RenderSectionAsync("Scripts", required: false)
     <script>
 
+        document.addEventListener("DOMContentLoaded", function () {
+
+            $('#loader-green').hide();
+            $('#loader-black').hide();
+
+            GetCartProductFromCookie();
+            console.log(productsInCart);
+            SetCart();
+            CheckIfCartIsEmpty();
+            SetInputs();
+            GetFullPriceForCart();
+        });
+
         window.addEventListener('resize', removeIcons);
         window.addEventListener('resize', searchSize);
+
+        class CartProduct {
+            constructor(id, count, price, title) {
+                this.id = id;
+                this.count = count;
+                this.price = price;
+                this.title = title;
+            }
+        }
+
+        var productsInCart = [];
         var searchIsFull = false;
         var isCatalogMenuShowing = false;
         var isBurgerMenuShowing = false;
@@ -582,6 +557,21 @@
                 catalogMenuShow();
             else
                 catalogMenuClose();
+        }
+
+        function ShowLoader() {
+            $('#loader-green').show();
+        };
+        function ShowLoaderBlack() {
+            $('#loader-black').show();
+        };
+
+        function SetCart() {
+            var cart = document.getElementsByClassName('cart-body-items')[0];
+            for (var i = 0; i < productsInCart.length; i++) {
+                var item = AddHtmlToCart(productsInCart[i]);
+                cart.innerHTML += item;
+            }
         }
 
         function catalogMenuShow() {
@@ -619,7 +609,7 @@
                     text.style.display = '';
                 }
             }
-            if (event.target !== document.getElementsByClassName('catalogue-btn')[0] && event.target !== document.getElementById('catalogText') && !document.getElementById('burger-catalog-btn').contains(event.target)) {
+            if (event.target !== document.getElementsByClassName('catalogue-btn')[0] && event.target !== document.getElementById('catalogText') && !document.getElementById('burger-catalog-btn').contains(event.target) && event.target != document.getElementById('cartBtn') && event.target != document.getElementById('cartBtnText')) {
                 if (isCatalogMenuShowing) {
                     catalogMenuClose();
                 }
@@ -630,7 +620,7 @@
                     CloseBurgerMenu();
                 }
             }
-            if (event.target === document.getElementsByClassName('overlay')[0] && isCartShowing) {
+            if (event.target === document.getElementsByClassName('overlay')[0] && isCartShowing || event.target === document.getElementById('cartBtn') || event.target === document.getElementById('cartBtnText')) {
                 CloseCart();
             }
             if (event.target === document.getElementsByClassName('overlay')[0] && isFooterShowing) {
@@ -786,21 +776,72 @@
             }
         }
 
+        function GetFullPriceForCart() {
+            var sum = 0;
+            for (var i = 0; i < productsInCart.length; i++) {
+                sum += (productsInCart[i].count * productsInCart[i].price);
+            }
+            sum = sum.toFixed(2);
+            sum += ' грн';
+            var price = document.getElementsByClassName('cart-body-total-footer-price-bottom')[0];
+            price.textContent = sum;
+        }
 
-        document.addEventListener('DOMContentLoaded', function () {
-            var cartInputsArray = Array.from(document.getElementsByClassName('num-input'));
+        function SetInputs() {
+            var cartInputsArray = Array.from(document.getElementsByClassName('num-input-product'));
             cartInputsArray.forEach(function (input) {
                 input.addEventListener('input', function () {
-                    var id = input.id.match(/\d+/);
+                    var id = input.id.replace(/\D/g, '');
+                    var span = document.getElementById("cartSpan" + id);
+                    var productSpan = document.getElementById("productSpan" + id);
+                    var productInput = document.getElementById("cartInput" + id);
+                    var index = productsInCart.findIndex(function (element) {
+                        return element.id === id;
+                    });
+                    productsInCart[index].count = input.value;
+                    span.textContent = productsInCart[index].count;
+                    productSpan.textContent = productsInCart[index].count;
+                    productInput.value = productsInCart[index].count;
+
+                    const jsonString = JSON.stringify(productsInCart);
+                    document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
+
+                    var item = document.getElementById(`cart-body-item${id}`);
+                    var price = item.getElementsByClassName('cart-body-item-controls-price-primary')[0];
+                    price.textContent = (productsInCart[index].count * productsInCart[index].price).toFixed(2) + ' грн';
+                    GetFullPriceForCart();
+                });
+            });
+
+            var cartInputsArray1 = Array.from(document.getElementsByClassName('num-input'));
+            cartInputsArray1.forEach(function (input) {
+                input.addEventListener('input', function () {
+                    var id = input.id.replace(/\D/g, '');
                     var span = document.getElementById("cartSpan" + id);
                     var productSpan = document.getElementById("productSpan" + id);
                     var productInput = document.getElementById("productInput" + id);
-                    span.textContent = input.value;
-                    productSpan.textContent = input.value;
-                    productInput.value = productSpan.textContent;
+                    var index = productsInCart.findIndex(function (element) {
+                        return element.id === id;
+                    });
+                    console.log(input.value);
+                    productsInCart[index].count = input.value;
+                    span.textContent = productsInCart[index].count;
+                    console.log(span.textContent);
+                    if (productSpan != null)
+                        productSpan.textContent = productsInCart[index].count;
+                    if (productInput != null)
+                        productInput.value = productsInCart[index].count;
+
+                    const jsonString = JSON.stringify(productsInCart);
+                    document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
+
+                    var item = document.getElementById(`cart-body-item${id}`);
+                    var price = item.getElementsByClassName('cart-body-item-controls-price-primary')[0];
+                    price.textContent = (productsInCart[index].count * productsInCart[index].price).toFixed(2) + ' грн';
+                    GetFullPriceForCart();
                 });
             });
-        });
+        };
 
         //function AddToCart(event) {
         //    var product = document.querySelector(`.other-products-item-cart[id="${event.target.id}"]`);
@@ -809,30 +850,109 @@
         //    overlay.classList.add('green');
         //};
 
+        var lastClickTime = 0;
+
         function Plus(event) {
-            var span = document.getElementById("cartSpan" + event.target.id);
-            var input = document.getElementById("cartInput" + event.target.id);
-            var productSpan = document.getElementById("productSpan" + event.target.id);
-            var productInput = document.getElementById("productInput" + event.target.id);
-            if (span.textContent < 999) {
-                span.textContent -= -1;
-                productSpan.textContent = span.textContent;
-                input.value = span.textContent;
-                productInput.value = productSpan.textContent;
+            var currentTime = new Date().getTime();
+
+            if (currentTime - lastClickTime >= 500) {
+                var span = document.getElementById("cartSpan" + event.target.id);
+                var input = document.getElementById("cartInput" + event.target.id);
+                var productSpan = document.getElementById("productSpan" + event.target.id);
+                var productInput = document.getElementById("productInput" + event.target.id);
+                var index = productsInCart.findIndex(function (element) {
+                    return element.id === event.target.id;
+                });
+                if (productsInCart[index].count < 999) {
+                    var index = productsInCart.findIndex(function (element) {
+                        return element.id === event.target.id;
+                    });
+                    productsInCart[index].count -= -1;
+
+                    span.textContent = productsInCart[index].count;
+                    if (productSpan != null)
+                        productSpan.textContent = productsInCart[index].count;
+                    input.value = productsInCart[index].count;
+                    if (productInput != null)
+                        productInput.value = productsInCart[index].count;
+
+                    const jsonString = JSON.stringify(productsInCart);
+                    document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
+
+                    var item = document.getElementById(`cart-body-item${event.target.id}`);
+                    var price = item.getElementsByClassName('cart-body-item-controls-price-primary')[0];
+                    price.textContent = (productsInCart[index].count * productsInCart[index].price).toFixed(2) + ' грн';
+                    GetFullPriceForCart();
+
+                    lastClickTime = currentTime;
+                }
             }
         }
 
+
         function Minus(event) {
-            var span = document.getElementById("cartSpan" + event.target.id);
-            var input = document.getElementById("cartInput" + event.target.id);
-            var productSpan = document.getElementById("productSpan" + event.target.id);
-            var productInput = document.getElementById("productInput" + event.target.id);
-            if (span.textContent > 1) {
-                span.textContent -= 1;
-                productSpan.textContent = span.textContent;
-                input.value = span.textContent;
-                productInput.value = productSpan.textContent;
+            var currentTime = new Date().getTime();
+
+            if (currentTime - lastClickTime >= 500) {
+                var span = document.getElementById("cartSpan" + event.target.id);
+                var input = document.getElementById("cartInput" + event.target.id);
+                var productSpan = document.getElementById("productSpan" + event.target.id);
+                var productInput = document.getElementById("productInput" + event.target.id);
+
+                var index = productsInCart.findIndex(function (element) {
+                    return element.id === event.target.id;
+                });
+                productsInCart[index].count -= 1;
+
+                if (productsInCart[index].count > 0) {
+
+                    span.textContent = productsInCart[index].count;
+                    if (productSpan != null)
+                        productSpan.textContent = productsInCart[index].count;
+                    input.value = productsInCart[index].count;
+                    if (productInput != null)
+                        productInput.value = productsInCart[index].count;
+
+                    const jsonString = JSON.stringify(productsInCart);
+                    document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
+
+                    var item = document.getElementById(`cart-body-item${event.target.id}`);
+                    var price = item.getElementsByClassName('cart-body-item-controls-price-primary')[0];
+                    price.textContent = (productsInCart[index].count * productsInCart[index].price).toFixed(2) + ' грн';
+                    GetFullPriceForCart();
+
+                    lastClickTime = currentTime;
+                }
+
+                else {
+                    productsInCart.splice(index, 1);
+                    var counter = document.getElementById(`counterContainer${event.target.id}`);
+                    if (counter != null)
+                        counter.style.display = 'none';
+                    var overlay = document.getElementById(`overlay${event.target.id}`);
+                    if (overlay != null)
+                        overlay.classList.remove('green');
+                    var cart = document.getElementsByClassName('cart-body-items')[0];
+                    var elementToRemove = document.getElementById(`cart-body-item${event.target.id}`);
+                    if (document.getElementsByClassName('product-info-buttons')[0] != null) {
+                        var addToCartBtn = document.getElementsByClassName('product-info-add-to-cart-btn')[0];
+                        addToCartBtn.style.display = 'flex';
+                    }
+                    cart.removeChild(elementToRemove);
+
+                    const jsonString = JSON.stringify(productsInCart);
+                    document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
+
+                    CheckIfCartIsEmpty();
+                    GetFullPriceForCart();
+
+                    lastClickTime = currentTime
+                }
             }
+        }
+
+        function deleteCookie(name) {
+            document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT;";
         }
 
         function ShowDetails() {
@@ -849,6 +969,65 @@
                 isDetailsShowing = true;
             }
 
+        }
+
+        function GetCartProductFromCookie() {
+            const cookieValue = document.cookie.split(';').find(cookie => cookie.trim().startsWith('MyCookie'));
+
+            if (cookieValue) {
+                const jsonString = decodeURIComponent(cookieValue.split('=')[1]);
+                try {
+                    const productsArray = JSON.parse(jsonString);
+                    productsInCart = productsArray.map(product => new CartProduct(product.id, product.count, product.price, product.title));
+                } catch (error) {
+                    console.error('Error parsing JSON:', error);
+                }
+            }
+        }
+
+        function AddHtmlToCart(itemInfo) {
+            var totalPrice = (itemInfo.price * itemInfo.count).toFixed(2);
+            var item = `<div class="cart-body-item" id="cart-body-item${itemInfo.id}">
+                                                            <img src="/Product_Images/product_${itemInfo.id}.jpg" />
+                                                            <div class="cart-body-item-info">
+                                                                <div class="cart-body-item-info-label">${itemInfo.title}</div>
+                                                                    <div id="${itemInfo.id}" class="cart-body-item-info-count-btn">
+                                                                            <svg id="${itemInfo.id}" onclick="Minus(event)" width="2.000rem" height="2.000rem" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="${itemInfo.id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                                    <div style="height:100%; width:60px; position:relative; display:flex; align-items:center; justify-content:center;">
+                                                                            <input id="cartInput${itemInfo.id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" class="num-input" value="${itemInfo.count}">
+                                                                                    <span id="cartSpan${itemInfo.id}" class="cart-body-item-info-count-btn-counter-num">${itemInfo.count}</span>
+                                                                        <span class="cart-body-item-info-count-btn-counter-text">шт</span>
+                                                                    </div>
+                                                                                <svg id="${itemInfo.id}" onclick="Plus(event)" width="2.000rem" height="2.000rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="${itemInfo.id}" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="${itemInfo.id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                                </div>
+                                                            </div>
+                                                            <div class="cart-body-item-controls">
+                                                                <div class="cart-body-item-controls-icons">
+                                                                    <svg width="1.000rem" height="1.000rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="cart-body-item-controls-icons-icon"><path d="M14.5455 7.63692C14.548 8.59682 14.3237 9.54374 13.8909 10.4006C13.3778 11.4273 12.5889 12.2909 11.6127 12.8946C10.6365 13.4983 9.51145 13.8183 8.36364 13.8187C7.40373 13.8212 6.45681 13.597 5.6 13.1642L1.45455 14.546L2.83636 10.4006C2.40359 9.54374 2.17932 8.59682 2.18182 7.63692C2.18226 6.4891 2.50226 5.36408 3.10598 4.38786C3.70969 3.41164 4.57328 2.62278 5.6 2.10964C6.45681 1.67687 7.40373 1.4526 8.36364 1.4551H8.72727C10.2432 1.53873 11.6749 2.17856 12.7485 3.25209C13.822 4.32561 14.4618 5.75739 14.5455 7.27328V7.63692Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                                                                    <svg width="1.000rem" height="1.000rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="cart-body-item-controls-icons-icon"><path d="M2 4H3.33333H14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M4.99976 4V2.66667C4.99976 2.31305 5.14023 1.64005 5.39028 1.39C5.64033 1.13995 5.97947 1 6.33309 1L9.66642 1C10.02 1 10.3592 1.13995 10.6092 1.39C10.8593 1.64005 10.9998 2.31305 10.9998 2.66667V4M12.9998 4V13.6667C12.9998 14.0203 12.8593 14.3594 12.6092 14.6095C12.3592 14.8595 12.02 15 11.6664 15H4.33309C3.97947 15 3.64033 14.8595 3.39028 14.6095C3.14023 14.3594 2.99976 14.0203 2.99976 13.6667V4H12.9998Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M6.5 7.5V11.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.5 7.5V11.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                                                                </div>
+                                                                <div class="cart-body-item-controls-price">
+                                                                        <div class="cart-body-item-controls-price-secondary">${itemInfo.price} грн за шт</div>
+                                                                                <div class="cart-body-item-controls-price-primary">${totalPrice} грн</div>
+                                                                </div>
+                                                            </div>`
+            return item;
+        }
+
+        function CheckIfCartIsEmpty() {
+            var cart = document.getElementsByClassName('cart-body')[0];
+            var emptyCart = document.getElementsByClassName('cart-empty-body')[0];
+            var cartTotal = document.getElementsByClassName('cart-body-total')[0];
+            if (productsInCart.length > 0) {
+                cart.style.display = 'flex';
+                emptyCart.style.display = 'none';
+                cartTotal.style.display = 'flex';
+            }
+            else {
+                cart.style.display = 'none';
+                emptyCart.style.display = 'flex';
+                cartTotal.style.display = 'none';
+            }
         }
 
         function AddLoading() {

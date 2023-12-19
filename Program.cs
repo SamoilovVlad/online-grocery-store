@@ -6,12 +6,14 @@ using Shop_Mvc.Data;
 using Pomelo.EntityFrameworkCore.MySql;
 using Shop_Mvc.Controllers;
 using Shop_Mvc.Services;
+using Microsoft.AspNetCore.CookiePolicy;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddMemoryCache();
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddDbContext<MyDbContext>(options =>
     options.UseMySql(
         builder.Configuration.GetConnectionString("MyDbContext"),
@@ -19,6 +21,12 @@ builder.Services.AddDbContext<MyDbContext>(options =>
     )
 );
 builder.Services.AddScoped<IDatabaseServise, DatabaseServise>();
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    options.MinimumSameSitePolicy = SameSiteMode.None;
+    options.HttpOnly = HttpOnlyPolicy.None;
+    options.Secure = CookieSecurePolicy.None;
+});
 
 
 var app = builder.Build();
@@ -37,6 +45,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+
 
 app.UseEndpoints(endpoints =>
 {

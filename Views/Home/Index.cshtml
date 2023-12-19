@@ -434,18 +434,18 @@
         dotsContainer.firstElementChild.classList.add('active-dot');
         dotsArray = Array.from(dotsContainer.children);
 
-        const productInputsArray = Array.from(document.getElementsByClassName('num-input-product'));
-        productInputsArray.forEach(productInput => {
-            productInput.addEventListener('input', () => {
-                const id = productInput.id.match(/\d+/);
-                const productSpan = document.getElementById("productSpan" + id);
-                const span = document.getElementById("cartSpan" + id);
-                const input = document.getElementById("cartInput" + id);
-                productSpan.textContent = productInput.value;
-                span.textContent = productInput.value;
-                input.value = span.textContent;
-            });
-        });
+        //const productInputsArray = Array.from(document.getElementsByClassName('num-input-product'));
+        //productInputsArray.forEach(productInput => {
+        //    productInput.addEventListener('input', () => {
+        //        const id = productInput.id.match(/\d+/);
+        //        const productSpan = document.getElementById("productSpan" + id);
+        //        const span = document.getElementById("cartSpan" + id);
+        //        const input = document.getElementById("cartInput" + id);
+        //        productSpan.textContent = productInput.value;
+        //        span.textContent = productInput.value;
+        //        input.value = span.textContent;
+        //    });
+        //});
     }
 
     function GetMainPartialOnClick(event) {
@@ -518,6 +518,9 @@
                 document.getElementsByClassName('main-page-products')[0].innerHTML = '';
                 document.getElementsByClassName('main-page-products')[0].innerHTML = data;
             })
+            .then(function(){
+                SetInputs();
+            })
             .catch(error => console.error("Failed to load partial:", error));
 
     }
@@ -584,10 +587,48 @@
     }
 
     function AddToCart(event) {
-        var product = document.querySelector(`.main-page-product[id="${event.target.id}"]`);
+        var id = event.target.id;
+        var product = document.querySelector(`.main-page-product[id="${id}"]`);
         var overlay = product.getElementsByClassName('product-overlay')[0];
         product.classList.add('added');
         overlay.classList.add('green');
+
+        var counterContainer = document.getElementById(`counterContainer${id}`);
+        counterContainer.style.display = 'flex';
+
+        var span = document.getElementById(`productSpan${id}`);
+        span.textContent = 1;
+        var input = document.getElementById(`productInput${id}`);
+        input.value = span.textContent;
+
+        //input.addEventListener('input', () => {
+        //    span.textContent = input.value;
+        //});
+        var price = document.querySelector(`.main-page-product-bottom-price[id="${id}"]`)
+        if (price == null)
+            price = document.querySelector(`.main-page-product-bottom-price-promo[id="${id}"]`)
+        var parsedPrice = price.textContent.slice(0, -4);
+        parsedPrice = parseFloat(parsedPrice.replace(',', '.'));
+        var title = product.getElementsByClassName('main-page-product-title')[0].textContent;
+
+        var cartProduct = new CartProduct(id, 1, parsedPrice, title);
+        productsInCart.push(cartProduct);
+        const jsonString = JSON.stringify(productsInCart);
+        document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
+        console.log(productsInCart);
+
+
+        var cart = document.getElementsByClassName('cart-body-items')[0];
+        var itemInfo = productsInCart.find(function (element) {
+            return element.id === id;
+        });
+        console.log(`Item info: ${itemInfo}`);
+        var item = AddHtmlToCart(itemInfo);
+        cart.innerHTML += item;
+
+        CheckIfCartIsEmpty();
+        SetInputs();
+        GetFullPriceForCart();
     };
 
     restartAutoPlayTimer();

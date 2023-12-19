@@ -28,7 +28,7 @@
                     <h1 class="product-info-title">@Html.DisplayFor(model => model.Product.Title)</h1>
                     <h2 class="product-info-price">@Html.DisplayFor(model => model.Product.Price) гривень за шт</h2>
                     <div class="product-info-buttons">
-                        <a class="product-info-add-to-cart-btn"><i class="fa-solid fa-cart-arrow-down" style="color: #ffffff; margin-right: 5px;"></i><p style="font-weight:400;">Додати в кошик</p></a>
+                        <a onclick="AddToCartProduct(event);" id="@Model.Product.id" class="product-info-add-to-cart-btn"><i id="@Model.Product.id" class="fa-solid fa-cart-arrow-down" style="color: #ffffff; margin-right: 5px;"></i><p id="@Model.Product.id" style="font-weight:400;">Додати в кошик</p></a>
                         <a class="product-info-add-to-favorites-btn"><i class="fa-regular fa-heart" style="color: #000000;"></i></a>
                     </div>
                 </div>
@@ -316,7 +316,7 @@
             @foreach (var product in Model.Product_list)
             {
                 <div class="other-products-item responsive" >
-                    <a class="other-products-item-cart" id="@product.id" asp-controller="Home" asp-action="ProductVIew" asp-route-id="@product.id">
+                    <div class="other-products-item-cart" id="@product.id">
                         @{
                             if (product.Promo != null)
                             {
@@ -325,7 +325,9 @@
                                 </div>
                             }
                         }
-                        <div class="product-overlay" style="z-index:3"></div>
+                        <a asp-controller="Home" asp-action="ProductView" asp-route-id="@product.id" style="width:100%; height:100%; position:absolute; top:0; left:0; z-index:4;" onclick="ShowLoader()">
+                            <div id="overlay@(product.id)" class="product-overlay @(product.inCart != null ? "green" : "")"></div>
+                        </a>
                         <div class="main-page-product-favorite" style="z-index:3;">
                             <svg width="1.000rem" height="0.938rem" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M14.1915 7.56097L14.218 7.52031L14.2405 7.47727C14.6216 6.74672 15 5.85591 15 4.9799C15 2.71644 13.5355 1.33759 11.8732 1.07637C10.4691 0.780647 8.956 1.35222 8.01756 2.56858C7.09624 1.31855 5.53247 0.883302 4.17204 1.06957L4.17203 1.06952L4.16182 1.07103C2.48513 1.31826 1 2.70055 1 4.9799C1 5.85591 1.37843 6.74672 1.75955 7.47727L1.782 7.52031L1.80851 7.56097C2.279 8.28247 2.86715 9.13148 3.56752 9.89897C4.82205 11.286 6.35624 12.5732 7.42816 13.3204L8.035 13.7434L8.61708 13.2869C8.64265 13.2668 8.66858 13.2465 8.69484 13.2259C9.69949 12.4384 11.1982 11.2636 12.4324 9.89901C13.1328 9.13152 13.721 8.28248 14.1915 7.56097Z" stroke="currentColor" stroke-width="1"></path></svg>
                         </div>
@@ -340,20 +342,37 @@
                             <span class="main-page-product-title" style="margin-top:135px; min-height:30px; overflow-y:hidden">@product.Title</span>
                             <span class="main-page-product-mass">@product.Brand</span>
                             <div class="main-page-product-bottom">
-                                <span class="main-page-product-bottom-price-promo">@product.Price грн</span>
+                                <span class="main-page-product-bottom-price-promo" id="@product.id">@product.Price грн</span>
                                 <span class="main-page-product-bottom-price-brand">@product.Country</span>
                             </div>
                         </div>
-                        <div class="main-page-product-counter-container">
-                            <svg id="@product.id" onclick="Minus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="@product.id" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
-                            <div class="main-page-product-counter-container-count">
-                                <input id="productInput@(product.id)" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="1" class="num-input-product">
-                                <span id="productSpan@(product.id)" class="cart-body-item-info-count-btn-counter-num">1</span>
-                                <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
-                            </div>
-                            <svg id="@product.id" onclick="Plus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="1" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="1" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
-                        </div>
-                    </a>
+                        @{
+                            if (product.inCart == null)
+                            {
+                                <div class="main-page-product-counter-container" id="counterContainer@(product.id)">
+                                    <svg id="@product.id" onclick="Minus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="@product.id" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                    <div class="main-page-product-counter-container-count">
+                                        <input id="productInput@(product.id)" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="" class="num-input-product">
+                                        <span id="productSpan@(product.id)" class="cart-body-item-info-count-btn-counter-num"></span>
+                                        <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
+                                    </div>
+                                    <svg id="@product.id" onclick="Plus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="@product.id" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="@product.id" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="main-page-product-counter-container" id="counterContainer@(product.id)" style="display:flex;">
+                                    <svg id="@product.id" onclick="Minus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="@product.id" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                    <div class="main-page-product-counter-container-count">
+                                        <input id="productInput@(product.id)" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="@product.inCart.count" class="num-input-product">
+                                        <span id="productSpan@(product.id)" class="cart-body-item-info-count-btn-counter-num">@product.inCart.count</span>
+                                        <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
+                                    </div>
+                                    <svg id="@product.id" onclick="Plus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="@product.id" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="@product.id" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                </div>
+                            }
+                        }
+                    </div>
                 </div>
             }
 
@@ -364,5 +383,151 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         $('#skeleton').hide();
+        GetCartProductFromCookie();
+
+        var index = productsInCart.findIndex(function (element) {
+            return element.id == @Model.Product.id;
+        });
+        console.log(@Model.Product.id);
+        console.log(index);
+        console.log(productsInCart)
+        if(productsInCart[index] != null)
+        {
+            var btns = document.getElementsByClassName('product-info-buttons')[0];
+            var addToCartBtn = btns.getElementsByClassName('product-info-add-to-cart-btn')[0];
+            addToCartBtn.style.display = 'none';
+            var counterContainer = MakeCounter(@Model.Product.id);
+            btns.prepend(counterContainer);
+        }
+        else {
+            console.log('ddd');
+        }
     });
+
+    function MakeCounter(id) {
+        var counter;
+        var index = productsInCart.findIndex(function (element) {
+            return element.id == id;
+        });
+        if (productsInCart[index] == undefined) {
+            console.log(productsInCart[index])
+            console.log('d');
+            counter = `<div class="product-menu-counter-container" id="counterContainer${id}" style="display:flex; position:relative; height: 48px; min-width: 196px; justify-content:space-between;">
+                                                    <svg id="${id}" onclick="Minus(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                    <div class="main-page-product-counter-container-count" style="min-width: 90px;">
+                                                            <input id="productInput${id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="1" style="margin-top:2px; left:15%;" class="num-input-product">
+                                                                <span id="productSpan${id}" class="cart-body-item-info-count-btn-counter-num">$"1"</span>
+                                                        <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
+                                                    </div>
+                                                                <svg id="${id}" onclick="Plus(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="${id}" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                </div>`;
+        }
+        else {
+            counter = `<div class="product-menu-counter-container" id="counterContainer${id}" style="display:flex; position:relative; justify-content:space-between; height: 48px; min-width: 196px">
+                                                <svg id="${id}" onclick="Minus(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                    <div class="main-page-product-counter-container-count" style="min-width: 90px;">
+                                                        <input id="productInput${id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="${productsInCart[index].count}" style="margin-top:2px; left:15%;" class="num-input-product">
+                                                            <span id="productSpan${id}" class="cart-body-item-info-count-btn-counter-num">$"${productsInCart[index].count}"</span>
+                                                    <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
+                                                </div>
+                                                            <svg id="${id}" onclick="Plus(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="${id}" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                            </div>`;
+        }
+        var tempDiv = document.createElement('div');
+        tempDiv.innerHTML = counter;
+        return tempDiv;
+    }
+
+    function AddToCartProduct(event) {
+        var id = event.target.id;
+
+        var btns = document.getElementsByClassName('product-info-buttons')[0];
+        var addToCartBtn = btns.getElementsByClassName('product-info-add-to-cart-btn')[0];
+            addToCartBtn.style.display = 'none';
+            var counterContainer = MakeCounter(@Model.Product.id);
+            btns.prepend(counterContainer);
+
+        var counterContainer = document.getElementById(`counterContainer${id}`);
+        counterContainer.style.display = 'flex';
+
+        var span = document.getElementById(`productSpan${id}`);
+        span.textContent = 1;
+        var input = document.getElementById(`productInput${id}`);
+        input.value = span.textContent;
+
+        //input.addEventListener('input', () => {
+        //    span.textContent = input.value;
+        //});
+       
+        var price = '@Model.Product.Price';
+        var parsedPrice = parseFloat(price.replace(',', '.'));
+        var title = "@Model.Product.Title";
+        title = title.replace(/&#x([0-9A-Fa-f]+);/g, function (match, hex) {
+            return String.fromCharCode(parseInt(hex, 16));
+        });
+
+        var cartProduct = new CartProduct(id, 1, parsedPrice, title);
+        productsInCart.push(cartProduct);
+        const jsonString = JSON.stringify(productsInCart);
+        document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
+        console.log(productsInCart);
+
+
+        var cart = document.getElementsByClassName('cart-body-items')[0];
+        var itemInfo = productsInCart.find(function (element) {
+            return element.id === id;
+        });
+        console.log(`Item info: ${itemInfo}`);
+        var item = AddHtmlToCart(itemInfo);
+        cart.innerHTML += item;
+
+        CheckIfCartIsEmpty();
+        SetInputs();
+        GetFullPriceForCart();
+    };
+
+    function AddToCart(event) {
+        var id = event.target.id;
+        var product = document.querySelector(`.other-products-item-cart[id="${id}"]`);
+        var overlay = product.getElementsByClassName('product-overlay')[0];
+        product.classList.add('added');
+        overlay.classList.add('green');
+
+        var counterContainer = document.getElementById(`counterContainer${id}`);
+        counterContainer.style.display = 'flex';
+
+        var span = document.getElementById(`productSpan${id}`);
+        span.textContent = 1;
+        var input = document.getElementById(`productInput${id}`);
+        input.value = span.textContent;
+
+        //input.addEventListener('input', () => {
+        //    span.textContent = input.value;
+        //});
+
+        var price = document.querySelector(`.main-page-product-bottom-price-promo[id="${id}"]`)
+        var parsedPrice = price.textContent.slice(0, -4);
+        parsedPrice = parseFloat(parsedPrice.replace(',', '.'));
+        var title = product.getElementsByClassName('main-page-product-title')[0].textContent;
+
+        var cartProduct = new CartProduct(id, 1, parsedPrice, title);
+        productsInCart.push(cartProduct);
+        const jsonString = JSON.stringify(productsInCart);
+        document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
+        console.log(productsInCart);
+
+
+        var cart = document.getElementsByClassName('cart-body-items')[0];
+        var itemInfo = productsInCart.find(function (element) {
+            return element.id === id;
+        });
+        console.log(`Item info: ${itemInfo}`);
+        var item = AddHtmlToCart(itemInfo);
+        cart.innerHTML += item;
+
+        CheckIfCartIsEmpty();
+        SetInputs();
+        GetFullPriceForCart();
+    };
+
 </script>

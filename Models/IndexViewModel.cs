@@ -17,6 +17,7 @@ namespace Shop_Mvc.Models
         public IEnumerable<Product> teaProducts { get; set; }
         public IEnumerable<Product> vegetableProducts { get; set; }
         public IEnumerable<Product> fruitProducts { get; set; }
+        public IEnumerable<CartProduct> cartProducts { get; set; }
     public IEnumerable<Product> sweetProducts { get; set; }
 
         public MainPartialViewModel mainPartialViewModel { get; set; }

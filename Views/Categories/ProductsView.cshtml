@@ -41,19 +41,16 @@
         @{
             foreach (var product in Model.products)
             {
-                <a class="products-view-product" id="@product.id" onclick="ShowProductMenu('@product.id', '@product.Title', '@product.Price')">
-                    <div class="product-overlay" style="z-index:3"></div>
+                <div class="products-view-product" id="@product.id">
+                    <div id="overlay@(product.id)" class="product-overlay @(product.inCart != null ? "green" : "")" onclick="ShowProductMenu('@product.id', '@product.Title', '@product.Price')"></div>
                     @{
-                        if(product.Promo!=null)
+                        if (product.Promo != null)
                         {
                             <div class="main-page-product-promo" style="z-index:2">
                                 <p class="main-page-product-promo-text">@product.Promo</p>
                             </div>
                         }
                     }
-                    <div class="main-page-product-cart-btn" id="@product.id">
-                        <i class="fa-solid fa-cart-shopping" style="color: #ffffff;font-size: 1.5rem;" onclick="AddToCart(event)" id="@product.id"></i>
-                    </div>
                     <div class="main-page-product-favorite">
                         <svg width="1.000rem" height="0.938rem" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M14.1915 7.56097L14.218 7.52031L14.2405 7.47727C14.6216 6.74672 15 5.85591 15 4.9799C15 2.71644 13.5355 1.33759 11.8732 1.07637C10.4691 0.780647 8.956 1.35222 8.01756 2.56858C7.09624 1.31855 5.53247 0.883302 4.17204 1.06957L4.17203 1.06952L4.16182 1.07103C2.48513 1.31826 1 2.70055 1 4.9799C1 5.85591 1.37843 6.74672 1.75955 7.47727L1.782 7.52031L1.80851 7.56097C2.279 8.28247 2.86715 9.13148 3.56752 9.89897C4.82205 11.286 6.35624 12.5732 7.42816 13.3204L8.035 13.7434L8.61708 13.2869C8.64265 13.2668 8.66858 13.2465 8.69484 13.2259C9.69949 12.4384 11.1982 11.2636 12.4324 9.89901C13.1328 9.13152 13.721 8.28248 14.1915 7.56097Z" stroke="currentColor" stroke-width="1"></path></svg>
                     </div>
@@ -61,33 +58,53 @@
                         var imagePath = $"/Product_Images/product_{product.id}.jpg";
                         <img style="width:100%; object-fit:contain; object-position:center; height:55%" src="@imagePath" />
                     }
-                    <span class="main-page-product-title" style="word-break:break-word; white-space:pre-wrap; margin-top:10px;">@product.Title</span>
+                    <span class="main-page-product-title" id="mainPageProductTitle@(product.id)" style="word-break:break-word; white-space:pre-wrap; margin-top:10px;">@product.Title</span>
                     <span class="main-page-product-mass">@product.Brand</span>
                     <div class="main-page-product-bottom">
                         @{
                             if (product.Promo != null)
                             {
-                                <span class="main-page-product-bottom-price-promo">@product.Price грн</span>
+                                <span class="main-page-product-bottom-price-promo" id="@product.id">@product.Price грн</span>
                             }
                             else
                             {
-                                <span class="main-page-product-bottom-price">@product.Price грн</span>
+                                <span class="main-page-product-bottom-price" id="@product.id">@product.Price грн</span>
                             }
                         }
-                        
+
                         <span class="main-page-product-bottom-price-brand">@product.Country</span>
                     </div>
 
-                    <div class="main-page-product-counter-container">
-                        <svg id="@product.id" onclick="Minus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="@product.id" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
-                        <div class="main-page-product-counter-container-count">
-                            <input id="productInput@(product.id)" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="1" class="num-input-product">
-                            <span id="productSpan@(product.id)" class="cart-body-item-info-count-btn-counter-num">1</span>
-                            <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
-                        </div>
-                        <svg id="@product.id" onclick="Plus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="@product.id" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="@product.id" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                    @{
+                        if (product.inCart == null)
+                        {
+                            <div class="main-page-product-counter-container" id="counterContainer@(product.id)">
+                                <svg id="@product.id" onclick="Minus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="@product.id" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                <div class="main-page-product-counter-container-count">
+                                    <input id="productInput@(product.id)" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="" class="num-input-product">
+                                    <span id="productSpan@(product.id)" class="cart-body-item-info-count-btn-counter-num"></span>
+                                    <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
+                                </div>
+                                <svg id="@product.id" onclick="Plus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="@product.id" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="@product.id" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="main-page-product-counter-container" id="counterContainer@(product.id)" style="display:flex;">
+                                <svg id="@product.id" onclick="Minus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="@product.id" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                <div class="main-page-product-counter-container-count">
+                                    <input id="productInput@(product.id)" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="@product.inCart.count" class="num-input-product">
+                                    <span id="productSpan@(product.id)" class="cart-body-item-info-count-btn-counter-num">@product.inCart.count</span>
+                                    <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
+                                </div>
+                                <svg id="@product.id" onclick="Plus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="@product.id" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="@product.id" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                            </div>
+                        }
+                    }
+                    <div class="main-page-product-cart-btn" id="@product.id">
+                        <i class="fa-solid fa-cart-shopping" style="color: #ffffff;font-size: 1.5rem;" onclick="AddToCart(event)" id="@product.id"></i>
                     </div>
-                </a>
+                </div>
 
                 <div class="product-menu">
                     <svg id="close-icon-product-menu" onclick="CloseProductMenu()" xmlns="http://www.w3.org/2000/svg" height="1.5rem" viewBox="0 0 384 512">
@@ -100,7 +117,7 @@
                         <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
                     </svg>
                     <div id="ImageContainer">
-                        <img src="@imagePath">
+                        <img class="product-menu-img" src="@imagePath">
                     </div>
                     <div class="product-menu-title-section">
                         <div id="productTitle">@product.Title</div>
@@ -108,11 +125,13 @@
                     </div>
                     <div class="product-menu-price-section">
                         <div id="productPrice">@product.Price</div>
-                        <p id="price-text">грн за кг</p>
+                        <p id="price-text">грн</p>
                     </div>
                     <div class="product-menu-buttons">
-                        <a class="product-menu-add-to-cart-btn"><p style="font-weight:400;">Додати в кошик</p></a>
-                        <a class="product-menu-more-info-btn" asp-controller="Home" asp-action="ProductView" asp-route-id="@product.id"><p style="font-weight:400;">Детальніше</p></a>
+                        <a class="product-menu-add-to-cart-btn"><p class="product-menu-add-to-cart-btn-text" style="font-weight:400;" onclick="AddToCartMenu(event)">Додати в кошик</p></a>
+                        <a class="product-menu-more-info-btn" href="" onclick="ShowLoader()">
+                            <p style="font-weight:400;">Детальніше</p>
+                        </a>
                     </div>
                 </div>
             }
@@ -222,7 +241,58 @@
     });
 
     function ShowProductMenu(id, title, price) {
+
         var menu = document.getElementsByClassName('product-menu')[0];
+        var btns = menu.getElementsByClassName('product-menu-buttons')[0];
+        var addToCartBtn = menu.getElementsByClassName('product-menu-add-to-cart-btn')[0];
+        var btnText = document.getElementsByClassName('product-menu-add-to-cart-btn-text')[0];
+        btnText.id = id;
+        var counterContainer = menu.getElementsByClassName('product-menu-counter-container')[0];
+        var index = productsInCart.findIndex(function (element) {
+            return element.id === id;
+        });
+
+        if (index == -1) {
+            if (counterContainer != null)
+                btns.removeChild(counterContainer);
+            addToCartBtn.style.display = 'flex';
+        }
+        else {
+            addToCartBtn.style.display = 'none';
+
+            var tempDiv = MakeCounter(id);
+
+            while (tempDiv.firstChild) {
+                btns.prepend(tempDiv.firstChild);
+            }
+            var inputMenu = document.getElementById(`productInputMenu${id}`);
+            inputMenu.addEventListener('input', () => {
+                var id = inputMenu.id.replace(/\D/g, '');
+                var input = document.getElementById("cartInput" + id);
+                var span = document.getElementById("cartSpan" + id);
+                var productSpan = document.getElementById("productSpan" + id);
+                var productInput = document.getElementById("productInput" + id);
+                var productSpanMenu = document.getElementById("productSpanMenu" + id);
+                var index = productsInCart.findIndex(function (element) {
+                    return element.id === id;
+                });
+                productsInCart[index].count = inputMenu.value;
+                input.value = productsInCart[index].count;
+                span.textContent = productsInCart[index].count;
+                productSpan.textContent = productsInCart[index].count;
+                productInput.value = productsInCart[index].count;
+                productSpanMenu.textContent = productsInCart[index].count;
+                inputMenu.value = productsInCart[index].count;
+
+                const jsonString = JSON.stringify(productsInCart);
+                document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
+
+                var item = document.getElementById(`cart-body-item${id}`);
+                var price = item.getElementsByClassName('cart-body-item-controls-price-primary')[0];
+                price.textContent = (productsInCart[index].count * productsInCart[index].price).toFixed(2) + ' грн';
+                GetFullPriceForCart();
+            });
+        }
         menu.style.right = '0.5rem';
         menu.style.visibility = "visible";
         menu.style.opacity = "1";
@@ -230,21 +300,246 @@
         document.getElementsByClassName('footer-container')[0].style.zIndex = '0';
         isProductMenuShowing = true;
 
-        //var imgElement = document.createElement('img');
-        //imgElement.src = `/Product_Images/product_${id}.jpg`;
-        //imgElement.id = 'productImage';
-        //imgElement.style.width = '262px';
-        //imgElement.style.height = '208px';
+        var img = menu.getElementsByClassName('product-menu-img')[0];
+        img.src = `/Product_Images/product_${id}.jpg`;
 
-        //var existingImg = document.getElementById('productImage');
-        //if (existingImg) {
-        //    existingImg.remove();
-        //}
+        var title = document.getElementById('productTitle');
+        title.textContent = document.getElementById(`mainPageProductTitle${id}`).textContent;
+        var price = document.getElementById('productPrice');
+        var productPrice = document.querySelector(`.main-page-product-bottom-price[id="${id}"]`);
+        if(productPrice == null)
+            productPrice = document.querySelector(`.main-page-product-bottom-price-promo[id="${id}"]`);
+        price.textContent = productPrice.textContent;
+        var detail = document.getElementsByClassName('product-menu-more-info-btn')[0];
+        console.log(detail);
+        detail.href = `/Home/ProductView?id=${id}`;
 
-        //document.getElementById('productTitle').innerText = title;
-        //document.getElementById('productPrice').innerText = price;
-        //document.getElementById('ImageContainer').appendChild(imgElement);
+    }
 
+    function MakeCounter(id) {
+        var counter;
+        var index = productsInCart.findIndex(function (element) {
+            return element.id === id;
+        });
+        if (productsInCart[index] == undefined) {
+            counter = `<div class="product-menu-counter-container" id="counterContainerMenu${id}" style="display:flex; position:relative" height: 50px;>
+                                                <svg id="${id}" onclick="MinusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                <div class="main-page-product-counter-container-count">
+                                                        <input id="productInputMenu${id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="1" style="margin-top:2px;" class="num-input-product">
+                                                            <span id="productSpanMenu${id}" class="cart-body-item-info-count-btn-counter-num">$"1"</span>
+                                                    <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
+                                                </div>
+                                                            <svg id="${id}" onclick="PlusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="${id}" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                            </div>`;
+        }
+        else {
+            counter = `<div class="product-menu-counter-container" id="counterContainerMenu${id}" style="display:flex; position:relative" height: 50px;>
+                                            <svg id="${id}" onclick="MinusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                            <div class="main-page-product-counter-container-count">
+                                                    <input id="productInputMenu${id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="${productsInCart[index].count}" style="margin-top:2px;" class="num-input-product">
+                                                        <span id="productSpanMenu${id}" class="cart-body-item-info-count-btn-counter-num">$"${productsInCart[index].count}"</span>
+                                                <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
+                                            </div>
+                                                        <svg id="${id}" onclick="PlusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="${id}" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                        </div>`;
+        }
+        var tempDiv = document.createElement('div');
+        tempDiv.innerHTML = counter;
+        return tempDiv;
+    }
+
+    var lastClickTime = 0;
+
+    function PlusInMenu(event) {
+        var currentTime = new Date().getTime();
+
+        if (currentTime - lastClickTime >= 500) {
+            var span = document.getElementById("cartSpan" + event.target.id);
+            var input = document.getElementById("cartInput" + event.target.id);
+            var productSpan = document.getElementById("productSpan" + event.target.id);
+            var productInput = document.getElementById("productInput" + event.target.id);
+            var productSpanMenu = document.getElementById("productSpanMenu" + event.target.id);
+            var productInputMenu = document.getElementById("productInputMenu" + event.target.id);
+            var index = productsInCart.findIndex(function (element) {
+                return element.id === event.target.id;
+            });
+            if (productsInCart[index].count < 999) {
+                var index = productsInCart.findIndex(function (element) {
+                    return element.id === event.target.id;
+                });
+                productsInCart[index].count -= -1;
+                console.log(productsInCart[index].count);
+
+                productInputMenu.value = productsInCart[index].count;
+                productSpanMenu.textContent = productsInCart[index].count;
+                span.textContent = productsInCart[index].count;
+                if (productSpan != null)
+                    productSpan.textContent = productsInCart[index].count;
+                input.value = productsInCart[index].count;
+                if (productInput != null)
+                    productInput.value = productsInCart[index].count;
+
+
+                const jsonString = JSON.stringify(productsInCart);
+                document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
+
+                var item = document.getElementById(`cart-body-item${event.target.id}`);
+                var price = item.getElementsByClassName('cart-body-item-controls-price-primary')[0];
+                price.textContent = (productsInCart[index].count * productsInCart[index].price).toFixed(2) + ' грн';
+                GetFullPriceForCart();
+
+                lastClickTime = currentTime;
+            }
+        }
+    }
+
+    function MinusInMenu(event) {
+        var currentTime = new Date().getTime();
+
+        if (currentTime - lastClickTime >= 500) {
+            var span = document.getElementById("cartSpan" + event.target.id);
+            var input = document.getElementById("cartInput" + event.target.id);
+            var productSpan = document.getElementById("productSpan" + event.target.id);
+            var productInput = document.getElementById("productInput" + event.target.id);
+            var productSpanMenu = document.getElementById("productSpanMenu" + event.target.id);
+            var productInputMenu = document.getElementById("productInputMenu" + event.target.id);
+
+            var index = productsInCart.findIndex(function (element) {
+                return element.id === event.target.id;
+            });
+            productsInCart[index].count -= 1;
+
+            if (productsInCart[index].count > 0) {
+                console.log(productsInCart[index].count);
+
+                productInputMenu.value = productsInCart[index].count;
+                productSpanMenu.textContent = productsInCart[index].count;
+                span.textContent = productsInCart[index].count;
+                if (productSpan != null)
+                    productSpan.textContent = productsInCart[index].count;
+                input.value = productsInCart[index].count;
+                if (productInput != null)
+                    productInput.value = productsInCart[index].count;
+
+                const jsonString = JSON.stringify(productsInCart);
+                document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
+
+                var item = document.getElementById(`cart-body-item${event.target.id}`);
+                var price = item.getElementsByClassName('cart-body-item-controls-price-primary')[0];
+                price.textContent = (productsInCart[index].count * productsInCart[index].price).toFixed(2) + ' грн';
+                GetFullPriceForCart();
+
+                lastClickTime = currentTime;
+            }
+
+            else {
+                productsInCart.splice(index, 1);
+                var counter = document.getElementById(`counterContainer${event.target.id}`);
+                if (counter != null)
+                    counter.style.display = 'none';
+                var overlay = document.getElementById(`overlay${event.target.id}`);
+                if (overlay != null)
+                    overlay.classList.remove('green');
+                var cart = document.getElementsByClassName('cart-body-items')[0];
+                var elementToRemove = document.getElementById(`cart-body-item${event.target.id}`);
+                cart.removeChild(elementToRemove);
+                var btns = document.getElementsByClassName('product-menu-buttons')[0];
+                var counterContainer = document.getElementsByClassName('product-menu-counter-container')[0];
+                btns.removeChild(counterContainer);
+                var addToCartBtn = document.getElementsByClassName('product-menu-add-to-cart-btn')[0];
+                addToCartBtn.style.display = 'flex';
+
+                const jsonString = JSON.stringify(productsInCart);
+                document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
+
+                CheckIfCartIsEmpty();
+                GetFullPriceForCart();
+
+                lastClickTime = currentTime
+            }
+        }
+    }
+
+    function AddToCartMenu(event) {
+        var id = event.target.id;
+        var product = document.querySelector(`.products-view-product[id="${id}"]`);
+        var overlay = document.getElementById(`overlay${id}`);
+        product.classList.add('added');
+        overlay.classList.add('green');
+        var btns = document.getElementsByClassName('product-menu-buttons')[0];
+        var addToCartBtn = document.getElementsByClassName('product-menu-add-to-cart-btn')[0];
+        addToCartBtn.style.display = 'none';
+        console.log(id);
+        var counter = MakeCounter(id);
+        while (counter.firstChild) {
+            btns.prepend(counter.firstChild);
+        }
+
+        var counterContainer = document.getElementById(`counterContainer${id}`);
+        counterContainer.style.display = 'flex';
+
+        var span = document.getElementById(`productSpan${id}`);
+        span.textContent = 1;
+        var input = document.getElementById(`productInput${id}`);
+        input.value = span.textContent;
+        var spanMenu = document.getElementById(`productSpanMenu${id}`);
+        spanMenu.textContent = 1;
+        var inputMenu = document.getElementById(`productInputMenu${id}`);
+        spanMenu.textContent = 1;
+        inputMenu.value = span.textContent;
+
+
+        inputMenu.addEventListener('input', () => {
+            var id = inputMenu.id.replace(/\D/g, '');
+            var input = document.getElementById("cartInput" + id);
+            var span = document.getElementById("cartSpan" + id);
+            var productSpan = document.getElementById("productSpan" + id);
+            var productInput = document.getElementById("productInput" + id);
+            var productSpanMenu = document.getElementById("productSpanMenu" + id);
+            var index = productsInCart.findIndex(function (element) {
+                return element.id === id;
+            });
+            productsInCart[index].count = inputMenu.value;
+            input.value = productsInCart[index].count;
+            span.textContent = productsInCart[index].count;
+            productSpan.textContent = productsInCart[index].count;
+            productInput.value = productsInCart[index].count;
+            productSpanMenu.textContent = productsInCart[index].count;
+            inputMenu.value = productsInCart[index].count;
+
+            const jsonString = JSON.stringify(productsInCart);
+            document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
+
+            var item = document.getElementById(`cart-body-item${id}`);
+            var price = item.getElementsByClassName('cart-body-item-controls-price-primary')[0];
+            price.textContent = (productsInCart[index].count * productsInCart[index].price).toFixed(2) + ' грн';
+            GetFullPriceForCart();
+        });
+        var price = document.querySelector(`.main-page-product-bottom-price[id="${id}"]`)
+        if (price == null)
+            price = document.querySelector(`.main-page-product-bottom-price-promo[id="${id}"]`)
+        var parsedPrice = price.textContent.slice(0, -4);
+        parsedPrice = parseFloat(parsedPrice.replace(',', '.'));
+        var title = product.getElementsByClassName('main-page-product-title')[0].textContent;
+
+        var cartProduct = new CartProduct(id, 1, parsedPrice, title);
+        productsInCart.push(cartProduct);
+        const jsonString = JSON.stringify(productsInCart);
+        document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
+        console.log(productsInCart);
+
+
+        var cart = document.getElementsByClassName('cart-body-items')[0];
+        var itemInfo = productsInCart.find(function (element) {
+            return element.id === id;
+        });
+        console.log(`Item info: ${itemInfo}`);
+        var item = AddHtmlToCart(itemInfo);
+        cart.innerHTML += item;
+
+        CheckIfCartIsEmpty();
+        SetInputs();
+        GetFullPriceForCart();
     }
 
     function CloseProductMenu() {
@@ -254,6 +549,12 @@
         menu.style.opacity = "0";
         document.getElementsByClassName('footer-container')[0].style.zIndex = '1100';
         $("body").removeClass("overlay");
+
+        var btns = menu.getElementsByClassName('product-menu-buttons')[0];
+        var counterContainer = menu.getElementsByClassName('product-menu-counter-container')[0];
+        if (counterContainer != null)
+            btns.removeChild(counterContainer);
+
         isProductMenuShowing = false;
     }
 
@@ -375,6 +676,8 @@
     }
 
     function SortBy(event) {
+        ShowLoaderBlack();
+
         var list = document.getElementsByClassName('filter-drop-down-list')[0];
         var spanElements = list.querySelectorAll('.filter-drop-down-list-text');
         spanElements = Array.from(spanElements);
@@ -394,6 +697,8 @@
     }
 
     function CheckBoxPromoProducts() {
+        ShowLoaderBlack();
+
         var checkBox = document.getElementsByClassName('check-box')[0];
         if (isCheckBox) {
             checkBox.style.backgroundImage = "none";
@@ -408,11 +713,48 @@
     };
 
     function AddToCart(event) {
-        var product = document.querySelector(`.products-view-product[id="${event.target.id}"]`);
-        console.log(product);
+        var id = event.target.id;
+        var product = document.querySelector(`.products-view-product[id="${id}"]`);
         var overlay = product.getElementsByClassName('product-overlay')[0];
         product.classList.add('added');
         overlay.classList.add('green');
+
+        var counterContainer = document.getElementById(`counterContainer${id}`);
+        counterContainer.style.display = 'flex';
+
+        var span = document.getElementById(`productSpan${id}`);
+        span.textContent = 1;
+        var input = document.getElementById(`productInput${id}`);
+        input.value = span.textContent;
+
+        //input.addEventListener('input', () => {
+        //    span.textContent = input.value;
+        //});
+        var price = document.querySelector(`.main-page-product-bottom-price[id="${id}"]`)
+        if (price == null)
+            price = document.querySelector(`.main-page-product-bottom-price-promo[id="${id}"]`)
+        var parsedPrice = price.textContent.slice(0, -4);
+        parsedPrice = parseFloat(parsedPrice.replace(',', '.'));
+        var title = product.getElementsByClassName('main-page-product-title')[0].textContent;
+
+        var cartProduct = new CartProduct(id, 1, parsedPrice, title);
+        productsInCart.push(cartProduct);
+        const jsonString = JSON.stringify(productsInCart);
+        document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
+        console.log(productsInCart);
+
+
+        var cart = document.getElementsByClassName('cart-body-items')[0];
+        var itemInfo = productsInCart.find(function (element) {
+            return element.id === id;
+        });
+        console.log(`Item info: ${itemInfo}`);
+        var item = AddHtmlToCart(itemInfo);
+        cart.innerHTML += item;
+
+        CheckIfCartIsEmpty();
+        SetInputs();
+        GetFullPriceForCart();
     };
 
 </script>

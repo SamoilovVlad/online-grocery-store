@@ -46,8 +46,7 @@ namespace Shop_Mvc.Models
         public string? Aging_in_barrel { get; set; }
         public string? Package_volume { get; set; }
         public decimal? Price { get; set; }
-
-
+        public CartProduct inCart = null;
 
     }
 }
