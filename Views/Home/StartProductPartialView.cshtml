@@ -27,8 +27,8 @@
                     <div class="main-page-product-counter-container" id="counterContainer@(product.id)" style="display:flex;">
                         <svg id="@product.id" onclick="Minus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="@product.id" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
                         <div class="main-page-product-counter-container-count">
-                            <input id="productInput@(product.id)" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="@product.inCart.count" class="num-input-product">
-                            <span id="productSpan@(product.id)" class="cart-body-item-info-count-btn-counter-num">@product.inCart.count</span>
+                            <input id="productInput@(product.id)" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="@product.inCart.Count" class="num-input-product">
+                            <span id="productSpan@(product.id)" class="cart-body-item-info-count-btn-counter-num">@product.inCart.Count</span>
                             <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
                         </div>
                         <svg id="@product.id" onclick="Plus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="@product.id" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="@product.id" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>

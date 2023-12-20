@@ -27,15 +27,8 @@ namespace Shop_Mvc.Controllers
         [HttpGet]
         public async Task<IActionResult> IndexAsync()
         {
-            var stopwatch = Stopwatch.StartNew();
-
             var cartProduct = GetProductsFromCookie();
-            //var model = _memoryCache.Get("IndexViewModel_key") as IndexViewModel;
-            //if (model != null && cartProduct != null)
-            //    model.cartProducts = cartProduct;
 
-            //if (model == null)
-            //{
                 var model = new IndexViewModel();
 
                 var task = Task.Run(() => _DatabaseServise.GetAllSliderImagesAsync());
@@ -77,6 +70,9 @@ namespace Shop_Mvc.Controllers
                 var sliderImages = task.Result;
 
                 var mainPartialViewModel = new MainPartialViewModel { sliderImages = sliderImages, products = promoProducts };
+            // Try to set data to cache memory
+            try
+            {
                 _memoryCache.Set("MainPartialViewModel_key", mainPartialViewModel, new MemoryCacheEntryOptions
                 {
                     AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1)
@@ -137,6 +133,11 @@ namespace Shop_Mvc.Controllers
                 {
                     AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1)
                 });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
 
 
 
@@ -157,14 +158,6 @@ namespace Shop_Mvc.Controllers
                 model.sweetProducts = SetFieldIsInCart(sweetProducts,cartProduct);
                 model.cartProducts = cartProduct;
 
-                //_memoryCache.Set("IndexViewModel_key", model, new MemoryCacheEntryOptions
-                //{
-                //    AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1)
-                //});
-            //}
-            //stopwatch.Stop();
-            //var executionTime = stopwatch.Elapsed;
-            //_logger.LogInformation($"IndexAsync execution time: {executionTime}");
             return View("Index", model);
         }
 
@@ -324,7 +317,7 @@ namespace Shop_Mvc.Controllers
 
         private IEnumerable<Product> SetFieldIsInCart(IEnumerable<Product> products, List<CartProduct> cartProducts)
         {
-            var commonIds = cartProducts.Select(p => p.id).ToList();
+            var commonIds = cartProducts.Select(p => p.Id).ToList();
 
             for (var i = 0; i<commonIds.Count; i++)
             {

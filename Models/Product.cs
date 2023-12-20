@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace Shop_Mvc.Models
 {
-    public class Product
+    public class Product : Info
     {
         public int id { get; set; }
         public string Title { get; set; }
@@ -48,5 +48,6 @@ namespace Shop_Mvc.Models
         public decimal? Price { get; set; }
         public CartProduct inCart = null;
 
+        public virtual string Info() => $"Product id: {id}\nTitle: {Title}\nPrice: {Price}\nCountry: {Country}\nBrand: {Brand}\n Description: {Description}";
     }
 }

@@ -93,8 +93,8 @@
                             <div class="main-page-product-counter-container" id="counterContainer@(product.id)" style="display:flex;">
                                 <svg id="@product.id" onclick="Minus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="@product.id" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
                                 <div class="main-page-product-counter-container-count">
-                                    <input id="productInput@(product.id)" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="@product.inCart.count" class="num-input-product">
-                                    <span id="productSpan@(product.id)" class="cart-body-item-info-count-btn-counter-num">@product.inCart.count</span>
+                                    <input id="productInput@(product.id)" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="@product.inCart.Count" class="num-input-product">
+                                    <span id="productSpan@(product.id)" class="cart-body-item-info-count-btn-counter-num">@product.inCart.Count</span>
                                     <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
                                 </div>
                                 <svg id="@product.id" onclick="Plus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="@product.id" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="@product.id" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
@@ -368,7 +368,6 @@
                     return element.id === event.target.id;
                 });
                 productsInCart[index].count -= -1;
-                console.log(productsInCart[index].count);
 
                 productInputMenu.value = productsInCart[index].count;
                 productSpanMenu.textContent = productsInCart[index].count;
@@ -448,6 +447,8 @@
                 btns.removeChild(counterContainer);
                 var addToCartBtn = document.getElementsByClassName('product-menu-add-to-cart-btn')[0];
                 addToCartBtn.style.display = 'flex';
+                var leftCart = document.getElementById('leftCartItemContainer');
+                leftCart.removeChild(document.getElementById(`leftCartItem${event.target.id}`));
 
                 const jsonString = JSON.stringify(productsInCart);
                 document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
@@ -530,12 +531,17 @@
 
 
         var cart = document.getElementsByClassName('cart-body-items')[0];
+        var leftCart = document.getElementById('leftCartItemContainer');
+
         var itemInfo = productsInCart.find(function (element) {
             return element.id === id;
         });
         console.log(`Item info: ${itemInfo}`);
         var item = AddHtmlToCart(itemInfo);
         cart.innerHTML += item;
+
+        item = AddHtmlToLeftCart(itemInfo);
+        leftCart.innerHTML += item;
 
         CheckIfCartIsEmpty();
         SetInputs();
@@ -727,9 +733,6 @@
         var input = document.getElementById(`productInput${id}`);
         input.value = span.textContent;
 
-        //input.addEventListener('input', () => {
-        //    span.textContent = input.value;
-        //});
         var price = document.querySelector(`.main-page-product-bottom-price[id="${id}"]`)
         if (price == null)
             price = document.querySelector(`.main-page-product-bottom-price-promo[id="${id}"]`)
@@ -745,12 +748,17 @@
 
 
         var cart = document.getElementsByClassName('cart-body-items')[0];
+        var leftCart = document.getElementById('leftCartItemContainer');
         var itemInfo = productsInCart.find(function (element) {
             return element.id === id;
         });
         console.log(`Item info: ${itemInfo}`);
         var item = AddHtmlToCart(itemInfo);
         cart.innerHTML += item;
+
+        item = AddHtmlToLeftCart(itemInfo);
+        leftCart.innerHTML += item;
+
 
         CheckIfCartIsEmpty();
         SetInputs();

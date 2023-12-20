@@ -596,7 +596,8 @@ body {
     border-top-color: transparent;
     height: 29.36rem;
     padding: 0.8rem 0.5rem 0.8rem 0.5rem;
-    justify-content: center;
+    justify-content: flex-start;
+    align-content:flex-start;
     overflow-x: hidden;
     overflow-y: auto;
     flex-wrap: wrap;
@@ -640,9 +641,10 @@ body {
 .burger-menu-body-cart-item-label {
     word-wrap: break-word;
     font-size: 0.7rem;
-    font-style: italic;
     font-family: 'Open Sans', sans-serif;
     margin: 0;
+    overflow:hidden;
+    height:28px;
 }
 
 .burger-menu-body-cart-item-close {
@@ -812,7 +814,7 @@ img {
 }
 
 .catalogue-btn:hover {
-    background-color: #7cd099;
+    background-color: #3c9c30;
 }
 
 .catalog-menu-item:hover {

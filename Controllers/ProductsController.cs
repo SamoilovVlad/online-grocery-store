@@ -30,6 +30,7 @@ namespace Shop_Mvc.Controllers
         {
             return _DatabaseServise.GetProductById(id);
         }
+
         [HttpGet("category")]
         public IEnumerable<Product> GetProductsByCategory([FromQuery] string category,[FromQuery] int n) { 
             return _DatabaseServise.GetProductsByCategory(category, n);

@@ -21,7 +21,9 @@ namespace Shop_Mvc.Services
         public IEnumerable<Product> GetProductsByBrand(string brand, int count = 0);
         public IEnumerable<Product> GetPromoProducts(int count = 0);
         public IEnumerable<Product> GetProductsByTitle(string title, int count = 0);
+        public IEnumerable<Product> GetProductsBySubcategoryOrderByPriceDescending(string subcategory);
         public IEnumerable<Product> GetProductsBySubcategoryOrderByPriceDescending(string subcategory, int count = 0, int skip = 0, bool isPromo = false);
+        public IEnumerable<Product> GetProductsBySubcategoryOrderByPrice(string subcategory);
         public IEnumerable<Product> GetProductsBySubcategoryOrderByPrice(string subcategory, int count = 0, int skip = 0, bool isPromo = false);
         public IEnumerable<Product> GetProductsBySubcategoryPromoFirstly(string subcategory, int count = 0, int skip = 0, bool isPromo = false);
         public Task<IEnumerable<Product>> GetProductsByCountryAsync(string country, int count = 0);
@@ -172,6 +174,10 @@ namespace Shop_Mvc.Services
             return products;
         }
 
+        public IEnumerable<Product> GetProductsBySubcategoryOrderByPriceDescending(string subcategory) => _context.Products
+                                                                                                                .Where(p => p.Subcategory == subcategory).OrderByDescending(p => p.Price).AsEnumerable();
+
+
         public IEnumerable<Product> GetProductsBySubcategoryOrderByPriceDescending(string subcategory, int count = 0, int skip = 0, bool isPromo = false)
         {
             IEnumerable<Product> products;
@@ -208,6 +214,9 @@ namespace Shop_Mvc.Services
             }
             return products;
         }
+
+        public IEnumerable<Product> GetProductsBySubcategoryOrderByPrice(string subcategory) => _context.Products
+                                                                                                    .Where(p => p.Subcategory == subcategory).OrderBy(p => p.Price);
 
         public IEnumerable<Product> GetProductsBySubcategoryOrderByPrice(string subcategory, int count = 0, int skip = 0, bool isPromo = false)
         {
