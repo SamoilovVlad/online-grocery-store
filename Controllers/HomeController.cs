@@ -201,6 +201,8 @@ namespace Shop_Mvc.Controllers
         {
             return PartialView("FourthPartialView");
         }
+
+        //returns partial view of list of products taken from cache to Index.cshtml
         public IActionResult GetProductPartialView(string name)
         {
             IEnumerable<Product> products;

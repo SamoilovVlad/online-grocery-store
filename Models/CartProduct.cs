@@ -6,18 +6,18 @@
         public int Id
         {
             get => id;
-            set {if (value > 0) id = value;}
+            set { if (value > 0) id = value; }
         }
         private int count;
-           public int Count
+        public int Count
         {
-            set {if(value > 0) count = value;}
+            set { if (value > 0) count = value; }
             get => count;
         }
-         private decimal price;
-           public decimal Price
+        private decimal price;
+        public decimal Price
         {
-            set {if(value > 0) price = value;}
+            set { if (value > 0) price = value; }
             get => price;
         }
         private string title;
