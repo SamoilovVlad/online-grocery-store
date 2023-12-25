@@ -39,6 +39,7 @@ namespace Shop_Mvc.Services
         public Category GetProductCategory(string categoryName);
         public IEnumerable<Subcategory> GetAllSubcategoriesByProductCategoryName(string categoryName);
         public Subcategory GetSubcategoryByName(string subcategoryName);
+        public IEnumerable<Product> SearchProduct(string parameter, int count);
     }
     public class DatabaseServise : IDatabaseServise
     {
@@ -361,6 +362,11 @@ namespace Shop_Mvc.Services
                 return await products.ToListAsync();
             }
         }
+
+        public IEnumerable<Product> SearchProduct(string parameter, int count) => _context.Products
+                                                                                .Where(p => p.Title.Contains(parameter) ||
+                                                                                       p.Brand.Contains(parameter) ||
+                                                                                       p.Price.ToString().Contains(parameter)).Take(count);
 
         public async Task<IEnumerable<SliderImage>> GetAllSliderImagesAsync()
         {

@@ -337,7 +337,7 @@
                                             <svg id="${id}" onclick="MinusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
                                             <div class="main-page-product-counter-container-count">
                                                     <input id="productInputMenu${id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="${productsInCart[index].count}" style="margin-top:2px;" class="num-input-product">
-                                                        <span id="productSpanMenu${id}" class="cart-body-item-info-count-btn-counter-num">$"${productsInCart[index].count}"</span>
+                                                        <span id="productSpanMenu${id}" class="cart-body-item-info-count-btn-counter-num">${productsInCart[index].count}"</span>
                                                 <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
                                             </div>
                                                         <svg id="${id}" onclick="PlusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="${id}" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
@@ -387,6 +387,9 @@
                 price.textContent = (productsInCart[index].count * productsInCart[index].price).toFixed(2) + ' грн';
                 GetFullPriceForCart();
 
+                var cartText = document.getElementsByClassName('cart-text')[0];
+                cartText.textContent = GetCartValue() + ' грн';
+
                 lastClickTime = currentTime;
             }
         }
@@ -427,6 +430,9 @@
                 var price = item.getElementsByClassName('cart-body-item-controls-price-primary')[0];
                 price.textContent = (productsInCart[index].count * productsInCart[index].price).toFixed(2) + ' грн';
                 GetFullPriceForCart();
+
+                var cartText = document.getElementsByClassName('cart-text')[0];
+                cartText.textContent = GetCartValue() + ' грн';
 
                 lastClickTime = currentTime;
             }

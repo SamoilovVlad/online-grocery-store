@@ -255,7 +255,7 @@ namespace Shop_Mvc.Controllers
                         products = SetFieldIsInCart(products, cartProducts);
                         return PartialView("StartProductPartialView", products);
                     }
-                case "Бокалія":
+                case "Бакалія":
                     {
                         products = _memoryCache.Get("GobletProducts_key") as List<Product>;
                         var cartProducts = GetProductsFromCookie();
@@ -331,7 +331,13 @@ namespace Shop_Mvc.Controllers
         }
 
 
-
+        [HttpGet]
+        public IActionResult ProductSearchPartialView(string param)
+        {
+            var products = _DatabaseServise.SearchProduct(param, 7);
+            products = SetFieldIsInCart(products, GetProductsFromCookie());
+            return PartialView(products);
+        }
 
 
 

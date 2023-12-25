@@ -18,6 +18,12 @@ p {
 }
 
 @media (min-width: 768px) {
+    .products-search-container {
+        position: absolute;
+        width: 493px;
+        max-height: 600px
+    }
+
     .logo {
         order: 1;
     }
@@ -83,6 +89,12 @@ p {
 }
 
 @media (max-width: 768px) {
+    .products-search-container {
+        position: fixed;
+        width: 100vw;
+        height: calc(var(--visual-height, var(--vh, 1vh) * 100) - 3.5rem);
+    }
+
     .burger-menu-body-left-side-btn {
         margin-right: 0;
     }
@@ -597,7 +609,7 @@ body {
     height: 29.36rem;
     padding: 0.8rem 0.5rem 0.8rem 0.5rem;
     justify-content: flex-start;
-    align-content:flex-start;
+    align-content: flex-start;
     overflow-x: hidden;
     overflow-y: auto;
     flex-wrap: wrap;
@@ -643,8 +655,8 @@ body {
     font-size: 0.7rem;
     font-family: 'Open Sans', sans-serif;
     margin: 0;
-    overflow:hidden;
-    height:28px;
+    overflow: hidden;
+    height: 28px;
 }
 
 .burger-menu-body-cart-item-close {
@@ -841,18 +853,143 @@ img {
     width: 21.04px;
 }
 
-.menu-btn {
-    width: 3rem;
-    min-width: 3rem;
-    height: 3rem;
-    cursor: pointer;
-    background-color: #222324;
-    transition: background-color .2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s ease;
+.products-search-container {
+    display: none;
+    
+    flex-direction: column;
+    opacity: 0;
+    top: 52px;
+    left: 0;
+    background-color: white;
+    z-index: 1100;
+    border-radius: 0.5rem;
+    transition: opacity 0.5s ease;
+    overflow-x:hidden;
+    overflow-y:auto;
 }
+
+    .products-search-container::-webkit-scrollbar {
+        width: 5px;
+        background-color: transparent
+    }
+
+    .products-search-container::-webkit-scrollbar-thumb {
+        background-color: rgba(34,35,36,.2);
+        border-radius: 0.5rem;
+    }
+
+.products-search-container-label {
+    padding: 1.5rem 1.5rem 0;
+    color: #222324;
+    font-size: 0.875rem;
+}
+
+.products-search-container-item {
+    padding: 1.125rem 1rem;
+    border-bottom: 0.0625rem solid #e8eaef;
+    display: flex;
+    position: relative;
+    height: 80px;
+}
+
+.products-search-container-details {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    max-width: calc(100% - 5.625rem);
+    margin-left: 0.5rem;
+}
+
+.products-search-container-item-title {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.75rem;
+    color: #222324;
+    font-weight: 500;
+    overflow: hidden;
+    font-family: CeraPro,-apple-system,BlinkMacSystemFont,Arial,sans-serif;
+}
+
+.products-search-container-item-brand {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.65rem;
+    margin-top: 0.375rem;
+    color: #797b80;
+    font-weight: 500;
+    overflow: hidden;
+    font-family: CeraPro,-apple-system,BlinkMacSystemFont,Arial,sans-serif;
+}
+
+.products-search-container-item-bottom{
+    display:flex;
+    justify-content:space-between;
+    margin-top:0.75rem;
+    align-items:center;
+}
+
+.products-search-container-item-price {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 1rem;
+    color: black;
+    font-weight: 600;
+    overflow: hidden;
+    font-family: CeraPro,-apple-system,BlinkMacSystemFont,Arial,sans-serif;
+}
+
+.products-search-container-btn {
+    display: flex;
+    justify-content: center;
+    color: #fff;
+    background: #42ac35;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    padding:0.63rem 1.1rem;
+    font-size: 0.7rem;
+    font-weight:700;
+}
+
+.all-search-products-btn {
+    padding: 0.8125rem 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: sticky;
+    height: 5rem;
+    color: #222324;
+    border: 0.0625rem solid #b1b4b9;
+    margin-left:auto;
+    margin-right:auto;
+    font-weight:600;
+    z-index:500;
+    background-color:white;
+    border-radius:0.25rem;
+    margin-bottom:1.5rem;
+    bottom:1.5rem;
+    margin-top:1.5rem;
+    max-width:150px;
+    cursor:pointer;
+    transition: border 0.2s ease;
+}
+
+    .all-search-products-btn:hover {
+        border: 0.0625rem solid black;
+    }
+
+    .menu-btn {
+        width: 3rem;
+        min-width: 3rem;
+        height: 3rem;
+        cursor: pointer;
+        background-color: #222324;
+        transition: background-color .2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.3s ease;
+    }
 
     .menu-btn:hover {
         background-color: gray;
@@ -931,12 +1068,19 @@ img {
     box-sizing: border-box;
     display: flex;
     align-items: center;
-    width: 100%;
+    width: fit-content;
     height: 100%;
     padding: 0.8125rem 1.5rem;
     cursor: pointer;
     border-radius: 1.875rem 0 0 1.875rem;
     background-color: #f3f5f8;
+}
+
+.cart-inner-not-empty {
+    background-color: #48bb3a;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 600;
 }
 
 .cart-text {
@@ -945,6 +1089,14 @@ img {
     color: #797b80;
     font-family: 'Open Sans', sans-serif;
     font-size: x-small;
+}
+
+.cart-text-not-empty {
+    max-width: 100%;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: white;
+    white-space: nowrap;
 }
 
 .cart-icon {
@@ -980,6 +1132,7 @@ input {
     background-color: #fff;
     border: 0.1875rem solid #48bb3a;
     display: flex;
+    position: relative;
 }
 
 ul {
@@ -1193,7 +1346,7 @@ ul {
     align-items: center;
     height: 70%;
     width: 100%;
-    overflow:hidden;
+    overflow: hidden;
 }
 
 .cart-body-items {
@@ -1238,7 +1391,7 @@ ul {
     font-weight: 400;
     font-family: 'Open Sans', sans-serif;
     color: #5b5d62;
-    max-width:124px;
+    max-width: 124px;
 }
 
 .cart-body-item-info-count-btn {
@@ -1646,15 +1799,15 @@ ul {
         right: 0;
     }
 
-    .main-page-product:hover .main-page-product-counter-container{
-        bottom:0;
-        right:0;
-    }
-
-    .other-products-item-cart:hover .main-page-product-counter-container {
+    .main-page-product:hover .main-page-product-counter-container {
         bottom: 0;
         right: 0;
     }
+
+.other-products-item-cart:hover .main-page-product-counter-container {
+    bottom: 0;
+    right: 0;
+}
 
 .products-view-product:hover .main-page-product-counter-container {
     bottom: 0;
@@ -2111,7 +2264,6 @@ ul {
     margin: 0 1.5rem;
     border-radius: 0.25rem;
     align-items: center;
-    
 }
 
 .filter-left-side {
@@ -2215,7 +2367,7 @@ ul {
     transition: 0.2s ease;
     overflow-y: auto;
     max-height: 165px;
-    z-index:100;
+    z-index: 100;
 }
 
     .filter-drop-down-list::-webkit-scrollbar {
@@ -2243,7 +2395,7 @@ ul {
     line-height: 120%;
     color: #5b5d62;
     background: #fff;
-    text-decoration:none;
+    text-decoration: none;
 }
 
     .filter-drop-down-list-text:hover {
@@ -2288,6 +2440,7 @@ ul {
         bottom: 0;
         right: 0;
     }
+
     .products-view-product.added:hover .main-page-product-counter-container {
         bottom: 0;
         right: 0;
@@ -2306,14 +2459,14 @@ ul {
     border-radius: 0.5rem;
 }
 
-.pagenated-btn-container{
-    display:flex;
-    justify-content:center;
-    position:absolute;
-    right:1.5rem;
-    bottom:0.5rem;
-    z-index:1101;
-    text-decoration:none;
+.pagenated-btn-container {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    right: 1.5rem;
+    bottom: 0.5rem;
+    z-index: 1101;
+    text-decoration: none;
 }
 
 .pagenated-btn {
@@ -2519,16 +2672,16 @@ ul {
 .product-info-add-to-cart-btn {
     display: flex;
     width: 196px;
-    height:48px;
+    height: 48px;
     border: 1px solid #48bb3a;
     background-color: #48bb3a;
     color: white;
     text-decoration: none;
     border-radius: 5px;
     transition: all 0.3s ease;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
 }
 
     /* Adjust hover styles for the "Додати в кошик" button */
@@ -2542,16 +2695,16 @@ ul {
     text-align: center;
     width: 20px;
     display: flex;
-    justify-content:center;
-    align-items:center;
-    width:48px;
-    height:48px;
+    justify-content: center;
+    align-items: center;
+    width: 48px;
+    height: 48px;
     background-color: white;
     border: 1px solid lightgrey;
     border-radius: 5px;
     color: #000;
     transition: all 0.3s ease;
-    cursor:pointer;
+    cursor: pointer;
 }
 
     /* Adjust hover styles for the favorites button */
@@ -2653,7 +2806,7 @@ ul {
 
 
 .product-menu {
-    visibility:collapse;
+    visibility: collapse;
     padding: 2rem;
     width: 350px;
     height: 490px;
@@ -2667,43 +2820,45 @@ ul {
     z-index: 1103;
 }
 
-#close-icon-product-menu{
+#close-icon-product-menu {
     position: absolute;
     top: 0.7rem;
     right: 0.75rem;
-    z-index:1104;
+    z-index: 1104;
 }
 
-#ImageContainer{
-    text-align:center;
-}
-.product-menu-title-section{
-    display:flex;
-    justify-content:space-between;
-}
-#productTitle{
-    font-size:x-large;
+#ImageContainer {
+    text-align: center;
 }
 
-#productPrice{
-    font-size:xx-large;
+.product-menu-title-section {
+    display: flex;
+    justify-content: space-between;
+}
+
+#productTitle {
+    font-size: x-large;
+}
+
+#productPrice {
+    font-size: xx-large;
     margin-top: 20px;
     margin-right: 10px;
 }
 
-.product-menu-price-section{
-    display:flex;
-}
-
-#price-text{
-    font-size: xx-large;
-    margin-top:20px;
-}
-
-.product-menu-buttons{
+.product-menu-price-section {
     display: flex;
-    gap:10px;
-    margin-top:20px;
+}
+
+#price-text {
+    font-size: xx-large;
+    margin-top: 20px;
+}
+
+.product-menu-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
 }
 
 .product-menu-add-to-cart-btn {
@@ -2711,15 +2866,17 @@ ul {
     padding: 15px;
     background-color: #48bb3a;
     color: white;
-    cursor:pointer;
+    cursor: pointer;
     text-decoration: none;
     border-radius: 5px;
     transition: all 0.3s ease;
 }
+
     .product-menu-add-to-cart-btn:hover {
         background-color: #7CD099;
         color: white;
     }
+
 .product-menu-more-info-btn {
     display: flex;
     padding: 15px;

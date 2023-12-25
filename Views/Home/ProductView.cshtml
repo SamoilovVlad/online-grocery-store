@@ -349,11 +349,11 @@
                         @{
                             if (product.inCart == null)
                             {
-                                <div class="main-page-product-counter-container" id="counterContainer@(product.id)">
+                                <div class="main-page-product-counter-container main-page-product-counter-similar-container" id="counterContainerSimilar@(product.id)">
                                     <svg id="@product.id" onclick="Minus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="@product.id" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
                                     <div class="main-page-product-counter-container-count">
-                                        <input id="productInput@(product.id)" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="" class="num-input-product">
-                                        <span id="productSpan@(product.id)" class="cart-body-item-info-count-btn-counter-num"></span>
+                                        <input id="productSimilarInput@(product.id)" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="" class="num-input-product">
+                                        <span id="productSimilarSpan@(product.id)" class="cart-body-item-info-count-btn-counter-num"></span>
                                         <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
                                     </div>
                                     <svg id="@product.id" onclick="Plus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="@product.id" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="@product.id" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
@@ -361,11 +361,11 @@
                             }
                             else
                             {
-                                <div class="main-page-product-counter-container" id="counterContainer@(product.id)" style="display:flex;">
+                                <div class="main-page-product-counter-container main-page-product-counter-similar-container" id="counterContainerSimilar@(product.id)" style="display:flex;">
                                     <svg id="@product.id" onclick="Minus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="@product.id" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
                                     <div class="main-page-product-counter-container-count">
-                                        <input id="productInput@(product.id)" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="@product.inCart.Count" class="num-input-product">
-                                        <span id="productSpan@(product.id)" class="cart-body-item-info-count-btn-counter-num">@product.inCart.Count</span>
+                                        <input id="productSimilarInput@(product.id)" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="@product.inCart.Count" class="num-input-product">
+                                        <span id="productSimilarSpan@(product.id)" class="cart-body-item-info-count-btn-counter-num">@product.inCart.Count</span>
                                         <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
                                     </div>
                                     <svg id="@product.id" onclick="Plus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="@product.id" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="@product.id" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
@@ -427,7 +427,7 @@
                                                 <svg id="${id}" onclick="Minus(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
                                                     <div class="main-page-product-counter-container-count" style="min-width: 90px;">
                                                         <input id="productInput${id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="${productsInCart[index].count}" style="margin-top:2px; left:15%;" class="num-input-product">
-                                                            <span id="productSpan${id}" class="cart-body-item-info-count-btn-counter-num">$"${productsInCart[index].count}"</span>
+                                                            <span id="productSpan${id}" class="cart-body-item-info-count-btn-counter-num">${productsInCart[index].count}</span>
                                                     <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
                                                 </div>
                                                             <svg id="${id}" onclick="Plus(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="${id}" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
@@ -447,13 +447,24 @@
             var counterContainer = MakeCounter(@Model.Product.id);
             btns.prepend(counterContainer);
 
+        var product = document.querySelector(`.other-products-item-cart[id="${id}"]`);
+        var overlay = product.getElementsByClassName('product-overlay')[0];
+        product.classList.add('added');
+        overlay.classList.add('green');
+
         var counterContainer = document.getElementById(`counterContainer${id}`);
         counterContainer.style.display = 'flex';
+        var counterContainerSimilar = document.getElementById(`counterContainerSimilar${id}`);
+        counterContainerSimilar.style.display = 'flex';
 
         var span = document.getElementById(`productSpan${id}`);
         span.textContent = 1;
         var input = document.getElementById(`productInput${id}`);
         input.value = span.textContent;
+        var spanSimilar = document.getElementById(`productSimilarSpan${id}`);
+        spanSimilar.textContent = 1;
+        var inputSimilar = document.getElementById(`productSimilarInput${id}`);
+        inputSimilar.value = span.textContent;
 
         var price = '@Model.Product.Price';
         var parsedPrice = parseFloat(price.replace(',', '.'));
@@ -495,16 +506,20 @@
         overlay.classList.add('green');
 
         var counterContainer = document.getElementById(`counterContainer${id}`);
+        if(counterContainer != null)
         counterContainer.style.display = 'flex';
 
-        var span = document.getElementById(`productSpan${id}`);
-        span.textContent = 1;
-        var input = document.getElementById(`productInput${id}`);
-        input.value = span.textContent;
+        var counterContainerSimilar = document.getElementById(`counterContainerSimilar${id}`);
+        counterContainerSimilar.style.display = 'flex';
 
-        //input.addEventListener('input', () => {
-        //    span.textContent = input.value;
-        //});
+        var btns = document.getElementsByClassName('product-info-buttons')[0];
+        var addToCartBtn = btns.getElementsByClassName('product-info-add-to-cart-btn')[0];
+        addToCartBtn.style.display = 'none';
+
+        var span = document.getElementById(`productSimilarSpan${id}`);
+        span.textContent = 1;
+        var input = document.getElementById(`productSimilarInput${id}`);
+        input.value = span.textContent;
 
         var price = document.querySelector(`.main-page-product-bottom-price-promo[id="${id}"]`)
         var parsedPrice = price.textContent.slice(0, -4);
