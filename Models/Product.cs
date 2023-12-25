@@ -48,6 +48,6 @@ namespace Shop_Mvc.Models
         public decimal? Price { get; set; }
         public CartProduct inCart = null;
 
-        public virtual string Info() => $"Product id: {id}\nTitle: {Title}\nPrice: {Price}\nCountry: {Country}\nBrand: {Brand}\n Description: {Description}";
+        public override string GetInfo() => $"Product id: {id}\nTitle: {Title}\nPrice: {Price}\nCountry: {Country}\nBrand: {Brand}\n Description: {Description}";
     }
 }

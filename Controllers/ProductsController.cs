@@ -17,7 +17,6 @@ namespace Shop_Mvc.Controllers
             _DatabaseServise = DatabaseServise;
         }
         // GET: api/<ProductsController>
-        //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         [HttpGet]
         public IEnumerable<Product> Get()
         {
