@@ -336,7 +336,7 @@ namespace Shop_Mvc.Controllers
         [HttpGet]
         public IActionResult ProductSearchPartialView(string param)
         {
-            var products = _DatabaseServise.SearchProduct(param, 7);
+            var products = _DatabaseServise.SearchProducts(param, 7);
             products = SetFieldIsInCart(products, GetProductsFromCookie());
             return PartialView(products);
         }

@@ -1,4 +1,4 @@
-﻿@model ProductsViewModel
+﻿@model FullProductSearchViewModel
 
 <div class="products-view-container">
     <div class="navigation-container">
@@ -10,17 +10,17 @@
     </div>
     <div class="products-header-container">
         <div class="products-header-inner">
-            <h1 class="products-header">@Model.products.First().Subcategory</h1>
+            <h1 class="products-header">@Model.searchBy</h1>
             <div class="products-filter-container-round-count">@Model.productsCount</div>
         </div>
     </div>
     <div class="products-filter-container">
         <div class="filter-left-side">
-            <h1 class="products-filter-container-label">@Model.products.First().Subcategory</h1>
+            <h1 class="products-filter-container-label">@Model.searchBy</h1>
             <div class="products-filter-container-round-count">@Model.productsCount</div>
         </div>
         <div class="filter-right-side">
-            <a id="checkBox" onclick="CheckBoxPromoProducts()" style="display:flex; align-items:center; text-decoration:none;" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="1" asp-route-isOnlySales="@(!Model.onlySales)" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory">
+            <a id="checkBox" onclick="CheckBoxPromoProducts()" style="display:flex; align-items:center; text-decoration:none;" asp-controller="Categories" asp-action="FullProductsSearchView" asp-route-currentPage="1" asp-route-isOnlySales="@(!Model.onlySales)" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-searchBy="@Model.searchBy">
                 <div class="check-box" style="margin-right:0.5rem;"></div>
                 <span class="filter-btn-text" style="margin-right:0.5rem; text-decoration:none;">Акційні товари</span>
             </a>
@@ -29,11 +29,11 @@
                 <span class="filter-btn-icon"><svg style="position:fixed;" width="0.750rem" height="0.750rem" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M11 4L6 9L1 4" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
             </div>
             <div class="filter-drop-down-list">
-                <a class="filter-drop-down-list-text" id="1" onclick="SortBy(event)" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="1" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="Cтандартно" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory">Cтандартно</a>
-                <a class="filter-drop-down-list-text" id="2" onclick="SortBy(event)" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="1" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="Спочатку акційні" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory">Спочатку акційні</a>
-                <a class="filter-drop-down-list-text" id="3" onclick="SortBy(event)" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="1" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="Спочатку дорожче" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory">Спочатку дорожче</a>
-                <a class="filter-drop-down-list-text" id="4" onclick="SortBy(event)" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="1" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="Спочатку дешевше" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory">Спочатку дешевше</a>
-                <a class="filter-drop-down-list-text" id="5" onclick="SortBy(event)" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="1" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="За знижкою" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory">За знижкою</a>
+                <a class="filter-drop-down-list-text" id="1" onclick="SortBy(event)" asp-controller="Categories" asp-action="FullProductsSearchView" asp-route-currentPage="1" asp-route-isOnlySales="@(Model.onlySales)" asp-route-sortedBy="Cтандартно" asp-route-pageSize="40" asp-route-searchBy="@Model.searchBy">Cтандартно</a>
+                <a class="filter-drop-down-list-text" id="2" onclick="SortBy(event)" asp-controller="Categories" asp-action="FullProductsSearchView" asp-route-currentPage="1" asp-route-isOnlySales="@(Model.onlySales)" asp-route-sortedBy="Спочатку акційні" asp-route-pageSize="40" asp-route-searchBy="@Model.searchBy">Спочатку акційні</a>
+                <a class="filter-drop-down-list-text" id="3" onclick="SortBy(event)" asp-controller="Categories" asp-action="FullProductsSearchView" asp-route-currentPage="1" asp-route-isOnlySales="@(Model.onlySales)" asp-route-sortedBy="Спочатку дорожче" asp-route-pageSize="40" asp-route-searchBy="@Model.searchBy">Спочатку дорожче</a>
+                <a class="filter-drop-down-list-text" id="4" onclick="SortBy(event)" asp-controller="Categories" asp-action="FullProductsSearchView" asp-route-currentPage="1" asp-route-isOnlySales="@(Model.onlySales)" asp-route-sortedBy="Спочатку дешевше" asp-route-pageSize="40" asp-route-searchBy="@Model.searchBy">Спочатку дешевше</a>
+                <a class="filter-drop-down-list-text" id="5" onclick="SortBy(event)" asp-controller="Categories" asp-action="FullProductsSearchView" asp-route-currentPage="1" asp-route-isOnlySales="@(Model.onlySales)" asp-route-sortedBy="За знижкою" asp-route-pageSize="40" asp-route-searchBy="@Model.searchBy">За знижкою</a>
             </div>
         </div>
     </div>
@@ -140,7 +140,7 @@
     <div class="pagenated-btn-container">
         @if (Model.currentPage > 1)
         {
-            <a class="pagenated-btn-arrow" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="@(Model.currentPage + 1)" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory">
+            <a class="pagenated-btn-arrow" asp-controller="Categories" asp-action="FullProductsSearchView" asp-route-currentPage="@(Model.currentPage + 1)" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-searchBy="@Model.searchBy">
                 <svg width="0.750rem" height="0.750rem" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M8 11L3 6L8 1" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path></svg>
             </a>
         }
@@ -150,39 +150,39 @@
                 <svg width="0.750rem" height="0.750rem" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M8 11L3 6L8 1" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path></svg>
             </a>
         }
-        <a class="pagenated-btn-first" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="1" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory">1</a>
+        <a class="pagenated-btn-first" asp-controller="Categories" asp-action="FullProductsSearchView" asp-route-currentPage="1" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-searchBy="@Model.searchBy">1</a>
         @if (Model.currentPage == 1)
         {
-            <a class="pagenated-btn" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="1" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory"></a>
-            <a class="pagenated-btn" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="2" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory"></a>
-            <a class="pagenated-btn" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="3" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory"></a>
+            <a class="pagenated-btn" asp-controller="Categories" asp-action="FullProductsSearchView" asp-route-currentPage="1" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-searchBy="@Model.searchBy"></a>
+            <a class="pagenated-btn" asp-controller="Categories" asp-action="FullProductsSearchView" asp-route-currentPage="2" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-searchBy="@Model.searchBy"></a>
+            <a class="pagenated-btn" asp-controller="Categories" asp-action="FullProductsSearchView" asp-route-currentPage="3" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-searchBy="@Model.searchBy"></a>
 
         }
         else if (Model.currentPage == Model.pageNumber && Model.currentPage == 2)
         {
-            <a class="pagenated-btn" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="@(Model.currentPage - 1)" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory"></a>
-            <a class="pagenated-btn" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="@(Model.currentPage)" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory"></a>
-            <a class="pagenated-btn" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="@Model.currentPage" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory"></a>
+            <a class="pagenated-btn" asp-controller="Categories" asp-action="FullProductsSearchView" asp-route-currentPage="@(Model.currentPage - 1)" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-searchBy="@Model.searchBy"></a>
+            <a class="pagenated-btn" asp-controller="Categories" asp-action="FullProductsSearchView" asp-route-currentPage="@(Model.currentPage)" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-searchBy="@Model.searchBy"></a>
+            <a class="pagenated-btn" asp-controller="Categories" asp-action="FullProductsSearchView" asp-route-currentPage="@Model.currentPage" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-searchBy="@Model.searchBy"></a>
 
         }
         else if (Model.currentPage == Model.pageNumber)
         {
-            <a class="pagenated-btn" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="@(Model.currentPage - 2)" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory"></a>
-            <a class="pagenated-btn" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="@(Model.currentPage - 1)" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory"></a>
-            <a class="pagenated-btn" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="@Model.currentPage" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory"></a>
+            <a class="pagenated-btn" asp-controller="Categories" asp-action="FullProductsSearchView" asp-route-currentPage="@(Model.currentPage - 2)" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-searchBy="@Model.searchBy"></a>
+            <a class="pagenated-btn" asp-controller="Categories" asp-action="FullProductsSearchView" asp-route-currentPage="@(Model.currentPage - 1)" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-searchBy="@Model.searchBy"></a>
+            <a class="pagenated-btn" asp-controller="Categories" asp-action="FullProductsSearchView" asp-route-currentPage="@Model.currentPage" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-searchBy="@Model.searchBy"></a>
 
         }
         else
         {
-            <a class="pagenated-btn" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="@(Model.currentPage - 1)" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory"></a>
-            <a class="pagenated-btn" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="@Model.currentPage" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory"></a>
-            <a class="pagenated-btn" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="@(Model.currentPage + 1)" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory"></a>
+            <a class="pagenated-btn" asp-controller="Categories" asp-action="FullProductsSearchView" asp-route-currentPage="@(Model.currentPage - 1)" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-searchBy="@Model.searchBy"></a>
+            <a class="pagenated-btn" asp-controller="Categories" asp-action="FullProductsSearchView" asp-route-currentPage="@Model.currentPage" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-searchBy="@Model.searchBy"></a>
+            <a class="pagenated-btn" asp-controller="Categories" asp-action="FullProductsSearchView" asp-route-currentPage="@(Model.currentPage + 1)" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-searchBy="@Model.searchBy"></a>
         }
-        <a class="pagenated-btn-last" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="@Model.pageNumber" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory">@Model.pageNumber</a>
+        <a class="pagenated-btn-last" asp-controller="Categories" asp-action="FullProductsSearchView" asp-route-currentPage="@Model.pageNumber" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-searchBy="@Model.searchBy">@Model.pageNumber</a>
 
         @if (Model.currentPage < Model.pageNumber)
         {
-            <a class="pagenated-btn-arrow" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="@(Model.currentPage + 1)" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-subcategoryName="@Model.products.First().Subcategory">
+            <a class="pagenated-btn-arrow" asp-controller="Categories" asp-action="FullProductsSearchView" asp-route-currentPage="@(Model.currentPage + 1)" asp-route-isOnlySales="@Model.onlySales" asp-route-sortedBy="@Model.sortedBy" asp-route-pageSize="40" asp-route-searchBy="@Model.searchBy">
                 <svg style="transform: rotate(180deg)" width="0.750rem" height="0.750rem" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M8 11L3 6L8 1" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path></svg>
             </a>
         }
@@ -307,7 +307,7 @@
         title.textContent = document.getElementById(`mainPageProductTitle${id}`).textContent;
         var price = document.getElementById('productPrice');
         var productPrice = document.querySelector(`.main-page-product-bottom-price[id="${id}"]`);
-        if(productPrice == null)
+        if (productPrice == null)
             productPrice = document.querySelector(`.main-page-product-bottom-price-promo[id="${id}"]`);
         price.textContent = productPrice.textContent;
         var detail = document.getElementsByClassName('product-menu-more-info-btn')[0];
@@ -323,25 +323,25 @@
         });
         if (productsInCart[index] == undefined) {
             counter = `<div class="product-menu-counter-container" id="counterContainerMenu${id}" style="display:flex; position:relative" height: 50px;>
+                                                    <svg id="${id}" onclick="MinusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                    <div class="main-page-product-counter-container-count">
+                                                            <input id="productInputMenu${id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="1" style="margin-top:2px;" class="num-input-product">
+                                                                <span id="productSpanMenu${id}" class="cart-body-item-info-count-btn-counter-num">$"1"</span>
+                                                        <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
+                                                    </div>
+                                                                <svg id="${id}" onclick="PlusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="${id}" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                </div>`;
+        }
+        else {
+            counter = `<div class="product-menu-counter-container" id="counterContainerMenu${id}" style="display:flex; position:relative" height: 50px;>
                                                 <svg id="${id}" onclick="MinusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
                                                 <div class="main-page-product-counter-container-count">
-                                                        <input id="productInputMenu${id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="1" style="margin-top:2px;" class="num-input-product">
-                                                            <span id="productSpanMenu${id}" class="cart-body-item-info-count-btn-counter-num">$"1"</span>
+                                                        <input id="productInputMenu${id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="${productsInCart[index].count}" style="margin-top:2px;" class="num-input-product">
+                                                            <span id="productSpanMenu${id}" class="cart-body-item-info-count-btn-counter-num">${productsInCart[index].count}"</span>
                                                     <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
                                                 </div>
                                                             <svg id="${id}" onclick="PlusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="${id}" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
                                             </div>`;
-        }
-        else {
-            counter = `<div class="product-menu-counter-container" id="counterContainerMenu${id}" style="display:flex; position:relative" height: 50px;>
-                                            <svg id="${id}" onclick="MinusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
-                                            <div class="main-page-product-counter-container-count">
-                                                    <input id="productInputMenu${id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="${productsInCart[index].count}" style="margin-top:2px;" class="num-input-product">
-                                                        <span id="productSpanMenu${id}" class="cart-body-item-info-count-btn-counter-num">${productsInCart[index].count}"</span>
-                                                <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
-                                            </div>
-                                                        <svg id="${id}" onclick="PlusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="${id}" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
-                                        </div>`;
         }
         var tempDiv = document.createElement('div');
         tempDiv.innerHTML = counter;

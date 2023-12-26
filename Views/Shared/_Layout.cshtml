@@ -403,21 +403,7 @@
         });
 
         window.addEventListener('resize', removeIcons);
-        window.addEventListener('resize', searchSize);
-        window.addEventListener('resize', function(){
-            console.log(document.getElementById('search_input').style.display == 'none')
-            if(document.getElementById('search_input').style.display == 'none')
-            {
-                var input = document.getElementById('search_input');
-                input.value = '';
-                var productsSearchContainer = document.getElementsByClassName("products-search-container")[0];
-                setTimeout(function () {
-                    productsSearchContainer.style.display = "none";
-                }, 500);
-                productsSearchContainer.style.opacity = "0";
-                productsSearchContainer.innerHTML = '';
-            }
-        });
+        window.addEventListener('resize', searchSize); 
 
 
         class CartProduct {
@@ -1187,6 +1173,22 @@
             SetSearchInputs();
             GetFullPriceForCart();
         }
+
+        function GetAllSearchProducts() {
+            ShowLoader();
+
+            const input = document.getElementById('search_input');
+            const searchByValue = encodeURIComponent(input.value);
+            const currentPageValue = 1;
+            const isOnlySalesValue = false;
+            const sortedByValue = encodeURIComponent("Стандартно");
+            const pageSizeValue = 40;
+
+            const url = `/Categories/FullProductsSearchView?searchBy=${searchByValue}&currentPage=${currentPageValue}&isOnlySales=${isOnlySalesValue}&sortedBy=${sortedByValue}&pageSize=${pageSizeValue}`;
+
+            window.location.href = url;
+        }
+
     </script>
 </body>
 </html>

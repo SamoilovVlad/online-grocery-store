@@ -39,7 +39,11 @@ namespace Shop_Mvc.Services
         public Category GetProductCategory(string categoryName);
         public IEnumerable<Subcategory> GetAllSubcategoriesByProductCategoryName(string categoryName);
         public Subcategory GetSubcategoryByName(string subcategoryName);
-        public IEnumerable<Product> SearchProduct(string parameter, int count);
+        public IEnumerable<Product> SearchProducts(string parameter, int count);
+        public IEnumerable<Product> SearchProducts(string parameter, int count = 0, int skip = 0, bool isPromo = false);
+        public IEnumerable<Product> SearchProductsOrderByPriceDescending(string parameter, int count = 0, int skip = 0, bool isPromo = false);
+        public IEnumerable<Product> SearchProductsOrderByPrice(string parameter, int count, int skip, bool isPromo);
+        public IEnumerable<Product> SearchProductsPromoFirstly(string parameter, int count, int skip, bool isPromo);
     }
     public class DatabaseServise : IDatabaseServise
     {
@@ -290,7 +294,7 @@ namespace Shop_Mvc.Services
             }
             return products;
         }
-       
+
         public async Task<IEnumerable<Product>> GetProductsByCountryAsync(string country, int count = 0)
         {
             using (var _context = new MyDbContext(_dbContextOptions))
@@ -363,10 +367,175 @@ namespace Shop_Mvc.Services
             }
         }
 
-        public IEnumerable<Product> SearchProduct(string parameter, int count) => _context.Products
+        public IEnumerable<Product> SearchProducts(string parameter, int count) => _context.Products
                                                                                 .Where(p => p.Title.Contains(parameter) ||
                                                                                        p.Brand.Contains(parameter) ||
                                                                                        p.Price.ToString().Contains(parameter)).Take(count);
+        public IEnumerable<Product> SearchProducts(string parameter, int count = 0, int skip = 0, bool isPromo = false)
+        {
+            IEnumerable<Product> products;
+            if (count == 0)
+            {
+                if (isPromo)
+                {
+                    products = _context.Products.Where(p => (p.Title.Contains(parameter) ||
+                                                       p.Brand.Contains(parameter) ||
+                                                       p.Price.ToString().Contains(parameter)) && p.Promo != null);
+                }
+                else
+                {
+                    products = _context.Products.Where(p => p.Title.Contains(parameter) ||
+                                                       p.Brand.Contains(parameter) ||
+                                                       p.Price.ToString().Contains(parameter));
+                }
+            }
+            else
+            {
+                if (isPromo)
+                {
+                    products = _context.Products.Where(p => (p.Title.Contains(parameter) ||
+                                                       p.Brand.Contains(parameter) ||
+                                                       p.Price.ToString().Contains(parameter)) && p.Promo != null).Skip(skip).Take(count);
+                }
+                else
+                {
+                    products = _context.Products.Where(p => p.Title.Contains(parameter) ||
+                                                       p.Brand.Contains(parameter) ||
+                                                       p.Price.ToString().Contains(parameter)).Skip(skip).Take(count);
+                }
+            }
+            return products;
+        }
+
+        public IEnumerable<Product> SearchProductsOrderByPriceDescending(string parameter, int count = 0, int skip = 0, bool isPromo = false)
+        {
+            IEnumerable<Product> products;
+
+            if (!isPromo)
+            {
+                if (count == 0)
+                {
+                    products = _context.Products
+                      .Where(p => p.Title.Contains(parameter) || p.Brand.Contains(parameter) || p.Price.ToString().Contains(parameter))
+                      .OrderByDescending(p => p.Price);
+                }
+                else
+                {
+
+                    products = _context.Products
+                        .Where(p => p.Title.Contains(parameter) || p.Brand.Contains(parameter) || p.Price.ToString().Contains(parameter))
+                        .OrderByDescending(p => p.Price)
+                        .Skip(skip)
+                        .Take(count);
+                }
+            }
+            else
+            {
+                if (count == 0)
+                {
+                    products = _context.Products
+                       .Where(p => (p.Title.Contains(parameter) || p.Brand.Contains(parameter) || p.Price.ToString().Contains(parameter)) && p.Promo != null)
+                       .OrderByDescending(p => p.Price);
+                }
+                else
+                {
+
+                    products = _context.Products
+                        .Where(p => (p.Title.Contains(parameter) || p.Brand.Contains(parameter) || p.Price.ToString().Contains(parameter)) && p.Promo != null)
+                        .OrderByDescending(p => p.Price)
+                        .Skip(skip)
+                        .Take(count);
+                }
+            }
+            return products;
+        }
+
+        public IEnumerable<Product> SearchProductsOrderByPrice(string parameter, int count, int skip, bool isPromo)
+        {
+            IEnumerable<Product> products;
+
+            if (!isPromo)
+            {
+                if (count == 0)
+                {
+                    products = _context.Products
+                      .Where(p => p.Title.Contains(parameter) || p.Brand.Contains(parameter) || p.Price.ToString().Contains(parameter))
+                      .OrderBy(p => p.Price);
+                }
+                else
+                {
+
+                    products = _context.Products
+                        .Where(p => p.Title.Contains(parameter) || p.Brand.Contains(parameter) || p.Price.ToString().Contains(parameter))
+                        .OrderBy(p => p.Price)
+                        .Skip(skip)
+                        .Take(count);
+                }
+            }
+            else
+            {
+                if (count == 0)
+                {
+                    products = _context.Products
+                       .Where(p => (p.Title.Contains(parameter) || p.Brand.Contains(parameter) || p.Price.ToString().Contains(parameter)) && p.Promo != null)
+                       .OrderBy(p => p.Price);
+                }
+                else
+                {
+
+                    products = _context.Products
+                        .Where(p => (p.Title.Contains(parameter) || p.Brand.Contains(parameter) || p.Price.ToString().Contains(parameter)) && p.Promo != null)
+                        .OrderBy(p => p.Price)
+                        .Skip(skip)
+                        .Take(count);
+                }
+            }
+            return products;
+        }
+
+        public IEnumerable<Product> SearchProductsPromoFirstly(string parameter, int count, int skip, bool isPromo)
+        {
+            IEnumerable<Product> products;
+
+            if (!isPromo)
+            {
+
+                if (count == 0)
+                    products = _context.Products
+                        .Where(p => p.Title.Contains(parameter) ||
+                        p.Brand.Contains(parameter) ||
+                        p.Price.ToString().Contains(parameter)).OrderByDescending(p => !string.IsNullOrEmpty(p.Promo));
+                else
+                {
+                    products = _context.Products
+                       .Where(p => p.Title.Contains(parameter) ||
+                        p.Brand.Contains(parameter) ||
+                        p.Price.ToString().Contains(parameter)).OrderByDescending(p => !string.IsNullOrEmpty(p.Promo))
+                        .Skip(skip)
+                        .Take(count);
+
+                }
+            }
+            else
+            {
+                if (count == 0)
+                    products = _context.Products
+                        .Where(p => (p.Title.Contains(parameter) ||
+                        p.Brand.Contains(parameter) ||
+                        p.Price.ToString().Contains(parameter)) && p.Promo != null).OrderByDescending(p => !string.IsNullOrEmpty(p.Promo));
+                else
+                {
+
+                    products = _context.Products
+                        .Where(p => (p.Title.Contains(parameter) ||
+                        p.Brand.Contains(parameter) ||
+                        p.Price.ToString().Contains(parameter)) && p.Promo != null).OrderByDescending(p => !string.IsNullOrEmpty(p.Promo))
+                        .Skip(skip)
+                        .Take(count);
+                }
+            }
+            return products;
+        }
 
         public async Task<IEnumerable<SliderImage>> GetAllSliderImagesAsync()
         {

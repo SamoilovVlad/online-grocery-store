@@ -4,6 +4,7 @@ using System.Diagnostics;
 using Shop_Mvc.Data;
 using Shop_Mvc.Services;
 using Newtonsoft.Json;
+using System.Globalization;
 
 namespace Shop_Mvc.Controllers
 {
@@ -57,11 +58,34 @@ namespace Shop_Mvc.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public IActionResult FullProductsSearchView(string searchBy = "", int currentPage = 1, bool isOnlySales = false, string sortedBy = "Стандартно", int pageSize = 40)
+        {
+            IEnumerable<Product> products;
+
+            products = SortSearchList(sortedBy, searchBy, isOnlySales, 0, 0);
+            int count = products.Count();
+            products = SetFieldIsInCart(products.Skip((currentPage - 1) * pageSize).Take(pageSize), GetProductsFromCookie());
+
+            var model = new FullProductSearchViewModel()
+            {
+                products = products,
+                productsCount = count,
+                pageNumber = (int)Math.Ceiling((double)count / pageSize),
+                pageSize = pageSize,
+                currentPage = currentPage,
+                onlySales = isOnlySales,
+                sortedBy = sortedBy,
+                searchBy = searchBy,
+            };
+            return View(model);
+        }
+
         private IEnumerable<Product>SortBy(string sortBy, string subcategory, bool isPromo, int count = 0, int skip = 0)
         {
             switch (sortBy) 
             {
-                case "Стандарт":
+                case "Стандартно":
                     return _DatabaseServise.GetProductsBySubcategory(subcategory, count, skip, isPromo);
                 case "Спочатку дорожче":
                     return _DatabaseServise.GetProductsBySubcategoryOrderByPriceDescending(subcategory, count, skip, isPromo);
@@ -75,6 +99,27 @@ namespace Shop_Mvc.Controllers
                                .OrderBy(p => p.Promo != null ? ParsePromoValue(p.Promo) : 0);
                     return data;
                 default: return _DatabaseServise.GetProductsBySubcategory(subcategory, count, skip, isPromo);
+            }
+        }
+
+        private IEnumerable<Product> SortSearchList(string sortBy, string searchBy, bool isPromo, int count = 0, int skip = 0)
+        {
+            switch (sortBy)
+            {
+                case "Стандартно":
+                    return _DatabaseServise.SearchProducts(searchBy, count, skip, isPromo);
+                case "Спочатку дорожче":
+                    return _DatabaseServise.SearchProductsOrderByPriceDescending(searchBy, count, skip, isPromo);
+                case "Спочатку дешевше":
+                    return _DatabaseServise.SearchProductsOrderByPrice(searchBy, count, skip, isPromo);
+                case "Спочатку акційні":
+                    return _DatabaseServise.SearchProductsPromoFirstly(searchBy, count, skip, isPromo);
+                case "За знижкою":
+                    var data = _DatabaseServise.SearchProductsPromoFirstly(searchBy, count, skip, isPromo);
+                    data = data
+                               .OrderBy(p => p.Promo != null ? ParsePromoValue(p.Promo) : 0);
+                    return data;
+                default: return _DatabaseServise.GetProductsBySubcategory(searchBy, count, skip, isPromo);
             }
         }
         private int ParsePromoValue(string promo)
