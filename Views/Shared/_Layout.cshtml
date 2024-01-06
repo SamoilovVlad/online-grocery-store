@@ -10,6 +10,72 @@
 <body>
     <div id="loader-green" class="loader"></div>
     <div id="loader-black" class="loader"></div>
+    <div id="overlayDark" class="overlay-dark"></div>
+    <div class="msg-box">
+        <svg width="0.800rem" height="0.800rem" viewBox="0 0 16 16" fill="none" onclick="CloseMsgBox()" xmlns="http://www.w3.org/2000/svg" style="cursor:pointer; position:absolute; top:10px; left:10px;" class=""><path b-o8qoazfa8l="" d="M2 2L14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path b-o8qoazfa8l="" d="M14 2L2 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        <span id="msgBoxTitle" style="margin-bottom:auto.5rem;"></span>
+        <p id="msgBoxContent" style="font-size:14px; text-align:center;"></p>
+    </div>
+    <div class="authorization-container">
+        <div class="authorization-form">
+            <div class="authorization-form-close" onclick="CloseAuthorization()">
+                <svg width="1.000rem" height="1.000rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M2 2L14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M14 2L2 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </div>
+            <p class="authorization-form-label">Вхід в кабінет</p>
+            <div class="log-or-reg">
+                <div class="login-btn" id="loginBtn" onclick="ChooseAuthorizationBlock(event)">
+                    <span id="loginBtn" onclick="ChooseAuthorizationBlock(event)">Увійти</span>
+                </div>
+                <div class="register-btn active" id="registerBtn" onclick="ChooseAuthorizationBlock(event)">
+                    <span id="registerBtn" onclick="ChooseAuthorizationBlock(event)">Зареєструватися</span>
+                </div>
+            </div>
+            <div class="login-form" id="logBlock">
+                <div class="input-form">
+                    <input class="input-form-input" inputmode="email" onblur="GetPasiveInput(event)" onfocus="GetActiveInput(event)" id="formInput1">
+                    <span class="input-form-placeholder" id="formPlaceholder1">Логін</span>
+                    <span class="input-form-label" id="formLabel1">Логін</span>
+                    <span class="error-span" id="errorSpan1">Невірна пошта</span>
+                </div>
+                <div class="input-form">
+                    <input class="input-form-input" type="password" onblur="GetPasiveInput(event)" onfocus="GetActiveInput(event)" id="formInput2">
+                    <span class="input-form-placeholder" id="formPlaceholder2">Пароль</span>
+                    <span class="input-form-label" id="formLabel2">Пароль</span>
+                    <span class="error-span" id="errorSpan2">Невірний пароль</span>
+                </div>
+            </div>
+            <div class="register-form" id="regBlock">
+                <div class="input-form">
+                    <input class="input-form-input" inputmode="email" onblur="GetPasiveInput(event)" onfocus="GetActiveInput(event)" id="formInput3">
+                    <span class="input-form-placeholder" id="formPlaceholder3">Ім'я</span>
+                    <span class="input-form-label" id="formLabel3">Ім'я</span>
+                    <span class="error-span" id="errorSpan3">Ім'я має містити не менше двох символів</span>
+                </div>
+                <div class="input-form">
+                    <input class="input-form-input" inputmode="email" onblur="GetPasiveInput(event)" onfocus="GetActiveInput(event)" id="formInput4">
+                    <span class="input-form-placeholder" id="formPlaceholder4">Логін</span>
+                    <span class="input-form-label" id="formLabel4">Логін</span>
+                    <span class="error-span" id="errorSpan4">Слабкий пароль</span>
+                </div>
+                <div class="input-form">
+                    <input class="input-form-input" type="password" onblur="GetPasiveInput(event)" onfocus="GetActiveInput(event)" id="formInput5">
+                    <span class="input-form-placeholder" id="formPlaceholder5">Пароль</span>
+                    <span class="input-form-label" id="formLabel5">Пароль</span>
+                    <span class="error-span" id="errorSpan5">Слабкий пароль</span>
+                </div>
+                <div class="input-form">
+                    <input class="input-form-input" type="password" onblur="GetPasiveInput(event)" onfocus="GetActiveInput(event)" id="formInput6">
+                    <span class="input-form-placeholder" id="formPlaceholder6">Повторіть пароль</span>
+                    <span class="input-form-label" id="formLabel6">Повторіть пароль</span>
+                    <span class="error-span" id="errorSpan6">Слабкий пароль</span>
+                </div>
+            </div>
+            <span class="error-span" id="errorSpan7"></span>
+            <div class="authorization-container-confirm-btn" onclick="Register();">
+                <span>Далі</span>
+            </div>
+        </div>
+    </div>
     <header class="header">
         <div class="header-top">
             <div class="header-left-side">
@@ -57,7 +123,7 @@
                     <div class="heart-icon">
                         <svg width="1.000rem" height="0.938rem" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg" class="favorite-link__heart-icon"><path d="M14.1915 7.56097L14.218 7.52031L14.2405 7.47727C14.6216 6.74672 15 5.85591 15 4.9799C15 2.71644 13.5355 1.33759 11.8732 1.07637C10.4691 0.780647 8.956 1.35222 8.01756 2.56858C7.09624 1.31855 5.53247 0.883302 4.17204 1.06957L4.17203 1.06952L4.16182 1.07103C2.48513 1.31826 1 2.70055 1 4.9799C1 5.85591 1.37843 6.74672 1.75955 7.47727L1.782 7.52031L1.80851 7.56097C2.279 8.28247 2.86715 9.13148 3.56752 9.89897C4.82205 11.286 6.35624 12.5732 7.42816 13.3204L8.035 13.7434L8.61708 13.2869C8.64265 13.2668 8.66858 13.2465 8.69484 13.2259C9.69949 12.4384 11.1982 11.2636 12.4324 9.89901C13.1328 9.13152 13.721 8.28248 14.1915 7.56097Z" stroke="currentColor" stroke-width="2"></path></svg>
                     </div>
-                    <div class="profile-icon">
+                    <div class="profile-icon" onclick="GetProfile()">
                         <svg width="1.000rem" height="1.000rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="cabinet-link__cabinet-icon"><rect x="5" y="1" width="6" height="7" rx="3" stroke="currentColor" stroke-width="2"></rect><path d="M1.5714 15.3714C1.77655 15.8842 2.35853 16.1336 2.8713 15.9285C3.38408 15.7233 3.63345 15.1413 3.42831 14.6286L1.5714 15.3714ZM12.5717 14.6285C12.3666 15.1413 12.616 15.7233 13.1287 15.9285C13.6415 16.1336 14.2235 15.8842 14.4286 15.3715L12.5717 14.6285ZM3.42831 14.6286C3.01835 13.6038 3.20266 13.0402 3.48154 12.7245C3.81679 12.3449 4.56205 12 5.85715 12V10C4.29514 10 2.86166 10.4051 1.9825 11.4005C1.04696 12.4598 0.981178 13.8962 1.5714 15.3714L3.42831 14.6286ZM5.85715 12H10.1429V10H5.85715V12ZM10.1429 12C11.438 12 12.1833 12.3449 12.5185 12.7245C12.7974 13.0402 12.9817 13.6038 12.5717 14.6285L14.4286 15.3715C15.0189 13.8962 14.9531 12.4598 14.0176 11.4005C13.1384 10.4051 11.7049 10 10.1429 10V12Z" fill="currentColor"></path></svg>
                     </div>
                 </div>
@@ -387,7 +453,7 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
-    <script>
+    <script type="text/javascript">
 
         document.addEventListener("DOMContentLoaded", function () {
 
@@ -403,7 +469,7 @@
         });
 
         window.addEventListener('resize', removeIcons);
-        window.addEventListener('resize', searchSize); 
+        window.addEventListener('resize', searchSize);
 
 
         class CartProduct {
@@ -423,6 +489,8 @@
         var isCartEmpty = true;
         var isCartShowing = false;
         var isDetailsShowing = false;
+        var isAuthorizationShowing = false;
+        var isLogBlockShowing = true;
         const search = document.getElementById('search');
         function showCatalogMenu() {
             if (!isCatalogMenuShowing)
@@ -862,8 +930,8 @@
                     var secondElementToRemove = document.getElementById(`leftCartItem${event.target.id}`);
                     if (document.getElementsByClassName('product-info-buttons')[0] != null) {
                         var addToCartBtn = document.getElementsByClassName('product-info-add-to-cart-btn')[0];
-                        if(addToCartBtn.id === event.target.id)
-                        addToCartBtn.style.display = 'flex';
+                        if (addToCartBtn.id === event.target.id)
+                            addToCartBtn.style.display = 'flex';
                     }
                     cart.removeChild(elementToRemove);
                     leftCart.removeChild(secondElementToRemove);
@@ -916,48 +984,48 @@
         function AddHtmlToCart(itemInfo) {
             var totalPrice = (itemInfo.price * itemInfo.count).toFixed(2);
             var item = `<div class="cart-body-item" id="cart-body-item${itemInfo.id}">
-                                                                                                                                                                    <img src="/Product_Images/product_${itemInfo.id}.jpg" />
-                                                                                                                                                                    <div class="cart-body-item-info">
-                                                                                                                                                                        <div class="cart-body-item-info-label">${itemInfo.title}</div>
-                                                                                                                                                                            <div id="${itemInfo.id}" class="cart-body-item-info-count-btn">
-                                                                                                                                                                                    <svg id="${itemInfo.id}" onclick="Minus(event)" width="2.000rem" height="2.000rem" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="${itemInfo.id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
-                                                                                                                                                                            <div style="height:100%; width:60px; position:relative; display:flex; align-items:center; justify-content:center;">
-                                                                                                                                                                                    <input id="cartInput${itemInfo.id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" class="num-input" value="${itemInfo.count}">
-                                                                                                                                                                                            <span id="cartSpan${itemInfo.id}" class="cart-body-item-info-count-btn-counter-num">${itemInfo.count}</span>
-                                                                                                                                                                                <span class="cart-body-item-info-count-btn-counter-text">шт</span>
-                                                                                                                                                                            </div>
-                                                                                                                                                                                        <svg id="${itemInfo.id}" onclick="Plus(event)" width="2.000rem" height="2.000rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="${itemInfo.id}" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="${itemInfo.id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
-                                                                                                                                                                        </div>
-                                                                                                                                                                    </div>
-                                                                                                                                                                    <div class="cart-body-item-controls">
-                                                                                                                                                                        <div class="cart-body-item-controls-icons">
-                                                                                                                                                                            <svg width="1.000rem" height="1.000rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="cart-body-item-controls-icons-icon"><path d="M14.5455 7.63692C14.548 8.59682 14.3237 9.54374 13.8909 10.4006C13.3778 11.4273 12.5889 12.2909 11.6127 12.8946C10.6365 13.4983 9.51145 13.8183 8.36364 13.8187C7.40373 13.8212 6.45681 13.597 5.6 13.1642L1.45455 14.546L2.83636 10.4006C2.40359 9.54374 2.17932 8.59682 2.18182 7.63692C2.18226 6.4891 2.50226 5.36408 3.10598 4.38786C3.70969 3.41164 4.57328 2.62278 5.6 2.10964C6.45681 1.67687 7.40373 1.4526 8.36364 1.4551H8.72727C10.2432 1.53873 11.6749 2.17856 12.7485 3.25209C13.822 4.32561 14.4618 5.75739 14.5455 7.27328V7.63692Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                                                                                                                                                                            <svg width="1.000rem" height="1.000rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="cart-body-item-controls-icons-icon"><path d="M2 4H3.33333H14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M4.99976 4V2.66667C4.99976 2.31305 5.14023 1.64005 5.39028 1.39C5.64033 1.13995 5.97947 1 6.33309 1L9.66642 1C10.02 1 10.3592 1.13995 10.6092 1.39C10.8593 1.64005 10.9998 2.31305 10.9998 2.66667V4M12.9998 4V13.6667C12.9998 14.0203 12.8593 14.3594 12.6092 14.6095C12.3592 14.8595 12.02 15 11.6664 15H4.33309C3.97947 15 3.64033 14.8595 3.39028 14.6095C3.14023 14.3594 2.99976 14.0203 2.99976 13.6667V4H12.9998Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M6.5 7.5V11.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.5 7.5V11.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                                                                                                                                                                        </div>
-                                                                                                                                                                        <div class="cart-body-item-controls-price">
-                                                                                                                                                                                <div class="cart-body-item-controls-price-secondary">${itemInfo.price} грн за шт</div>
-                                                                                                                                                                                        <div class="cart-body-item-controls-price-primary">${totalPrice} грн</div>
-                                                                                                                                                                        </div>
-                                                                                                                                                                    </div>`
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <img src="/Product_Images/product_${itemInfo.id}.jpg" />
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <div class="cart-body-item-info">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <div class="cart-body-item-info-label">${itemInfo.title}</div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <div id="${itemInfo.id}" class="cart-body-item-info-count-btn">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <svg id="${itemInfo.id}" onclick="Minus(event)" width="2.000rem" height="2.000rem" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="${itemInfo.id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <div style="height:100%; width:60px; position:relative; display:flex; align-items:center; justify-content:center;">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <input id="cartInput${itemInfo.id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" class="num-input" value="${itemInfo.count}">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <span id="cartSpan${itemInfo.id}" class="cart-body-item-info-count-btn-counter-num">${itemInfo.count}</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <span class="cart-body-item-info-count-btn-counter-text">шт</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <svg id="${itemInfo.id}" onclick="Plus(event)" width="2.000rem" height="2.000rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="${itemInfo.id}" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="${itemInfo.id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <div class="cart-body-item-controls">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <div class="cart-body-item-controls-icons">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <svg width="1.000rem" height="1.000rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="cart-body-item-controls-icons-icon"><path d="M14.5455 7.63692C14.548 8.59682 14.3237 9.54374 13.8909 10.4006C13.3778 11.4273 12.5889 12.2909 11.6127 12.8946C10.6365 13.4983 9.51145 13.8183 8.36364 13.8187C7.40373 13.8212 6.45681 13.597 5.6 13.1642L1.45455 14.546L2.83636 10.4006C2.40359 9.54374 2.17932 8.59682 2.18182 7.63692C2.18226 6.4891 2.50226 5.36408 3.10598 4.38786C3.70969 3.41164 4.57328 2.62278 5.6 2.10964C6.45681 1.67687 7.40373 1.4526 8.36364 1.4551H8.72727C10.2432 1.53873 11.6749 2.17856 12.7485 3.25209C13.822 4.32561 14.4618 5.75739 14.5455 7.27328V7.63692Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <svg width="1.000rem" height="1.000rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="cart-body-item-controls-icons-icon"><path d="M2 4H3.33333H14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M4.99976 4V2.66667C4.99976 2.31305 5.14023 1.64005 5.39028 1.39C5.64033 1.13995 5.97947 1 6.33309 1L9.66642 1C10.02 1 10.3592 1.13995 10.6092 1.39C10.8593 1.64005 10.9998 2.31305 10.9998 2.66667V4M12.9998 4V13.6667C12.9998 14.0203 12.8593 14.3594 12.6092 14.6095C12.3592 14.8595 12.02 15 11.6664 15H4.33309C3.97947 15 3.64033 14.8595 3.39028 14.6095C3.14023 14.3594 2.99976 14.0203 2.99976 13.6667V4H12.9998Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M6.5 7.5V11.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.5 7.5V11.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <div class="cart-body-item-controls-price">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="cart-body-item-controls-price-secondary">${itemInfo.price} грн за шт</div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <div class="cart-body-item-controls-price-primary">${totalPrice} грн</div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>`
             return item;
         }
 
         function AddHtmlToLeftCart(itemInfo) {
             var item = `<div class="burger-menu-body-cart-item" id="leftCartItem${itemInfo.id}">
-                                                                                                                                                <svg id="close-icon" class="burger-menu-body-cart-item-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-                                                                                                                                                    <style type="text/css">
-                                                                                                                                                        #close-icon {
-                                                                                                                                                            fill: #000000
-                                                                                                                                                        }</style>
-                                                                                                                                                    <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
-                                                                                                                                                </svg>
-                                                                                                                                                <img class="burger-menu-body-cart-item-img" src="/Product_Images/product_${itemInfo.id}.jpg" />
-                                                                                                                                                <p class="burger-menu-body-cart-item-label">${itemInfo.title}</p>
-                                                                                                                                                <div class="burger-menu-body-cart-item-details">
-                                                                                                                                                    <p class="burger-menu-body-cart-item-price">${itemInfo.price} грн</p>
-                                                                                                                                                    <p class="burger-menu-body-cart-item-weight"></p>
-                                                                                                                                                </div>
-                                                                                                                                            </div>`;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <svg id="close-icon" class="burger-menu-body-cart-item-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <style type="text/css">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        #close-icon {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            fill: #000000
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }</style>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </svg>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <img class="burger-menu-body-cart-item-img" src="/Product_Images/product_${itemInfo.id}.jpg" />
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <p class="burger-menu-body-cart-item-label">${itemInfo.title}</p>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="burger-menu-body-cart-item-details">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <p class="burger-menu-body-cart-item-price">${itemInfo.price} грн</p>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <p class="burger-menu-body-cart-item-weight"></p>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div>`;
             return item;
         }
 
@@ -1102,7 +1170,7 @@
                 }
             }
             var overlay3 = document.getElementById('overlay28664');
-            if(overlay3 != null){
+            if (overlay3 != null) {
                 overlay3.classList.add('green');
             }
 
@@ -1187,6 +1255,476 @@
             const url = `/Categories/FullProductsSearchView?searchBy=${searchByValue}&currentPage=${currentPageValue}&isOnlySales=${isOnlySalesValue}&sortedBy=${sortedByValue}&pageSize=${pageSizeValue}`;
 
             window.location.href = url;
+        }
+
+        function ShowAuthorization() {
+            if (!isAuthorizationShowing) {
+                var overlay = document.getElementById('overlayDark');
+                overlay.style.display = 'flex';
+                overlay.style.opacity = '1'
+                var container = document.getElementsByClassName('authorization-container')[0];
+                container.style.display = 'flex';
+                setTimeout(function () {
+                    container.classList.add('show');
+                    isAuthorizationShowing = true;
+                }, 10);
+            }
+        }
+
+        function CloseAuthorization() {
+            if (isAuthorizationShowing) {
+                var overlay = document.getElementById('overlayDark');
+                overlay.style.opacity = '0'
+                setTimeout(function () {
+                    overlay.style.display = 'none';
+                }, 300);
+                var container = document.getElementsByClassName('authorization-container')[0];
+                container.classList.remove('show');
+                setTimeout(function () {
+                    container.style.display = 'none';
+                }, 300);
+                setTimeout(function () {
+                    var inputs = document.getElementsByClassName('input-form-input');
+                    for (var i = 0; i < inputs.length; i++) {
+                        var id = inputs[i].id.replace(/\D/g, '');
+                        const label = document.getElementById('formLabel' + id);
+                        const placeholder = document.getElementById('formPlaceholder' + id);
+                        const errorspan = document.getElementById('errorSpan' + id)
+                        inputs[i].value = '';
+                        label.style.opacity = '0';
+                        label.style.top = '30%';
+                        placeholder.style.opacity = '1';
+                        placeholder.style.top = '30%';
+                        errorspan.style.display = 'none';
+                        label.style.color = '#c8cbce';
+                        inputs[i].style.border = '0.0625rem solid #c8cbce';
+                    }
+                }, 300);
+                isAuthorizationShowing = false;
+            }
+        }
+
+        function GetPasiveInput(event) {
+            const id = event.target.id.replace(/\D/g, '');
+            const input = event.target;
+            const label = document.getElementById('formLabel' + id);
+            const placeholder = document.getElementById('formPlaceholder' + id);
+
+            if (input.value === '') {
+                label.style.opacity = '0';
+                label.style.top = '30%';
+                placeholder.style.opacity = '1';
+                placeholder.style.top = '30%';
+            }
+            label.style.color = '#c8cbce';
+            input.style.border = '0.0625rem solid #c8cbce';
+            errorSpan7.style.display = 'none';
+            errorSpan7.textContent = '';
+        }
+
+        function GetActiveInput(event) {
+            const id = event.target.id.replace(/\D/g, '');
+            const input = event.target;
+            const label = document.getElementById('formLabel' + id);
+            const placeholder = document.getElementById('formPlaceholder' + id);
+            const errorSpan = document.getElementById('errorSpan' + id);
+
+            placeholder.style.opacity = '0';
+            placeholder.style.top = '-10%';
+            input.style.border = '0.12rem solid #43bb3a';
+            errorSpan.style.display = 'none';
+            label.style.opacity = '1';
+            label.style.color = '#43bb3a';
+            label.style.top = '-17%';
+        }
+
+        function ChooseAuthorizationBlock(event) {
+            const container = document.getElementsByClassName('authorization-container')[0];
+            const logBlock = document.getElementById('logBlock');
+            const regBlock = document.getElementById('regBlock');
+            const logBtn = document.getElementById('loginBtn');
+            const regBtn = document.getElementById('registerBtn');
+
+            if (event.target.id === 'loginBtn') {
+                if (!isLogBlockShowing) {
+                    container.style.top = 'calc(50% - 180px)';
+                    regBlock.style.display = 'none';
+                    regBtn.classList.add('active');
+                    logBtn.classList.remove('active');
+                    logBlock.style.display = 'flex';
+                    var inputs = document.getElementsByClassName('input-form-input');
+                    for (var i = 0; i < inputs.length; i++) {
+                        var id = inputs[i].id.replace(/\D/g, '');
+                        const label = document.getElementById('formLabel' + id);
+                        const placeholder = document.getElementById('formPlaceholder' + id);
+                        const errorspan = document.getElementById('errorSpan' + id)
+                        inputs[i].value = '';
+                        label.style.opacity = '0';
+                        label.style.top = '30%';
+                        errorspan.style.display = 'none';
+                        placeholder.style.opacity = '1';
+                        placeholder.style.top = '30%';
+                        label.style.color = '#c8cbce';
+                        inputs[i].style.border = '0.0625rem solid #c8cbce';
+                    }
+                    const errorSpan7 = document.getElementById('errorSpan7');
+                    errorSpan7.style.display = 'none';
+
+                    isLogBlockShowing = true;
+                }
+            } else {
+                if (isLogBlockShowing) {
+                    container.style.top = 'calc(50% - 200px)';
+                    logBlock.style.display = 'none';
+                    logBtn.classList.add('active');
+                    regBlock.style.display = 'flex';
+                    regBtn.classList.remove('active');
+
+                    var inputs = document.getElementsByClassName('input-form-input');
+                    for (var i = 0; i < inputs.length; i++) {
+                        var id = inputs[i].id.replace(/\D/g, '');
+                        const label = document.getElementById('formLabel' + id);
+                        const placeholder = document.getElementById('formPlaceholder' + id);
+                        const errorspan = document.getElementById('errorSpan' + id);
+                        inputs[i].value = '';
+                        label.style.opacity = '0';
+                        label.style.top = '30%';
+                        errorspan.style.display = 'none';
+                        placeholder.style.opacity = '1';
+                        placeholder.style.top = '30%';
+                        label.style.color = '#c8cbce';
+                        inputs[i].style.border = '0.0625rem solid #c8cbce';
+                    }
+                    const errorSpan7 = document.getElementById('errorSpan7');
+                    errorSpan7.style.display = 'none';
+
+                    isLogBlockShowing = false;
+                }
+            }
+        }
+
+        function ValidateFormData() {
+            var errorCount = 0;
+
+            if (isLogBlockShowing) {
+                const logInput = document.getElementById('formInput1');
+                const logLabel = document.getElementById('formLabel1');
+                const errorSpan1 = document.getElementById('errorSpan1');
+                const pwdInput = document.getElementById('formInput2');
+                const pwdLabel = document.getElementById('formLabel2');
+                const errorSpan2 = document.getElementById('errorSpan2');
+                const errorSpan7 = document.getElementById('errorSpan7');
+
+                fetch(`/User/IsUserExist?email=${encodeURIComponent(logInput.value)}&password=${encodeURIComponent(pwdInput.value)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data === false) {
+                            logInput.style.border = '0.12rem solid #ff5631';
+                            logLabel.style.color = '#ff5631';
+                            errorSpan1.style.display = 'none';
+                            pwdInput.style.border = '0.12rem solid #ff5631';
+                            pwdLabel.style.color = '#ff5631';
+                            errorSpan2.style.display = 'none';
+                            errorSpan7.textContent = 'Невірна пошта або пароль';
+                            errorSpan7.style.display = 'flex';
+                            errorCount++;
+                        }
+                    })
+                return errorCount;
+            } else {
+                const nameInput = document.getElementById('formInput3');
+                const nameLabel = document.getElementById('formLabel3');
+                const errorSpan3 = document.getElementById('errorSpan3');
+                const mailInput = document.getElementById('formInput4');
+                const mailLabel = document.getElementById('formLabel4');
+                const errorSpan4 = document.getElementById('errorSpan4');
+                const pwdInput = document.getElementById('formInput5');
+                const pwdLabel = document.getElementById('formLabel5');
+                const errorSpan5 = document.getElementById('errorSpan5');
+                const confPwdInput = document.getElementById('formInput6');
+                const confPwdLabel = document.getElementById('formLabel6');
+                const errorSpan6 = document.getElementById('errorSpan6');
+
+                if (nameInput.value.length < 2) {
+                    nameInput.style.border = '0.12rem solid #ff5631';
+                    nameLabel.style.color = '#ff5631';
+                    errorSpan3.textContent = `Ім'я має містити не менше двох символів`;
+                    errorSpan3.style.display = 'flex';
+                    document.getElementById('formPlaceholder3').style.top = '24%';
+                    errorCount++;
+                }
+                else if (nameInput.value.length > 20) {
+                    nameInput.style.border = '0.12rem solid #ff5631';
+                    nameLabel.style.color = '#ff5631';
+                    errorSpan3.textContent = `Ім'я має містити не більше двадцяти символів`;
+                    errorSpan3.style.display = 'flex';
+                    document.getElementById('formPlaceholder3').style.top = '24%';
+                    errorCount++;
+                }
+                else {
+                    nameInput.style.border = '0.12rem solid #43bb3a';
+                    nameLabel.style.color = '#48bb3a';
+                    errorSpan3.style.display = 'none';
+                }
+                if (mailInput.value.length === 0) {
+                    mailInput.style.border = '0.12rem solid #ff5631';
+                    mailLabel.style.color = '#ff5631';
+                    errorSpan4.textContent = 'Введіть свою пошту';
+                    errorSpan4.style.display = 'flex';
+                    document.getElementById('formPlaceholder4').style.top = '24%';
+                    errorCount++;
+                }
+                else if (mailInput.value.length > 0) {
+                    fetch(`/User/IsEmailValid?email=${encodeURIComponent(mailInput.value)}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data === false) {
+                                mailInput.style.border = '0.12rem solid #ff5631';
+                                mailLabel.style.color = '#ff5631';
+                                errorSpan4.textContent = 'Невірна пошта'
+                                errorSpan4.style.display = 'flex';
+                                document.getElementById('formPlaceholder4').style.top = '24%';
+                                errorCount++;
+                            }
+                            else {
+                                fetch(`/User/IsEmailAvailable?email=${encodeURIComponent(mailInput.value)}`)
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        if (data === false) {
+                                            mailInput.style.border = '0.12rem solid #ff5631';
+                                            mailLabel.style.color = '#ff5631';
+                                            errorSpan4.textContent = 'Пошта зайнята'
+                                            errorSpan4.style.display = 'flex';
+                                            document.getElementById('formPlaceholder4').style.top = '24%';
+                                            errorCount++;
+                                        }
+                                        else {
+                                            mailInput.style.border = '0.12rem solid #43bb3a';
+                                            mailLabel.style.color = '#48bb3a';
+                                            errorSpan4.style.display = 'none';
+                                        }
+                                    });
+                            }
+                        })
+                }
+
+                if (pwdInput.value.length < 8) {
+                    pwdInput.style.border = '0.12rem solid #ff5631';
+                    pwdLabel.style.color = '#ff5631';
+                    errorSpan5.textContent = 'Слабкий пароль';
+                    errorSpan5.style.display = 'flex';
+                    document.getElementById('formPlaceholder5').style.top = '24%';
+                    errorCount++;
+                }
+                else if (!isLowerExist(pwdInput.value)) {
+                    pwdInput.style.border = '0.12rem solid #ff5631';
+                    pwdLabel.style.color = '#ff5631';
+                    errorSpan5.textContent = 'Пароль має містити малу літеру';
+                    errorSpan5.style.display = 'flex';
+                    document.getElementById('formPlaceholder5').style.top = '24%';
+                    errorCount++;
+                }
+                else if (!isUpperExist(pwdInput.value)) {
+                    pwdInput.style.border = '0.12rem solid #ff5631';
+                    pwdLabel.style.color = '#ff5631';
+                    errorSpan5.textContent = 'Пароль має містити велику літеру';
+                    errorSpan5.style.display = 'flex';
+                    document.getElementById('formPlaceholder5').style.top = '24%';
+                    errorCount++;
+                }
+                else if (!isSymbolExist(pwdInput.value)) {
+                    pwdInput.style.border = '0.12rem solid #ff5631';
+                    pwdLabel.style.color = '#ff5631';
+                    errorSpan5.textContent = 'Пароль має містити спеціальний символ';
+                    errorSpan5.style.display = 'flex';
+                    document.getElementById('formPlaceholder5').style.top = '24%';
+                    errorCount++;
+                }
+                else if (!isNumberExist(pwdInput.value)) {
+                    pwdInput.style.border = '0.12rem solid #ff5631';
+                    pwdLabel.style.color = '#ff5631';
+                    errorSpan5.textContent = 'Пароль має містити цифру';
+                    errorSpan5.style.display = 'flex';
+                    document.getElementById('formPlaceholder5').style.top = '24%';
+                    errorCount++;
+                }
+                else {
+                    pwdInput.style.border = '0.12rem solid #43bb3a';
+                    pwdLabel.style.color = '#48bb3a';
+                    errorSpan5.style.display = 'none';
+                }
+                if (confPwdInput.value !== pwdInput.value) {
+                    confPwdInput.style.border = '0.12rem solid #ff5631';
+                    confPwdLabel.style.color = '#ff5631';
+                    errorSpan6.textContent = 'Пароль не збігається';
+                    errorSpan6.style.display = 'flex';
+                    document.getElementById('formPlaceholder6').style.top = '24%';
+                    errorCount++;
+                }
+                else if (confPwdInput.value.length < 8) {
+                    confPwdInput.style.border = '0.12rem solid #ff5631';
+                    confPwdLabel.style.color = '#ff5631';
+                    errorSpan6.textContent = 'Слабкий пароль';
+                    errorSpan6.style.display = 'flex';
+                    document.getElementById('formPlaceholder6').style.top = '24%';
+                    errorCount++;
+                }
+                else {
+                    confPwdInput.style.border = '0.12rem solid #43bb3a';
+                    confPwdLabel.style.color = '#48bb3a';
+                    errorSpan6.style.display = 'none';
+                }
+                return errorCount;
+            }
+        }
+
+        function Register() {
+            var errorCount = ValidateFormData();
+            if (!isLogBlockShowing) {
+                $('#loader-green').show();
+                setTimeout(function () {
+                    if (errorCount === 0) {
+                        const name = document.getElementById('formInput3').value;
+                        const email = document.getElementById('formInput4').value;
+                        const password = document.getElementById('formInput5').value;
+
+                        fetch(`/User/Register`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}&name=${encodeURIComponent(name)}`
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data === true) {
+                                    CloseAuthorization();
+                                    OpenMsgBox('Зверніть увагу!', 'Щоб авторизуватися, будь ласка підтвердіть вашу пошту, перейшовши за посиланням в отриманому в листі');
+                                }
+                            })
+                            .finally(() => {
+                                $('#loader-green').hide();
+                            });
+                    } else if (errorCount > 2) {
+                        document.getElementsByClassName('authorization-container')[0].style.top = 'calc(50% - 240px)';
+                        $('#loader-green').hide();
+                    }
+                    else {
+                        $('#loader-green').hide();
+                    }
+                }, 500);
+            }
+            else {
+                $('#loader-green').show();
+                setTimeout(function () {
+                    var errorSpan7 = document.getElementById('errorSpan7');
+                    if (errorSpan7.textContent !== 'Невірна пошта або пароль') {
+                        const logInput = document.getElementById('formInput1');
+                        fetch(`/User/IsEmailConfirmed?email=${encodeURIComponent(logInput.value)}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data === false) {
+                                    EmailConfirmationError();
+                                    $('#loader-green').hide();
+                                }
+                                else {
+                                    const email = document.getElementById('formInput1').value;
+                                    const password = document.getElementById('formInput2').value;
+
+                                    fetch(`/User/Login?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`)
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            if (data.success) {
+                                                window.location.href = `/User/UserProfileView`;
+                                            } else {
+                                                console.error("Login failed");
+                                            }
+                                        })
+                                        .finally(() => {
+                                            $('#loader-green').hide();
+                                        });
+                                }
+                            });
+                    }
+                    else {
+                        $('#loader-green').hide();
+                    }
+                }, 1500);
+            }
+        }
+
+        function EmailConfirmationError() {
+            const errorSpan7 = document.getElementById('errorSpan7');
+
+            errorSpan7.textContent = 'Підтвердіть свою пошту';
+            errorSpan7.style.display = 'flex';
+        };
+
+        function isLowerExist(pass) {
+            var lowercaseRegex = /[a-z]/;
+            return pass.match(lowercaseRegex) !== null ? true : false;
+        }
+
+        function isUpperExist(pass) {
+            var uppercaseRegex = /[A-Z]/;
+            return uppercaseRegex.test(pass) ? true : false;
+        }
+
+        function isSymbolExist(pass) {
+            var symbolRegex = /[!#$%^&*(),.?":{}|<>]/;
+            return symbolRegex.test(pass) ? true : false;
+        }
+
+        function isNumberExist(pass) {
+            var numberRegex = /\d/;
+            return numberRegex.test(pass) ? true : false;
+        }
+
+        function getCookie(name) {
+            const cookies = document.cookie.split(';');
+
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.startsWith(name + '=')) {
+                    return cookie.substring(name.length + 1);
+                }
+            }
+            return null;
+        }
+
+        function GetProfile() {
+            const userCookieValue = getCookie('UserCookie');
+            if (userCookieValue != null) {
+                window.location.href = `/User/UserProfileView`;
+            }
+            else {
+                ShowAuthorization();
+            }
+        };
+
+        function OpenMsgBox(title, content) {
+            const msgBox = document.getElementsByClassName('msg-box')[0];
+            const msgTitle = document.getElementById('msgBoxTitle');
+            const msgContent = document.getElementById('msgBoxContent');
+            msgTitle.textContent = title;
+            msgContent.textContent = content;
+            msgBox.style.opacity = '1';
+            msgBox.style.display = 'flex';
+            msgBox.style.right = '0';
+            setTimeout(function () {
+                msgBox.style.opacity = '0';
+
+                setTimeout(function () {
+                    CloseMsgBox();
+                }, 500);
+            }, 5000);
+        }
+
+        function CloseMsgBox() {
+            const msgBox = document.getElementsByClassName('msg-box')[0];
+            msgBox.style.display = 'none';
+            msgBox.style.right = '-500px';
+            msgBox.style.opacity = '0';
         }
 
     </script>

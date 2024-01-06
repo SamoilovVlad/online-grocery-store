@@ -7,6 +7,10 @@ using Pomelo.EntityFrameworkCore.MySql;
 using Shop_Mvc.Controllers;
 using Shop_Mvc.Services;
 using Microsoft.AspNetCore.CookiePolicy;
+using System.Runtime.InteropServices;
+using Microsoft.AspNetCore.Identity;
+using Shop_Mvc.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,9 +21,15 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddDbContext<MyDbContext>(options =>
     options.UseMySql(
         builder.Configuration.GetConnectionString("MyDbContext"),
-        new MySqlServerVersion(new Version(8, 0, 23)) 
+        new MySqlServerVersion(new Version(8, 0, 23))
     )
 );
+
+builder.Services.AddIdentity<User, IdentityRole>()
+    .AddEntityFrameworkStores<MyDbContext>()
+    .AddDefaultTokenProviders();
+
+
 builder.Services.AddScoped<IDatabaseServise, DatabaseServise>();
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
@@ -54,6 +64,13 @@ app.UseEndpoints(endpoints =>
             name: "default",
             pattern: "{controller=Home}/{action=Index}/{id?}");
 });
+
+//app.UseEndpoints(endpoints =>
+//{
+//    endpoints.MapControllerRoute(
+//            name: "default",
+//            pattern: "{controller=Home}/{action=UserProfileView}");
+//});
 
 //app.UseEndpoints(endpoints =>
 //{

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
@@ -44,16 +45,21 @@ namespace Shop_Mvc.Services
         public IEnumerable<Product> SearchProductsOrderByPriceDescending(string parameter, int count = 0, int skip = 0, bool isPromo = false);
         public IEnumerable<Product> SearchProductsOrderByPrice(string parameter, int count, int skip, bool isPromo);
         public IEnumerable<Product> SearchProductsPromoFirstly(string parameter, int count, int skip, bool isPromo);
+        public User GetUserByEmail(string email);
     }
     public class DatabaseServise : IDatabaseServise
     {
         private readonly MyDbContext _context;
         private readonly DbContextOptions<MyDbContext> _dbContextOptions;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public DatabaseServise(MyDbContext context, DbContextOptions<MyDbContext> dbContextOptions)
+        public DatabaseServise(MyDbContext context, DbContextOptions<MyDbContext> dbContextOptions, UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _context = context;
             _dbContextOptions = dbContextOptions;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public IEnumerable<SliderImage> GetAllSliderImages()
@@ -620,6 +626,14 @@ namespace Shop_Mvc.Services
             var subcategories = _context.Subcategories.Where(s => s.CategoryId == category.CategoryId);
             var a = subcategories.Count();
             return subcategories;
+        }
+
+        public User GetUserByEmail(string email)
+        {
+           User user = _userManager.Users
+                       .Where(u => u.Email == email)
+                       .FirstOrDefault();
+            return user;
         }
     }
 }

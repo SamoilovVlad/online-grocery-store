@@ -8,6 +8,7 @@ using System.Net.WebSockets;
 using System.Threading.Tasks;
 using System.IO;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Identity;
 
 namespace Shop_Mvc.Controllers
 {
@@ -17,12 +18,16 @@ namespace Shop_Mvc.Controllers
         private readonly IDatabaseServise _DatabaseServise;
         private readonly IMemoryCache _memoryCache;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public HomeController(ILogger<HomeController> logger, IDatabaseServise DatabaseServise, IMemoryCache memoryCache, IHttpContextAccessor httpContextAccessor)
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
+        public HomeController(ILogger<HomeController> logger, IDatabaseServise DatabaseServise, IMemoryCache memoryCache, IHttpContextAccessor httpContextAccessor, UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _logger = logger;
             _DatabaseServise = DatabaseServise;
             _memoryCache = memoryCache;
             _httpContextAccessor = httpContextAccessor;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
         [HttpGet]
         public async Task<IActionResult> IndexAsync()
@@ -351,6 +356,12 @@ namespace Shop_Mvc.Controllers
             product_list = SetFieldIsInCart(product_list, GetProductsFromCookie());
             ProductViewModel productViewModel = new ProductViewModel(product, product_list);
             return View("ProductView", productViewModel);
+        }
+
+        [HttpGet]
+        public IActionResult UserProfileView()
+        {
+            return View();
         }
 
     }
