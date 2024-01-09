@@ -1,7 +1,12 @@
-﻿namespace Shop_Mvc.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Shop_Mvc.Models
 {
     public class CartProduct
     {
+        [Key]
+        public int PK_id { get; set; }
+
         private int id;
         public int Id
         {
@@ -20,11 +25,9 @@
             set { if (value > 0) price = value; }
             get => price;
         }
-        private string title;
-        public string Title
-        {
-            set { if (string.IsNullOrEmpty(value)) title = value; }
-            get => title;
-        }
+        public string title { get; set; }
+       
+
+        public string user_id { get; set; }
     }
 }

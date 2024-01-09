@@ -107,6 +107,15 @@ namespace Shop_Mvc.Controllers
                         Secure = Request.IsHttps,
                         Expires = DateTime.UtcNow.AddMinutes(100000000)
                     });
+                    var cartProductsString = _httpContextAccessor.HttpContext.Request.Cookies["MyCookie"];
+                    if (cartProductsString != null && cartProductsString.Length > 2)
+                    {
+                        List<CartProduct> products = JsonConvert.DeserializeObject<List<CartProduct>>(cartProductsString);
+                        foreach (var product in products)
+                            product.user_id = user.Id;
+                        _DatabaseServise.DeleteUserCartProducts(user.Id);
+                        await _DatabaseServise.SetCartProductsAsync(products);
+                    }
                     return Json(new { success = true, user });
                 }
 
@@ -162,7 +171,7 @@ namespace Shop_Mvc.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> UserProfileView(string email)
+        public IActionResult UserProfileView(string email)
         {
             var userString = Request.Cookies["UserCookie"];
             if (userString != null)
@@ -170,7 +179,7 @@ namespace Shop_Mvc.Controllers
                 var user = JsonConvert.DeserializeObject<User>(userString);
                 return View(user);
             }
-            
+
             return View();
         }
 
@@ -190,21 +199,47 @@ namespace Shop_Mvc.Controllers
             return Json(false);
         }
 
-        public IActionResult IsEmailConfirmed(string email) 
+        public IActionResult IsEmailConfirmed(string email)
         {
             var user = _userManager?.FindByEmailAsync(email).Result;
             if (user != null)
             {
                 return user.EmailConfirmed ? Json(true) : Json(false);
             }
-            else return Json(false); 
+            else return Json(false);
         }
 
         [HttpGet]
-        public IActionResult LogOut() 
+        public IActionResult LogOut()
         {
             Response.Cookies.Delete("UserCookie");
+            Response.Cookies.Delete("MyCookie");
             return RedirectToAction("Index", "Home");
         }
+
+        public IActionResult IsUserAuthorized()
+        {
+            var userString = Request.Cookies["UserCookie"];
+            return userString == null ? Json(false) : Json(true);
+        }
+
+        public IActionResult GetUserCartProduct(int productId, string userId)
+        {
+            return Json(_DatabaseServise.GetCartProduct(productId, userId));
+        }
+
+        public void UpdateUserCartProduct(int productId, string userId, int count)
+        {
+            _DatabaseServise.UpdateCartProduct(productId, userId, count);
+        }
+
+        public IActionResult GetUserCartProducts(string userId)
+        {
+            return Json(_DatabaseServise.GetCartProductsAsync(userId).Result);
+        }
+
+        public void DeleteUserCartProduct(string userId, int productId) => _DatabaseServise.DeleteUserCartProduct(productId, userId);
+        public void AddUserCartProduct(int productId, string userId, decimal price, string title, int count) => _DatabaseServise.AddUserCartProduct(productId, userId, price, title, count);
+        public IActionResult GetUserCartProductCount(int productId, string userId) => Json(_DatabaseServise.GetUserCartProductCount(productId, userId));
     }
 }

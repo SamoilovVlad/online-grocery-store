@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.IO;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Shop_Mvc.Controllers
 {
@@ -34,11 +35,11 @@ namespace Shop_Mvc.Controllers
         {
             var cartProduct = GetProductsFromCookie();
 
-                var model = new IndexViewModel();
+            var model = new IndexViewModel();
 
-                var task = Task.Run(() => _DatabaseServise.GetAllSliderImagesAsync());
+            var task = Task.Run(() => _DatabaseServise.GetAllSliderImagesAsync());
 
-                var tasks = new List<Task<IEnumerable<Product>>>
+            var tasks = new List<Task<IEnumerable<Product>>>
         {
             _DatabaseServise.GetProductsByBrandAsync("Novus", 16),
             _DatabaseServise.GetProductsByCountryAsync("Україна", 16),
@@ -55,26 +56,26 @@ namespace Shop_Mvc.Controllers
             _DatabaseServise.GetPromoProductsAsync(16),
         };
 
-                await Task.WhenAll(tasks);
-                await Task.WhenAll(task);
+            await Task.WhenAll(tasks);
+            await Task.WhenAll(task);
 
-                var ownBrandProducts = tasks[0].Result;
-                var domesticManufacturerProducts = tasks[1].Result;
-                var breadProducts = tasks[2].Result;
-                var meatProducts = tasks[3].Result;
-                var cheeseProducts = tasks[4].Result;
-                var milkProducts = tasks[5].Result;
-                var gobletProducts = tasks[6].Result;
-                var coffeeProducts = tasks[7].Result;
-                var teaProducts = tasks[8].Result;
-                var vegetableProducts = tasks[9].Result;
-                var fruitProducts = tasks[10].Result;
-                var sweetProducts = tasks[11].Result;
-                var promoProducts = tasks[12].Result;
+            var ownBrandProducts = tasks[0].Result;
+            var domesticManufacturerProducts = tasks[1].Result;
+            var breadProducts = tasks[2].Result;
+            var meatProducts = tasks[3].Result;
+            var cheeseProducts = tasks[4].Result;
+            var milkProducts = tasks[5].Result;
+            var gobletProducts = tasks[6].Result;
+            var coffeeProducts = tasks[7].Result;
+            var teaProducts = tasks[8].Result;
+            var vegetableProducts = tasks[9].Result;
+            var fruitProducts = tasks[10].Result;
+            var sweetProducts = tasks[11].Result;
+            var promoProducts = tasks[12].Result;
 
-                var sliderImages = task.Result;
+            var sliderImages = task.Result;
 
-                var mainPartialViewModel = new MainPartialViewModel { sliderImages = sliderImages, products = promoProducts };
+            var mainPartialViewModel = new MainPartialViewModel { sliderImages = sliderImages, products = promoProducts };
             // Try to set data to cache memory
             try
             {
@@ -146,22 +147,22 @@ namespace Shop_Mvc.Controllers
 
 
 
-                model.promoProducts = SetFieldIsInCart(promoProducts,cartProduct);
-                model.sliderImages = sliderImages;
-                model.mainPartialViewModel = mainPartialViewModel;
-                model.domesticManufacturerProducts = SetFieldIsInCart(domesticManufacturerProducts, cartProduct);
-                model.ownBrandProducts = SetFieldIsInCart(ownBrandProducts, cartProduct);
-                model.breadProducts = SetFieldIsInCart(breadProducts,cartProduct);
-                model.meatProducts = SetFieldIsInCart(meatProducts,cartProduct);
-                model.cheeseProducts = SetFieldIsInCart(cheeseProducts,cartProduct);
-                model.milkProducts = SetFieldIsInCart(milkProducts,cartProduct);
-                model.gobletProducts = SetFieldIsInCart(gobletProducts,cartProduct);
-                model.coffeeProducts = SetFieldIsInCart(coffeeProducts,cartProduct);
-                model.teaProducts = SetFieldIsInCart(teaProducts,cartProduct);
-                model.vegetableProducts = SetFieldIsInCart(vegetableProducts,cartProduct);
-                model.fruitProducts = SetFieldIsInCart(fruitProducts,cartProduct);
-                model.sweetProducts = SetFieldIsInCart(sweetProducts,cartProduct);
-                model.cartProducts = cartProduct;
+            model.promoProducts = SetFieldIsInCart(promoProducts, cartProduct);
+            model.sliderImages = sliderImages;
+            model.mainPartialViewModel = mainPartialViewModel;
+            model.domesticManufacturerProducts = SetFieldIsInCart(domesticManufacturerProducts, cartProduct);
+            model.ownBrandProducts = SetFieldIsInCart(ownBrandProducts, cartProduct);
+            model.breadProducts = SetFieldIsInCart(breadProducts, cartProduct);
+            model.meatProducts = SetFieldIsInCart(meatProducts, cartProduct);
+            model.cheeseProducts = SetFieldIsInCart(cheeseProducts, cartProduct);
+            model.milkProducts = SetFieldIsInCart(milkProducts, cartProduct);
+            model.gobletProducts = SetFieldIsInCart(gobletProducts, cartProduct);
+            model.coffeeProducts = SetFieldIsInCart(coffeeProducts, cartProduct);
+            model.teaProducts = SetFieldIsInCart(teaProducts, cartProduct);
+            model.vegetableProducts = SetFieldIsInCart(vegetableProducts, cartProduct);
+            model.fruitProducts = SetFieldIsInCart(fruitProducts, cartProduct);
+            model.sweetProducts = SetFieldIsInCart(sweetProducts, cartProduct);
+            model.cartProducts = cartProduct;
 
             return View("Index", model);
         }
@@ -312,12 +313,21 @@ namespace Shop_Mvc.Controllers
         public List<CartProduct> GetProductsFromCookie()
         {
             var cookieValue = _httpContextAccessor.HttpContext.Request.Cookies["MyCookie"];
-
-            if (!string.IsNullOrEmpty(cookieValue))
+            var userString = _httpContextAccessor.HttpContext.Request.Cookies["UserCookie"];
+            if (!userString.IsNullOrEmpty())
             {
-                var products = JsonConvert.DeserializeObject<List<CartProduct>>(cookieValue);
+                var user = JsonConvert.DeserializeObject<User>(userString);
+                List<CartProduct> cartProducts = _DatabaseServise.GetCartProductsAsync(user.Id).GetAwaiter().GetResult();
+                return cartProducts;
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(cookieValue))
+                {
+                    var products = JsonConvert.DeserializeObject<List<CartProduct>>(cookieValue);
 
-                return products;
+                    return products;
+                }
             }
             return new List<CartProduct>();
         }
@@ -326,7 +336,7 @@ namespace Shop_Mvc.Controllers
         {
             var commonIds = cartProducts.Select(p => p.Id).ToList();
 
-            for (var i = 0; i<commonIds.Count; i++)
+            for (var i = 0; i < commonIds.Count; i++)
             {
                 var id = commonIds[i];
                 foreach (var product in products.Where(p => p.id == id))
@@ -358,11 +368,6 @@ namespace Shop_Mvc.Controllers
             return View("ProductView", productViewModel);
         }
 
-        [HttpGet]
-        public IActionResult UserProfileView()
-        {
-            return View();
-        }
-
+       
     }
 }

@@ -13,12 +13,12 @@
                     foreach (var subcategory in Model.Subcategories)
                     {
                         <div class="subcategories-item">
-                            <a class="subcategories-item-cart" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="1" asp-route-isOnlySales="false" asp-route-sortedBy="Стандартно" asp-route-pageSize="40" asp-route-subcategoryName="@subcategory.SubcategoryName" onclick="ShowLoader()" >
+                            <a class="subcategories-item-cart" asp-controller="Categories" asp-action="ProductsView" asp-route-currentPage="1" asp-route-isOnlySales="false" asp-route-sortedBy="Стандартно" asp-route-pageSize="40" asp-route-subcategoryName="@subcategory.SubcategoryName" onclick="ShowLoader()">
                                 <div class="subcategories-item-cart-top">
 
                                     @{
                                         var imagePath = $"/Subcategory_Images/subcategory_{subcategory.SubcategoryName}.png";
-                                        <img class="subcategories-item-cart-top-img" src="@imagePath"/>
+                                        <img class="subcategories-item-cart-top-img" src="@imagePath" />
                                     }
                                     <p class="subcategories-item-cart-top-count">@subcategory.CountOfProducts</p>
                                 </div>
@@ -40,11 +40,13 @@
                         foreach (var product in Model.promoProducts)
                         {
                             <div class="other-products-item">
-                                <a class="other-products-item-cart" id="@product.id">
+                                <div class="other-products-item-cart" id="@product.id">
                                     <div class="main-page-product-promo" style="z-index:2">
                                         <p class="main-page-product-promo-text">@product.Promo</p>
                                     </div>
+                                    <a asp-controller="Home" asp-action="ProductView" asp-route-id="@product.id" style="width:100%; height:100%; position:absolute; top:0; left:0; z-index:4;" onclick="ShowLoader()">
                                     <div class="product-overlay @(product.inCart != null ? "green" : "")" id="overlay@(product.id)" style="z-index:3"></div>
+                                    </a>
                                     <div class="main-page-product-favorite">
                                         <svg width="1.000rem" height="0.938rem" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M14.1915 7.56097L14.218 7.52031L14.2405 7.47727C14.6216 6.74672 15 5.85591 15 4.9799C15 2.71644 13.5355 1.33759 11.8732 1.07637C10.4691 0.780647 8.956 1.35222 8.01756 2.56858C7.09624 1.31855 5.53247 0.883302 4.17204 1.06957L4.17203 1.06952L4.16182 1.07103C2.48513 1.31826 1 2.70055 1 4.9799C1 5.85591 1.37843 6.74672 1.75955 7.47727L1.782 7.52031L1.80851 7.56097C2.279 8.28247 2.86715 9.13148 3.56752 9.89897C4.82205 11.286 6.35624 12.5732 7.42816 13.3204L8.035 13.7434L8.61708 13.2869C8.64265 13.2668 8.66858 13.2465 8.69484 13.2259C9.69949 12.4384 11.1982 11.2636 12.4324 9.89901C13.1328 9.13152 13.721 8.28248 14.1915 7.56097Z" stroke="currentColor" stroke-width="1"></path></svg>
                                     </div>
@@ -64,7 +66,7 @@
                                         </div>
                                     </div>
                                     @{
-                                        if(product.inCart == null)
+                                        if (product.inCart == null)
                                         {
                                             <div class="main-page-product-counter-container" id="counterContainer@(product.id)">
                                                 <svg id="@product.id" onclick="Minus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="@product.id" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
@@ -89,7 +91,7 @@
                                             </div>
                                         }
                                     }
-                                </a>
+                                </div>
                             </div>
                         }
                     }
@@ -104,52 +106,97 @@
     });
 
     function AddToCart(event) {
-        var id = event.target.id;
-        var product = document.querySelector(`.other-products-item-cart[id="${id}"]`);
-        var overlay = product.getElementsByClassName('product-overlay')[0];
-        product.classList.add('added');
-        overlay.classList.add('green');
+        var currentTime = new Date().getTime();
+        if (currentTime - lastClickTime >= 500) {
 
-        var counterContainer = document.getElementById(`counterContainer${id}`);
-        counterContainer.style.display = 'flex';
+            var id = event.target.id;
+            var userId = GetUserId();
 
-        var span = document.getElementById(`productSpan${id}`);
-        span.textContent = 1;
-        var input = document.getElementById(`productInput${id}`);
-        input.value = span.textContent;
+            if (userId === null) {
+                var product = document.querySelector(`.other-products-item-cart[id="${id}"]`);
+                var overlay = product.getElementsByClassName('product-overlay')[0];
+                product.classList.add('added');
+                overlay.classList.add('green');
 
-        //input.addEventListener('input', () => {
-        //    span.textContent = input.value;
-        //});
-        var price = document.querySelector(`.main-page-product-bottom-price[id="${id}"]`)
-        if (price == null)
-            price = document.querySelector(`.main-page-product-bottom-price-promo[id="${id}"]`)
-        var parsedPrice = price.textContent.slice(0, -4);
-        parsedPrice = parseFloat(parsedPrice.replace(',', '.'));
-        var title = product.getElementsByClassName('main-page-product-title')[0].textContent;
+                var counterContainer = document.getElementById(`counterContainer${id}`);
+                counterContainer.style.display = 'flex';
 
-        var cartProduct = new CartProduct(id, 1, parsedPrice, title);
-        productsInCart.push(cartProduct);
-        const jsonString = JSON.stringify(productsInCart);
-        document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
-        console.log(productsInCart);
+                var span = document.getElementById(`productSpan${id}`);
+                span.textContent = 1;
+                var input = document.getElementById(`productInput${id}`);
+                input.value = span.textContent;
+
+                var price = document.querySelector(`.main-page-product-bottom-price[id="${id}"]`)
+                if (price == null)
+                    price = document.querySelector(`.main-page-product-bottom-price-promo[id="${id}"]`)
+                var parsedPrice = price.textContent.slice(0, -4);
+                parsedPrice = parseFloat(parsedPrice.replace(',', '.'));
+                var title = product.getElementsByClassName('main-page-product-title')[0].textContent;
+
+                var cartProduct = new CartProduct(id, 1, parsedPrice, title);
+                productsInCart.push(cartProduct);
+                const jsonString = JSON.stringify(productsInCart);
+                document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
+                console.log(productsInCart);
 
 
-        var cart = document.getElementsByClassName('cart-body-items')[0];
-        var leftCart = document.getElementById('leftCartItemContainer');
-        var itemInfo = productsInCart.find(function (element) {
-            return element.id === id;
-        });
-        console.log(`Item info: ${itemInfo}`);
-        var item = AddHtmlToCart(itemInfo);
-        cart.innerHTML += item;
+                var cart = document.getElementsByClassName('cart-body-items')[0];
+                var leftCart = document.getElementById('leftCartItemContainer');
+                var itemInfo = productsInCart.find(function (element) {
+                    return element.id === id;
+                });
+                console.log(`Item info: ${itemInfo}`);
+                var item = AddHtmlToCart(itemInfo);
+                cart.innerHTML += item;
 
-        item = AddHtmlToLeftCart(itemInfo);
-        leftCart.innerHTML += item;
+                item = AddHtmlToLeftCart(itemInfo);
+                leftCart.innerHTML += item;
 
-        CheckIfCartIsEmpty();
-        SetInputs();
-        GetFullPriceForCart();
+                CheckIfCartIsEmpty();
+                SetInputs();
+                GetFullPriceForCart();
+            }
+            else {
+                var product = document.querySelector(`.other-products-item-cart[id="${id}"]`);
+                var overlay = product.getElementsByClassName('product-overlay')[0];
+                var counterContainer = document.getElementById(`counterContainer${id}`);
+                var span = document.getElementById(`productSpan${id}`);
+                var input = document.getElementById(`productInput${id}`);
+                var price = document.querySelector(`.main-page-product-bottom-price[id="${id}"]`)
+                if (price == null)
+                    price = document.querySelector(`.main-page-product-bottom-price-promo[id="${id}"]`)
+                var parsedPrice = price.textContent.slice(0, -4);
+                parsedPrice = parseFloat(parsedPrice.replace(',', '.'));
+                var title = product.getElementsByClassName('main-page-product-title')[0].textContent;
+
+                fetch(`/User/AddUserCartProduct?productId=${id}&userId=${userId}&price=${parsedPrice}&title=${title}&count=${1}`);
+
+                product.classList.add('added');
+                overlay.classList.add('green');
+                counterContainer.style.display = 'flex';
+                span.textContent = 1;
+                input.value = span.textContent;
+
+
+                var itemInfo = new CartProduct(id, 1, parsedPrice, title);
+
+
+                var cart = document.getElementsByClassName('cart-body-items')[0];
+                var leftCart = document.getElementById('leftCartItemContainer');
+                var item = AddHtmlToCart(itemInfo);
+                cart.innerHTML += item;
+
+                item = AddHtmlToLeftCart(itemInfo);
+                leftCart.innerHTML += item;
+
+                SetInputs();
+                CheckIfCartIsEmpty();
+                var sum = UpdateCartValue();
+                if (sum > 0)
+                    document.querySelector('.cart-text').textContent = sum + ' грн';
+            }
+        }
+        lastClickTime = currentTime;
     };
 
 

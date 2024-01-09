@@ -11,6 +11,6 @@ namespace Shop_Mvc.Data
         public DbSet<SliderImage> SliderImages { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Subcategory> Subcategories { get; set; }
-
+        public DbSet<CartProduct> UserCartProducts { get; set; }
     }
 }

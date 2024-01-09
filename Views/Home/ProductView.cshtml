@@ -315,7 +315,7 @@
         <div class="product-list">
             @foreach (var product in Model.Product_list)
             {
-                <div class="other-products-item responsive" >
+                <div class="other-products-item responsive">
                     <div class="other-products-item-cart" id="@product.id">
                         @{
                             if (product.Promo != null)
@@ -383,173 +383,338 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         $('#skeleton').hide();
-        GetCartProductFromCookie();
+        var userId = GetUserId();
 
-        var index = productsInCart.findIndex(function (element) {
-            return element.id == @Model.Product.id;
-        });
-        console.log(@Model.Product.id);
-        console.log(index);
-        console.log(productsInCart)
-        if(productsInCart[index] != null)
-        {
-            var btns = document.getElementsByClassName('product-info-buttons')[0];
-            var addToCartBtn = btns.getElementsByClassName('product-info-add-to-cart-btn')[0];
-            addToCartBtn.style.display = 'none';
-            var counterContainer = MakeCounter(@Model.Product.id);
-            btns.prepend(counterContainer);
+        if (userId === null) {
+            GetCartProductFromCookie();
+
+            var index = productsInCart.findIndex(function (element) {
+                return element.id == @Model.Product.id;
+            });
+
+            if (productsInCart[index] != null) {
+                var btns = document.getElementsByClassName('product-info-buttons')[0];
+                var addToCartBtn = btns.getElementsByClassName('product-info-add-to-cart-btn')[0];
+                addToCartBtn.style.display = 'none';
+                var counterContainer = MakeCounter(@Model.Product.id);
+                btns.prepend(counterContainer);
+            }
         }
         else {
-            console.log('ddd');
+            fetch(`/User/GetUserCartProductCount?productId=${@Model.Product.id}&userId=${userId}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    if (data > 0) {
+                        var btns = document.getElementsByClassName('product-info-buttons')[0];
+                        var addToCartBtn = btns.getElementsByClassName('product-info-add-to-cart-btn')[0];
+                        addToCartBtn.style.display = 'none';
+                        var counterContainer = MakeCounter(@Model.Product.id, data);
+                        btns.prepend(counterContainer);
+                    }
+                })
         }
     });
 
-    function MakeCounter(id) {
-        var counter;
-        var index = productsInCart.findIndex(function (element) {
-            return element.id == id;
-        });
-        if (productsInCart[index] == undefined) {
-            console.log(productsInCart[index])
-            console.log('d');
-            counter = `<div class="product-menu-counter-container" id="counterContainer${id}" style="display:flex; position:relative; height: 48px; min-width: 196px; justify-content:space-between;">
-                                                    <svg id="${id}" onclick="Minus(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
-                                                    <div class="main-page-product-counter-container-count" style="min-width: 90px;">
-                                                            <input id="productInput${id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="1" style="margin-top:2px; left:15%;" class="num-input-product">
-                                                                <span id="productSpan${id}" class="cart-body-item-info-count-btn-counter-num">$"1"</span>
-                                                        <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
-                                                    </div>
-                                                                <svg id="${id}" onclick="Plus(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="${id}" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
-                                                </div>`;
+    function MakeCounter(id, count = 0) {
+        userId = GetUserId();
+        if (userId === null) {
+            var counter;
+            var index = productsInCart.findIndex(function (element) {
+                return element.id == id;
+            });
+            if (productsInCart[index] == undefined) {
+                counter = `<div class="product-menu-counter-container" id="counterContainer${id}" style="display:flex; position:relative; height: 48px; min-width: 196px; justify-content:space-between;">
+                                                                                            <svg id="${id}" onclick="Minus(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                                                            <div class="main-page-product-counter-container-count" style="min-width: 90px;">
+                                                                                                    <input id="productInput${id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="1" style="margin-top:2px; left:15%;" class="num-input-product">
+                                                                                                        <span id="productSpan${id}" class="cart-body-item-info-count-btn-counter-num">$"1"</span>
+                                                                                                <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
+                                                                                            </div>
+                                                                                                        <svg id="${id}" onclick="Plus(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="${id}" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                                                        </div>`;
+            }
+            else {
+                counter = `<div class="product-menu-counter-container" id="counterContainer${id}" style="display:flex; position:relative; justify-content:space-between; height: 48px; min-width: 196px">
+                                                                                        <svg id="${id}" onclick="Minus(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                                                            <div class="main-page-product-counter-container-count" style="min-width: 90px;">
+                                                                                                <input id="productInput${id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="${productsInCart[index].count}" style="margin-top:2px; left:15%;" class="num-input-product">
+                                                                                                    <span id="productSpan${id}" class="cart-body-item-info-count-btn-counter-num">${productsInCart[index].count}</span>
+                                                                                            <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
+                                                                                        </div>
+                                                                                                    <svg id="${id}" onclick="Plus(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="${id}" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                                                    </div>`;
+            }
+            var tempDiv = document.createElement('div');
+            tempDiv.innerHTML = counter;
+            return tempDiv;
         }
         else {
-            counter = `<div class="product-menu-counter-container" id="counterContainer${id}" style="display:flex; position:relative; justify-content:space-between; height: 48px; min-width: 196px">
-                                                <svg id="${id}" onclick="Minus(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
-                                                    <div class="main-page-product-counter-container-count" style="min-width: 90px;">
-                                                        <input id="productInput${id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="${productsInCart[index].count}" style="margin-top:2px; left:15%;" class="num-input-product">
-                                                            <span id="productSpan${id}" class="cart-body-item-info-count-btn-counter-num">${productsInCart[index].count}</span>
-                                                    <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
-                                                </div>
-                                                            <svg id="${id}" onclick="Plus(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="${id}" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
-                                            </div>`;
+            var counter;
+            if (count == 0) {
+                counter = `<div class="product-menu-counter-container" id="counterContainer${id}" style="display:flex; position:relative; height: 48px; min-width: 196px; justify-content:space-between;">
+                                                                                                <svg id="${id}" onclick="Minus(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                                                                <div class="main-page-product-counter-container-count" style="min-width: 90px;">
+                                                                                                        <input id="productInput${id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="1" style="margin-top:2px; left:15%;" class="num-input-product">
+                                                                                                            <span id="productSpan${id}" class="cart-body-item-info-count-btn-counter-num">$"1"</span>
+                                                                                                    <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
+                                                                                                </div>
+                                                                                                            <svg id="${id}" onclick="Plus(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="${id}" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                                                            </div>`;
+            }
+            else {
+                counter = `<div class="product-menu-counter-container" id="counterContainer${id}" style="display:flex; position:relative; justify-content:space-between; height: 48px; min-width: 196px">
+                                                                                            <svg id="${id}" onclick="Minus(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                                                                <div class="main-page-product-counter-container-count" style="min-width: 90px;">
+                                                                                                    <input id="productInput${id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="${count}" style="margin-top:2px; left:15%;" class="num-input-product">
+                                                                                                        <span id="productSpan${id}" class="cart-body-item-info-count-btn-counter-num">${count}</span>
+                                                                                                <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
+                                                                                            </div>
+                                                                                                        <svg id="${id}" onclick="Plus(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="${id}" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                                                        </div>`;
+            }
+            var tempDiv = document.createElement('div');
+            tempDiv.innerHTML = counter;
+            return tempDiv;
         }
-        var tempDiv = document.createElement('div');
-        tempDiv.innerHTML = counter;
-        return tempDiv;
     }
 
     function AddToCartProduct(event) {
-        var id = event.target.id;
+        var currentTime = new Date().getTime();
+        if (currentTime - lastClickTime >= 500) {
+            var id = event.target.id;
+            var userId = GetUserId();
 
-        var btns = document.getElementsByClassName('product-info-buttons')[0];
-        var addToCartBtn = btns.getElementsByClassName('product-info-add-to-cart-btn')[0];
-            addToCartBtn.style.display = 'none';
-            var counterContainer = MakeCounter(@Model.Product.id);
-            btns.prepend(counterContainer);
+            if (userId === null) {
+                var btns = document.getElementsByClassName('product-info-buttons')[0];
+                var addToCartBtn = btns.getElementsByClassName('product-info-add-to-cart-btn')[0];
+                addToCartBtn.style.display = 'none';
+                var counterContainer = MakeCounter(@Model.Product.id);
+                btns.prepend(counterContainer);
 
-        var product = document.querySelector(`.other-products-item-cart[id="${id}"]`);
-        var overlay = product.getElementsByClassName('product-overlay')[0];
-        product.classList.add('added');
-        overlay.classList.add('green');
+                var product = document.querySelector(`.other-products-item-cart[id="${id}"]`);
+                if (product) {
+                    var overlay = product.getElementsByClassName('product-overlay')[0];
+                    product.classList.add('added');
+                    overlay.classList.add('green');
+                }
 
-        var counterContainer = document.getElementById(`counterContainer${id}`);
-        counterContainer.style.display = 'flex';
-        var counterContainerSimilar = document.getElementById(`counterContainerSimilar${id}`);
-        counterContainerSimilar.style.display = 'flex';
+                var counterContainer = document.getElementById(`counterContainer${id}`);
+                counterContainer.style.display = 'flex';
+                var counterContainerSimilar = document.getElementById(`counterContainerSimilar${id}`);
+                if (counterContainerSimilar)
+                    counterContainerSimilar.style.display = 'flex';
 
-        var span = document.getElementById(`productSpan${id}`);
-        span.textContent = 1;
-        var input = document.getElementById(`productInput${id}`);
-        input.value = span.textContent;
-        var spanSimilar = document.getElementById(`productSimilarSpan${id}`);
-        spanSimilar.textContent = 1;
-        var inputSimilar = document.getElementById(`productSimilarInput${id}`);
-        inputSimilar.value = span.textContent;
+                var span = document.getElementById(`productSpan${id}`);
+                span.textContent = 1;
+                var input = document.getElementById(`productInput${id}`);
+                input.value = span.textContent;
+                var spanSimilar = document.getElementById(`productSimilarSpan${id}`);
+                if (spanSimilar)
+                    spanSimilar.textContent = 1;
+                var inputSimilar = document.getElementById(`productSimilarInput${id}`);
+                if (inputSimilar)
+                    inputSimilar.value = span.textContent;
 
-        var price = '@Model.Product.Price';
-        var parsedPrice = parseFloat(price.replace(',', '.'));
-        var title = "@Model.Product.Title";
-        title = title.replace(/&#x([0-9A-Fa-f]+);/g, function (match, hex) {
-            return String.fromCharCode(parseInt(hex, 16));
-        });
+                var price = '@Model.Product.Price';
+                var parsedPrice = parseFloat(price.replace(',', '.'));
+                var title = "@Model.Product.Title";
+                title = title.replace(/&#x([0-9A-Fa-f]+);/g, function (match, hex) {
+                    return String.fromCharCode(parseInt(hex, 16));
+                });
 
-        var cartProduct = new CartProduct(id, 1, parsedPrice, title);
-        productsInCart.push(cartProduct);
-        const jsonString = JSON.stringify(productsInCart);
-        document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
-        console.log(productsInCart);
+                var cartProduct = new CartProduct(id, 1, parsedPrice, title);
+                productsInCart.push(cartProduct);
+                const jsonString = JSON.stringify(productsInCart);
+                document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
+                console.log(productsInCart);
 
 
-        var cart = document.getElementsByClassName('cart-body-items')[0];
-        var leftCart = document.getElementById('leftCartItemContainer');
+                var cart = document.getElementsByClassName('cart-body-items')[0];
+                var leftCart = document.getElementById('leftCartItemContainer');
 
-        var itemInfo = productsInCart.find(function (element) {
-            return element.id === id;
-        });
-   
-        var item = AddHtmlToCart(itemInfo);
-        cart.innerHTML += item;
+                var itemInfo = productsInCart.find(function (element) {
+                    return element.id === id;
+                });
 
-        item = AddHtmlToLeftCart(itemInfo);
-        leftCart.innerHTML += item;
+                var item = AddHtmlToCart(itemInfo);
+                cart.innerHTML += item;
 
-        CheckIfCartIsEmpty();
-        SetInputs();
-        GetFullPriceForCart();
+                item = AddHtmlToLeftCart(itemInfo);
+                leftCart.innerHTML += item;
+                SetInputs();
+                CheckIfCartIsEmpty();
+                GetFullPriceForCart();
+            }
+            else {
+                var btns = document.getElementsByClassName('product-info-buttons')[0];
+                var addToCartBtn = btns.getElementsByClassName('product-info-add-to-cart-btn')[0];
+                addToCartBtn.style.display = 'none';
+
+                var price = '@Model.Product.Price';
+                var parsedPrice = parseFloat(price.replace(',', '.'));
+                var title = "@Model.Product.Title";
+                title = title.replace(/&#x([0-9A-Fa-f]+);/g, function (match, hex) {
+                    return String.fromCharCode(parseInt(hex, 16));
+                });
+
+                fetch(`/User/AddUserCartProduct?productId=${id}&userId=${userId}&price=${parsedPrice}&title=${title}&count=${1}`);
+
+                var counterContainer = MakeCounter(@Model.Product.id, 0);
+                btns.prepend(counterContainer);
+
+                var product = document.querySelector(`.other-products-item-cart[id="${id}"]`);
+                if (product) {
+                    var overlay = product.getElementsByClassName('product-overlay')[0];
+                    product.classList.add('added');
+                    overlay.classList.add('green');
+                }
+
+                var counterContainer = document.getElementById(`counterContainer${id}`);
+                counterContainer.style.display = 'flex';
+                var counterContainerSimilar = document.getElementById(`counterContainerSimilar${id}`);
+                if (counterContainerSimilar)
+                    counterContainerSimilar.style.display = 'flex';
+
+                var span = document.getElementById(`productSpan${id}`);
+                span.textContent = 1;
+                var input = document.getElementById(`productInput${id}`);
+                input.value = span.textContent;
+                var spanSimilar = document.getElementById(`productSimilarSpan${id}`);
+                if (spanSimilar)
+                    spanSimilar.textContent = 1;
+                var inputSimilar = document.getElementById(`productSimilarInput${id}`);
+                if (inputSimilar)
+                    inputSimilar.value = span.textContent;
+
+                var itemInfo = new CartProduct(id, 1, parsedPrice, title);
+
+
+                var cart = document.getElementsByClassName('cart-body-items')[0];
+                var leftCart = document.getElementById('leftCartItemContainer');
+
+                var item = AddHtmlToCart(itemInfo);
+                cart.innerHTML += item;
+
+                item = AddHtmlToLeftCart(itemInfo);
+                leftCart.innerHTML += item;
+
+                CheckIfCartIsEmpty();
+                SetInputs();
+                var sum = UpdateCartValue();
+                if (sum > 0)
+                    document.querySelector('.cart-text').textContent = sum + ' грн';
+            }
+        }
+        lastClickTime = currentTime;
     };
 
     function AddToCart(event) {
-        var id = event.target.id;
-        var product = document.querySelector(`.other-products-item-cart[id="${id}"]`);
-        var overlay = product.getElementsByClassName('product-overlay')[0];
-        product.classList.add('added');
-        overlay.classList.add('green');
+        var currentTime = new Date().getTime();
+        if (currentTime - lastClickTime >= 500) {
+            var id = event.target.id;
+            var userId = GetUserId();
 
-        var counterContainer = document.getElementById(`counterContainer${id}`);
-        if(counterContainer != null)
-        counterContainer.style.display = 'flex';
+            if (userId === null) {
+                var product = document.querySelector(`.other-products-item-cart[id="${id}"]`);
+                var overlay = product.getElementsByClassName('product-overlay')[0];
+                product.classList.add('added');
+                overlay.classList.add('green');
 
-        var counterContainerSimilar = document.getElementById(`counterContainerSimilar${id}`);
-        counterContainerSimilar.style.display = 'flex';
+                var counterContainer = document.getElementById(`counterContainer${id}`);
+                if (counterContainer != null)
+                    counterContainer.style.display = 'flex';
 
-        var btns = document.getElementsByClassName('product-info-buttons')[0];
-        var addToCartBtn = btns.getElementsByClassName('product-info-add-to-cart-btn')[0];
-        addToCartBtn.style.display = 'none';
+                var counterContainerSimilar = document.getElementById(`counterContainerSimilar${id}`);
+                counterContainerSimilar.style.display = 'flex';
 
-        var span = document.getElementById(`productSimilarSpan${id}`);
-        span.textContent = 1;
-        var input = document.getElementById(`productSimilarInput${id}`);
-        input.value = span.textContent;
+                var btns = document.getElementsByClassName('product-info-buttons')[0];
+                var addToCartBtn = btns.getElementsByClassName('product-info-add-to-cart-btn')[0];
+                addToCartBtn.style.display = 'none';
 
-        var price = document.querySelector(`.main-page-product-bottom-price-promo[id="${id}"]`)
-        var parsedPrice = price.textContent.slice(0, -4);
-        parsedPrice = parseFloat(parsedPrice.replace(',', '.'));
-        var title = product.getElementsByClassName('main-page-product-title')[0].textContent;
+                var span = document.getElementById(`productSimilarSpan${id}`);
+                span.textContent = 1;
+                var input = document.getElementById(`productSimilarInput${id}`);
+                input.value = span.textContent;
 
-        var cartProduct = new CartProduct(id, 1, parsedPrice, title);
-        productsInCart.push(cartProduct);
-        const jsonString = JSON.stringify(productsInCart);
-        document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
-        console.log(productsInCart);
+                var price = document.querySelector(`.main-page-product-bottom-price-promo[id="${id}"]`)
+                var parsedPrice = price.textContent.slice(0, -4);
+                parsedPrice = parseFloat(parsedPrice.replace(',', '.'));
+                var title = product.getElementsByClassName('main-page-product-title')[0].textContent;
 
-
-        var cart = document.getElementsByClassName('cart-body-items')[0];
-        var leftCart = document.getElementById('leftCartItemContainer');
-
-        var itemInfo = productsInCart.find(function (element) {
-            return element.id === id;
-        });
-        console.log(`Item info: ${itemInfo}`);
-        var item = AddHtmlToCart(itemInfo);
-        cart.innerHTML += item;
-
-        item = AddHtmlToLeftCart(itemInfo);
-        leftCart.innerHTML += item;
+                var cartProduct = new CartProduct(id, 1, parsedPrice, title);
+                productsInCart.push(cartProduct);
+                const jsonString = JSON.stringify(productsInCart);
+                document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
+                console.log(productsInCart);
 
 
-        CheckIfCartIsEmpty();
-        SetInputs();
-        GetFullPriceForCart();
-    };
+                var cart = document.getElementsByClassName('cart-body-items')[0];
+                var leftCart = document.getElementById('leftCartItemContainer');
+
+                var itemInfo = productsInCart.find(function (element) {
+                    return element.id === id;
+                });
+
+                var item = AddHtmlToCart(itemInfo);
+                cart.insertAdjacentHTML('beforeend', item);
+
+                item = AddHtmlToLeftCart(itemInfo);
+                leftCart.insertAdjacentHTML('beforeend', item);
+
+
+                CheckIfCartIsEmpty();
+                SetInputs();
+                GetFullPriceForCart();
+            }
+            else {
+                var product = document.querySelector(`.other-products-item-cart[id="${id}"]`);
+                var overlay = product.getElementsByClassName('product-overlay')[0];
+                var counterContainer = document.getElementById(`counterContainer${id}`);
+                var counterContainerSimilar = document.getElementById(`counterContainerSimilar${id}`);
+                var btns = document.getElementsByClassName('product-info-buttons')[0];
+                var addToCartBtn = btns.getElementsByClassName('product-info-add-to-cart-btn')[0];
+
+                var price = document.querySelector(`.main-page-product-bottom-price-promo[id="${id}"]`)
+                var parsedPrice = price.textContent.slice(0, -4);
+                parsedPrice = parseFloat(parsedPrice.replace(',', '.'));
+                var title = product.getElementsByClassName('main-page-product-title')[0].textContent;
+
+                fetch(`/User/AddUserCartProduct?productId=${id}&userId=${userId}&price=${parsedPrice}&title=${title}&count=${1}`);
+
+                product.classList.add('added');
+                overlay.classList.add('green');
+                if (counterContainer)
+                    counterContainer.style.display = 'flex';
+                counterContainerSimilar.style.display = 'flex';
+                addToCartBtn.style.display = 'none';
+
+                var span = document.getElementById(`productSimilarSpan${id}`);
+                span.textContent = 1;
+                var input = document.getElementById(`productSimilarInput${id}`);
+                input.value = span.textContent;
+
+                var itemInfo = new CartProduct(id, 1, parsedPrice, title);
+
+                var cart = document.getElementsByClassName('cart-body-items')[0];
+                var leftCart = document.getElementById('leftCartItemContainer');
+
+                var item = AddHtmlToCart(itemInfo);
+                cart.insertAdjacentHTML('beforeend', item);
+
+                item = AddHtmlToLeftCart(itemInfo);
+                leftCart.insertAdjacentHTML('beforeend', item);
+
+
+                CheckIfCartIsEmpty();
+                SetInputs();
+                var sum = UpdateCartValue();
+                if (sum > 0)
+                    document.querySelector('.cart-text').textContent = sum + ' грн';
+
+            }
+        }
+        lastClickTime = currentTime;
+    }
 
 </script>

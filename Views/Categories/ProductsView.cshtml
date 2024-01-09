@@ -242,110 +242,214 @@
 
     function ShowProductMenu(id, title, price) {
 
-        var menu = document.getElementsByClassName('product-menu')[0];
-        var btns = menu.getElementsByClassName('product-menu-buttons')[0];
-        var addToCartBtn = menu.getElementsByClassName('product-menu-add-to-cart-btn')[0];
-        var btnText = document.getElementsByClassName('product-menu-add-to-cart-btn-text')[0];
-        btnText.id = id;
-        var counterContainer = menu.getElementsByClassName('product-menu-counter-container')[0];
-        var index = productsInCart.findIndex(function (element) {
-            return element.id === id;
-        });
+        var userId = GetUserId();
 
-        if (index == -1) {
-            if (counterContainer != null)
-                btns.removeChild(counterContainer);
-            addToCartBtn.style.display = 'flex';
+        if (userId === null) {
+            var menu = document.getElementsByClassName('product-menu')[0];
+            var btns = menu.getElementsByClassName('product-menu-buttons')[0];
+            var addToCartBtn = menu.getElementsByClassName('product-menu-add-to-cart-btn')[0];
+            var btnText = document.getElementsByClassName('product-menu-add-to-cart-btn-text')[0];
+            btnText.id = id;
+            var counterContainer = menu.getElementsByClassName('product-menu-counter-container')[0];
+            var index = productsInCart.findIndex(function (element) {
+                return element.id === id;
+            });
+
+            if (index == -1) {
+                if (counterContainer != null)
+                    btns.removeChild(counterContainer);
+                addToCartBtn.style.display = 'flex';
+            }
+            else {
+                addToCartBtn.style.display = 'none';
+
+                var tempDiv = MakeCounter(id);
+
+                while (tempDiv.firstChild) {
+                    btns.prepend(tempDiv.firstChild);
+                }
+                var inputMenu = document.getElementById(`productInputMenu${id}`);
+                inputMenu.addEventListener('input', () => {
+                    var id = inputMenu.id.replace(/\D/g, '');
+                    var input = document.getElementById("cartInput" + id);
+                    var span = document.getElementById("cartSpan" + id);
+                    var productSpan = document.getElementById("productSpan" + id);
+                    var productInput = document.getElementById("productInput" + id);
+                    var productSpanMenu = document.getElementById("productSpanMenu" + id);
+                    var index = productsInCart.findIndex(function (element) {
+                        return element.id === id;
+                    });
+                    productsInCart[index].count = inputMenu.value;
+                    input.value = productsInCart[index].count;
+                    span.textContent = productsInCart[index].count;
+                    productSpan.textContent = productsInCart[index].count;
+                    productInput.value = productsInCart[index].count;
+                    productSpanMenu.textContent = productsInCart[index].count;
+                    inputMenu.value = productsInCart[index].count;
+
+                    const jsonString = JSON.stringify(productsInCart);
+                    document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
+
+                    var item = document.getElementById(`cart-body-item${id}`);
+                    var price = item.getElementsByClassName('cart-body-item-controls-price-primary')[0];
+                    price.textContent = (productsInCart[index].count * productsInCart[index].price).toFixed(2) + ' грн';
+                    document.querySelector('.cart-text').textContent = GetFullPriceForCart() + ' грн';
+                    GetFullPriceForCart();
+                });
+            }
+            menu.style.right = '0.5rem';
+            menu.style.visibility = "visible";
+            menu.style.opacity = "1";
+            $("body").addClass("overlay");
+            document.getElementsByClassName('footer-container')[0].style.zIndex = '0';
+            isProductMenuShowing = true;
+
+            var img = menu.getElementsByClassName('product-menu-img')[0];
+            img.src = `/Product_Images/product_${id}.jpg`;
+
+            var title = document.getElementById('productTitle');
+            title.textContent = document.getElementById(`mainPageProductTitle${id}`).textContent;
+            var price = document.getElementById('productPrice');
+            var productPrice = document.querySelector(`.main-page-product-bottom-price[id="${id}"]`);
+            if (productPrice == null)
+                productPrice = document.querySelector(`.main-page-product-bottom-price-promo[id="${id}"]`);
+            price.textContent = productPrice.textContent;
+            var detail = document.getElementsByClassName('product-menu-more-info-btn')[0];
+            detail.href = `/Home/ProductView?id=${id}`;
         }
         else {
-            addToCartBtn.style.display = 'none';
+            var menu = document.getElementsByClassName('product-menu')[0];
+            var btns = menu.getElementsByClassName('product-menu-buttons')[0];
+            var addToCartBtn = menu.getElementsByClassName('product-menu-add-to-cart-btn')[0];
+            var btnText = document.getElementsByClassName('product-menu-add-to-cart-btn-text')[0];
+            btnText.id = id;
+            var counterContainer = menu.getElementsByClassName('product-menu-counter-container')[0];
 
-            var tempDiv = MakeCounter(id);
+            fetch(`/User/GetUserCartProductCount?productId=${id}&userId=${userId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data == 0) {
+                        if (counterContainer != null)
+                            btns.removeChild(counterContainer);
+                        addToCartBtn.style.display = 'flex';
+                    }
+                    else {
+                        addToCartBtn.style.display = 'none';
 
-            while (tempDiv.firstChild) {
-                btns.prepend(tempDiv.firstChild);
-            }
-            var inputMenu = document.getElementById(`productInputMenu${id}`);
-            inputMenu.addEventListener('input', () => {
-                var id = inputMenu.id.replace(/\D/g, '');
-                var input = document.getElementById("cartInput" + id);
-                var span = document.getElementById("cartSpan" + id);
-                var productSpan = document.getElementById("productSpan" + id);
-                var productInput = document.getElementById("productInput" + id);
-                var productSpanMenu = document.getElementById("productSpanMenu" + id);
-                var index = productsInCart.findIndex(function (element) {
-                    return element.id === id;
-                });
-                productsInCart[index].count = inputMenu.value;
-                input.value = productsInCart[index].count;
-                span.textContent = productsInCart[index].count;
-                productSpan.textContent = productsInCart[index].count;
-                productInput.value = productsInCart[index].count;
-                productSpanMenu.textContent = productsInCart[index].count;
-                inputMenu.value = productsInCart[index].count;
+                        var tempDiv = MakeCounter(id, data);
+                        console.log(data);
 
-                const jsonString = JSON.stringify(productsInCart);
-                document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
+                        while (tempDiv.firstChild) {
+                            btns.prepend(tempDiv.firstChild);
+                        }
+                        var inputMenu = document.getElementById(`productInputMenu${id}`);
+                        inputMenu.addEventListener('blur', OnBlurSaveUserCartProduct);
+                        inputMenu.addEventListener('input', () => {
+                            var id = inputMenu.id.replace(/\D/g, '');
+                            var input = document.getElementById("cartInput" + id);
+                            var span = document.getElementById("cartSpan" + id);
+                            var productSpan = document.getElementById("productSpan" + id);
+                            var productInput = document.getElementById("productInput" + id);
+                            var productSpanMenu = document.getElementById("productSpanMenu" + id);
 
-                var item = document.getElementById(`cart-body-item${id}`);
-                var price = item.getElementsByClassName('cart-body-item-controls-price-primary')[0];
-                price.textContent = (productsInCart[index].count * productsInCart[index].price).toFixed(2) + ' грн';
-                GetFullPriceForCart();
-            });
+                            input.value = inputMenu.value;
+                            span.textContent = inputMenu.value;
+                            productSpan.textContent = inputMenu.value;
+                            productInput.value = inputMenu.value;
+                            productSpanMenu.textContent = inputMenu.value;
+                            inputMenu.value = inputMenu.value;
+
+                            var item = document.getElementById(`cart-body-item${id}`);
+                            var price = item.getElementsByClassName('cart-body-item-controls-price-primary')[0];
+                            price.textContent = (inputMenu.value * price).toFixed(2) + ' грн';
+                            var sum = UpdateCartValue();
+                            document.querySelector('.cart-text').textContent = sum + ' грн';
+                        });
+                    }
+                    menu.style.right = '0.5rem';
+                    menu.style.visibility = "visible";
+                    menu.style.opacity = "1";
+                    $("body").addClass("overlay");
+                    document.getElementsByClassName('footer-container')[0].style.zIndex = '0';
+                    isProductMenuShowing = true;
+
+                    var img = menu.getElementsByClassName('product-menu-img')[0];
+                    img.src = `/Product_Images/product_${id}.jpg`;
+
+                    var title = document.getElementById('productTitle');
+                    title.textContent = document.getElementById(`mainPageProductTitle${id}`).textContent;
+                    var price = document.getElementById('productPrice');
+                    var productPrice = document.querySelector(`.main-page-product-bottom-price[id="${id}"]`);
+                    if (productPrice == null)
+                        productPrice = document.querySelector(`.main-page-product-bottom-price-promo[id="${id}"]`);
+                    price.textContent = productPrice.textContent;
+                    var detail = document.getElementsByClassName('product-menu-more-info-btn')[0];
+                    detail.href = `/Home/ProductView?id=${id}`;
+                })
         }
-        menu.style.right = '0.5rem';
-        menu.style.visibility = "visible";
-        menu.style.opacity = "1";
-        $("body").addClass("overlay");
-        document.getElementsByClassName('footer-container')[0].style.zIndex = '0';
-        isProductMenuShowing = true;
-
-        var img = menu.getElementsByClassName('product-menu-img')[0];
-        img.src = `/Product_Images/product_${id}.jpg`;
-
-        var title = document.getElementById('productTitle');
-        title.textContent = document.getElementById(`mainPageProductTitle${id}`).textContent;
-        var price = document.getElementById('productPrice');
-        var productPrice = document.querySelector(`.main-page-product-bottom-price[id="${id}"]`);
-        if(productPrice == null)
-            productPrice = document.querySelector(`.main-page-product-bottom-price-promo[id="${id}"]`);
-        price.textContent = productPrice.textContent;
-        var detail = document.getElementsByClassName('product-menu-more-info-btn')[0];
-        console.log(detail);
-        detail.href = `/Home/ProductView?id=${id}`;
-
     }
 
-    function MakeCounter(id) {
-        var counter;
-        var index = productsInCart.findIndex(function (element) {
-            return element.id === id;
-        });
-        if (productsInCart[index] == undefined) {
-            counter = `<div class="product-menu-counter-container" id="counterContainerMenu${id}" style="display:flex; position:relative" height: 50px;>
-                                                <svg id="${id}" onclick="MinusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
-                                                <div class="main-page-product-counter-container-count">
-                                                        <input id="productInputMenu${id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="1" style="margin-top:2px;" class="num-input-product">
-                                                            <span id="productSpanMenu${id}" class="cart-body-item-info-count-btn-counter-num">$"1"</span>
-                                                    <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
-                                                </div>
-                                                            <svg id="${id}" onclick="PlusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="${id}" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
-                                            </div>`;
+    function MakeCounter(id, count = 0) {
+        var userId = GetUserId();
+        if (userId === null) {
+            var counter;
+            var index = productsInCart.findIndex(function (element) {
+                return element.id === id;
+            });
+            if (productsInCart[index] == undefined) {
+                counter = `<div class="product-menu-counter-container" id="counterContainerMenu${id}" style="display:flex; position:relative" height: 50px;>
+                                                                                                                    <svg id="${id}" onclick="MinusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                                                                                    <div class="main-page-product-counter-container-count">
+                                                                                                                            <input id="productInputMenu${id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="1" style="margin-top:2px;" class="num-input-product">
+                                                                                                                                <span id="productSpanMenu${id}" class="cart-body-item-info-count-btn-counter-num">$"1"</span>
+                                                                                                                        <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
+                                                                                                                    </div>
+                                                                                                                                <svg id="${id}" onclick="PlusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="${id}" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                                                                                </div>`;
+            }
+            else {
+                counter = `<div class="product-menu-counter-container" id="counterContainerMenu${id}" style="display:flex; position:relative" height: 50px;>
+                                                                                                                <svg id="${id}" onclick="MinusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                                                                                <div class="main-page-product-counter-container-count">
+                                                                                                                        <input id="productInputMenu${id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="${productsInCart[index].count}" style="margin-top:2px;" class="num-input-product">
+                                                                                                                            <span id="productSpanMenu${id}" class="cart-body-item-info-count-btn-counter-num">${productsInCart[index].count}"</span>
+                                                                                                                    <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
+                                                                                                                </div>
+                                                                                                                            <svg id="${id}" onclick="PlusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="${id}" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                                                                            </div>`;
+            }
+            var tempDiv = document.createElement('div');
+            tempDiv.innerHTML = counter;
+            return tempDiv;
         }
         else {
-            counter = `<div class="product-menu-counter-container" id="counterContainerMenu${id}" style="display:flex; position:relative" height: 50px;>
-                                            <svg id="${id}" onclick="MinusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
-                                            <div class="main-page-product-counter-container-count">
-                                                    <input id="productInputMenu${id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="${productsInCart[index].count}" style="margin-top:2px;" class="num-input-product">
-                                                        <span id="productSpanMenu${id}" class="cart-body-item-info-count-btn-counter-num">${productsInCart[index].count}"</span>
-                                                <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
-                                            </div>
-                                                        <svg id="${id}" onclick="PlusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="${id}" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
-                                        </div>`;
+            console.log(count);
+            if (count > 0) {
+                counter = `<div class="product-menu-counter-container" id="counterContainerMenu${id}" style="display:flex; position:relative" height: 50px;>
+                                                                                                                    <svg id="${id}" onclick="MinusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                                                                                    <div class="main-page-product-counter-container-count">
+                                                                                                                            <input id="productInputMenu${id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="${count}" style="margin-top:2px;" class="num-input-product">
+                                                                                                                                <span id="productSpanMenu${id}" class="cart-body-item-info-count-btn-counter-num">${count}"</span>
+                                                                                                                        <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
+                                                                                                                    </div>
+                                                                                                                                <svg id="${id}" onclick="PlusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="${id}" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                                                                                </div>`;
+            }
+            else {
+                counter = `<div class="product-menu-counter-container" id="counterContainerMenu${id}" style="display:flex; position:relative" height: 50px;>
+                                                                                                                        <svg id="${id}" onclick="MinusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                                                                                        <div class="main-page-product-counter-container-count">
+                                                                                                                                <input id="productInputMenu${id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="1" style="margin-top:2px;" class="num-input-product">
+                                                                                                                                    <span id="productSpanMenu${id}" class="cart-body-item-info-count-btn-counter-num">$"1"</span>
+                                                                                                                            <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
+                                                                                                                        </div>
+                                                                                                                                    <svg id="${id}" onclick="PlusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="${id}" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                                                                                    </div>`;
+            }
+            var tempDiv = document.createElement('div');
+            tempDiv.innerHTML = counter;
+            return tempDiv;
         }
-        var tempDiv = document.createElement('div');
-        tempDiv.innerHTML = counter;
-        return tempDiv;
     }
 
     var lastClickTime = 0;
@@ -360,37 +464,71 @@
             var productInput = document.getElementById("productInput" + event.target.id);
             var productSpanMenu = document.getElementById("productSpanMenu" + event.target.id);
             var productInputMenu = document.getElementById("productInputMenu" + event.target.id);
-            var index = productsInCart.findIndex(function (element) {
-                return element.id === event.target.id;
-            });
-            if (productsInCart[index].count < 999) {
+            var userId = GetUserId();
+
+            if (userId === null) {
                 var index = productsInCart.findIndex(function (element) {
                     return element.id === event.target.id;
                 });
-                productsInCart[index].count -= -1;
+                if (productsInCart[index].count < 999) {
+                    var index = productsInCart.findIndex(function (element) {
+                        return element.id === event.target.id;
+                    });
+                    productsInCart[index].count -= -1;
 
-                productInputMenu.value = productsInCart[index].count;
-                productSpanMenu.textContent = productsInCart[index].count;
-                span.textContent = productsInCart[index].count;
-                if (productSpan != null)
-                    productSpan.textContent = productsInCart[index].count;
-                input.value = productsInCart[index].count;
-                if (productInput != null)
-                    productInput.value = productsInCart[index].count;
+                    productInputMenu.value = productsInCart[index].count;
+                    productSpanMenu.textContent = productsInCart[index].count;
+                    span.textContent = productsInCart[index].count;
+                    if (productSpan != null)
+                        productSpan.textContent = productsInCart[index].count;
+                    input.value = productsInCart[index].count;
+                    if (productInput != null)
+                        productInput.value = productsInCart[index].count;
 
 
-                const jsonString = JSON.stringify(productsInCart);
-                document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
+                    const jsonString = JSON.stringify(productsInCart);
+                    document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
 
-                var item = document.getElementById(`cart-body-item${event.target.id}`);
-                var price = item.getElementsByClassName('cart-body-item-controls-price-primary')[0];
-                price.textContent = (productsInCart[index].count * productsInCart[index].price).toFixed(2) + ' грн';
-                GetFullPriceForCart();
+                    var item = document.getElementById(`cart-body-item${event.target.id}`);
+                    var price = item.getElementsByClassName('cart-body-item-controls-price-primary')[0];
+                    price.textContent = (productsInCart[index].count * productsInCart[index].price).toFixed(2) + ' грн';
+                    GetFullPriceForCart();
 
-                var cartText = document.getElementsByClassName('cart-text')[0];
-                cartText.textContent = GetCartValue() + ' грн';
+                    var cartText = document.getElementsByClassName('cart-text')[0];
+                    cartText.textContent = GetCartValue() + ' грн';
+                    lastClickTime = currentTime;
+                }
+            }
+            else {
+                if (input.value < 999) {
+                    input.value -= -1;
 
-                lastClickTime = currentTime;
+                    fetch(`/User/UpdateUserCartProduct?productId=${event.target.id}&userId=${userId}&count=${input.value}`);
+
+                    productInputMenu.value = input.value;
+                    productSpanMenu.textContent = input.value;
+                    span.textContent = input.value;
+                    if (productSpan != null)
+                        productSpan.textContent = input.value;
+                    input.value = input.value;
+                    if (productInput != null)
+                        productInput.value = input.value;
+
+                    var item = document.getElementById(`cart-body-item${event.target.id}`);
+                    var pricePerProduct = item.getElementsByClassName('cart-body-item-controls-price-secondary')[0].textContent;
+                    if (pricePerProduct.length === 0)
+                        pricePerProduct = item.getElementsByClassName('cart-body-item-controls-price-promo')[0].textContent;
+                    var match = pricePerProduct.match(/\d+(\.\d+)?/);
+                    pricePerProduct = parseFloat(match[0]);
+
+                    var price = item.querySelector('.cart-body-item-controls-price-primary');
+                    price.textContent = (input.value * pricePerProduct).toFixed(2) + ' грн';
+                    var sum = UpdateCartValue();
+
+                    var cartText = document.querySelector('.cart-text');
+                    cartText.textContent = sum + ' грн';
+                    lastClickTime = currentTime;
+                }
             }
         }
     }
@@ -405,153 +543,297 @@
             var productInput = document.getElementById("productInput" + event.target.id);
             var productSpanMenu = document.getElementById("productSpanMenu" + event.target.id);
             var productInputMenu = document.getElementById("productInputMenu" + event.target.id);
+            var userId = GetUserId();
 
-            var index = productsInCart.findIndex(function (element) {
-                return element.id === event.target.id;
-            });
-            productsInCart[index].count -= 1;
+            if (userId === null) {
+                var index = productsInCart.findIndex(function (element) {
+                    return element.id === event.target.id;
+                });
+                productsInCart[index].count -= 1;
 
-            if (productsInCart[index].count > 0) {
-                console.log(productsInCart[index].count);
+                if (productsInCart[index].count > 0) {
+                    console.log(productsInCart[index].count);
 
-                productInputMenu.value = productsInCart[index].count;
-                productSpanMenu.textContent = productsInCart[index].count;
-                span.textContent = productsInCart[index].count;
-                if (productSpan != null)
-                    productSpan.textContent = productsInCart[index].count;
-                input.value = productsInCart[index].count;
-                if (productInput != null)
-                    productInput.value = productsInCart[index].count;
+                    productInputMenu.value = productsInCart[index].count;
+                    productSpanMenu.textContent = productsInCart[index].count;
+                    span.textContent = productsInCart[index].count;
+                    if (productSpan != null)
+                        productSpan.textContent = productsInCart[index].count;
+                    input.value = productsInCart[index].count;
+                    if (productInput != null)
+                        productInput.value = productsInCart[index].count;
 
-                const jsonString = JSON.stringify(productsInCart);
-                document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
+                    const jsonString = JSON.stringify(productsInCart);
+                    document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
 
-                var item = document.getElementById(`cart-body-item${event.target.id}`);
-                var price = item.getElementsByClassName('cart-body-item-controls-price-primary')[0];
-                price.textContent = (productsInCart[index].count * productsInCart[index].price).toFixed(2) + ' грн';
-                GetFullPriceForCart();
+                    var item = document.getElementById(`cart-body-item${event.target.id}`);
+                    var price = item.getElementsByClassName('cart-body-item-controls-price-primary')[0];
+                    price.textContent = (productsInCart[index].count * productsInCart[index].price).toFixed(2) + ' грн';
+                    GetFullPriceForCart();
 
-                var cartText = document.getElementsByClassName('cart-text')[0];
-                cartText.textContent = GetCartValue() + ' грн';
+                    var cartText = document.getElementsByClassName('cart-text')[0];
+                    cartText.textContent = GetCartValue() + ' грн';
 
-                lastClickTime = currentTime;
+                    lastClickTime = currentTime;
+                }
+
+                else {
+                    productsInCart.splice(index, 1);
+                    var counter = document.getElementById(`counterContainer${event.target.id}`);
+                    if (counter != null)
+                        counter.style.display = 'none';
+                    var overlay = document.getElementById(`overlay${event.target.id}`);
+                    if (overlay != null)
+                        overlay.classList.remove('green');
+                    var cart = document.getElementsByClassName('cart-body-items')[0];
+                    var elementToRemove = document.getElementById(`cart-body-item${event.target.id}`);
+                    cart.removeChild(elementToRemove);
+                    var btns = document.getElementsByClassName('product-menu-buttons')[0];
+                    var counterContainer = document.getElementsByClassName('product-menu-counter-container')[0];
+                    btns.removeChild(counterContainer);
+                    var addToCartBtn = document.getElementsByClassName('product-menu-add-to-cart-btn')[0];
+                    addToCartBtn.style.display = 'flex';
+                    var leftCart = document.getElementById('leftCartItemContainer');
+                    leftCart.removeChild(document.getElementById(`leftCartItem${event.target.id}`));
+
+                    const jsonString = JSON.stringify(productsInCart);
+                    document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
+
+                    CheckIfCartIsEmpty();
+                    GetFullPriceForCart();
+
+                    lastClickTime = currentTime
+                }
             }
-
             else {
-                productsInCart.splice(index, 1);
-                var counter = document.getElementById(`counterContainer${event.target.id}`);
-                if (counter != null)
-                    counter.style.display = 'none';
-                var overlay = document.getElementById(`overlay${event.target.id}`);
-                if (overlay != null)
-                    overlay.classList.remove('green');
-                var cart = document.getElementsByClassName('cart-body-items')[0];
-                var elementToRemove = document.getElementById(`cart-body-item${event.target.id}`);
-                cart.removeChild(elementToRemove);
-                var btns = document.getElementsByClassName('product-menu-buttons')[0];
-                var counterContainer = document.getElementsByClassName('product-menu-counter-container')[0];
-                btns.removeChild(counterContainer);
-                var addToCartBtn = document.getElementsByClassName('product-menu-add-to-cart-btn')[0];
-                addToCartBtn.style.display = 'flex';
-                var leftCart = document.getElementById('leftCartItemContainer');
-                leftCart.removeChild(document.getElementById(`leftCartItem${event.target.id}`));
+                input.value -= 1;
 
-                const jsonString = JSON.stringify(productsInCart);
-                document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
+                if (input.value > 0) {
+                    productInputMenu.value = input.value;
+                    productSpanMenu.textContent = input.value;
+                    span.textContent = input.value;
+                    if (productSpan != null)
+                        productSpan.textContent = input.value;
+                    input.value = input.value;
+                    if (productInput != null)
+                        productInput.value = input.value;
 
-                CheckIfCartIsEmpty();
-                GetFullPriceForCart();
+                    fetch(`/User/UpdateUserCartProduct?productId=${event.target.id}&userId=${userId}&count=${input.value}`);
 
-                lastClickTime = currentTime
+                    var item = document.getElementById(`cart-body-item${event.target.id}`);
+                    var pricePerProduct = item.getElementsByClassName('cart-body-item-controls-price-secondary')[0].textContent;
+                    if (pricePerProduct.length === 0)
+                        pricePerProduct = item.getElementsByClassName('cart-body-item-controls-price-promo')[0].textContent;
+                    var match = pricePerProduct.match(/\d+(\.\d+)?/);
+                    pricePerProduct = parseFloat(match[0]);
+
+                    var price = item.querySelector('.cart-body-item-controls-price-primary');
+                    price.textContent = (input.value * pricePerProduct).toFixed(2) + ' грн';
+                    var sum = UpdateCartValue();
+
+                    var cartText = document.querySelector('.cart-text');
+                    cartText.textContent = sum + ' грн';
+                    lastClickTime = currentTime;
+                }
+
+                else {
+                    fetch(`/User/DeleteUserCartProduct?productId=${event.target.id}&userId=${userId}`);
+
+                    var counter = document.getElementById(`counterContainer${event.target.id}`);
+                    if (counter != null)
+                        counter.style.display = 'none';
+                    var overlay = document.getElementById(`overlay${event.target.id}`);
+                    if (overlay != null)
+                        overlay.classList.remove('green');
+                    var cart = document.getElementsByClassName('cart-body-items')[0];
+                    var elementToRemove = document.getElementById(`cart-body-item${event.target.id}`);
+                    cart.removeChild(elementToRemove);
+                    var btns = document.getElementsByClassName('product-menu-buttons')[0];
+                    var counterContainer = document.getElementsByClassName('product-menu-counter-container')[0];
+                    btns.removeChild(counterContainer);
+                    var addToCartBtn = document.getElementsByClassName('product-menu-add-to-cart-btn')[0];
+                    addToCartBtn.style.display = 'flex';
+                    var leftCart = document.getElementById('leftCartItemContainer');
+                    leftCart.removeChild(document.getElementById(`leftCartItem${event.target.id}`));
+
+                    CheckIfCartIsEmpty();
+                    var sum = UpdateCartValue();
+
+                    var cartText = document.querySelector('.cart-text');
+                    cartText.textContent = sum + ' грн';
+                }
             }
+
         }
     }
 
     function AddToCartMenu(event) {
-        var id = event.target.id;
-        var product = document.querySelector(`.products-view-product[id="${id}"]`);
-        var overlay = document.getElementById(`overlay${id}`);
-        product.classList.add('added');
-        overlay.classList.add('green');
-        var btns = document.getElementsByClassName('product-menu-buttons')[0];
-        var addToCartBtn = document.getElementsByClassName('product-menu-add-to-cart-btn')[0];
-        addToCartBtn.style.display = 'none';
-        console.log(id);
-        var counter = MakeCounter(id);
-        while (counter.firstChild) {
-            btns.prepend(counter.firstChild);
+        var currentTime = new Date().getTime();
+        if (currentTime - lastClickTime >= 500) {
+            var id = event.target.id;
+            var userId = GetUserId();
+
+            if (userId === null) {
+                var product = document.querySelector(`.products-view-product[id="${id}"]`);
+                var overlay = document.getElementById(`overlay${id}`);
+                product.classList.add('added');
+                overlay.classList.add('green');
+                var btns = document.getElementsByClassName('product-menu-buttons')[0];
+                var addToCartBtn = document.getElementsByClassName('product-menu-add-to-cart-btn')[0];
+                addToCartBtn.style.display = 'none';
+                console.log(id);
+                var counter = MakeCounter(id);
+                while (counter.firstChild) {
+                    btns.prepend(counter.firstChild);
+                }
+
+                var counterContainer = document.getElementById(`counterContainer${id}`);
+                counterContainer.style.display = 'flex';
+
+                var span = document.getElementById(`productSpan${id}`);
+                span.textContent = 1;
+                var input = document.getElementById(`productInput${id}`);
+                input.value = span.textContent;
+                var spanMenu = document.getElementById(`productSpanMenu${id}`);
+                spanMenu.textContent = 1;
+                var inputMenu = document.getElementById(`productInputMenu${id}`);
+                spanMenu.textContent = 1;
+                inputMenu.value = span.textContent;
+
+
+                inputMenu.addEventListener('input', () => {
+                    var id = inputMenu.id.replace(/\D/g, '');
+                    var input = document.getElementById("cartInput" + id);
+                    var span = document.getElementById("cartSpan" + id);
+                    var productSpan = document.getElementById("productSpan" + id);
+                    var productInput = document.getElementById("productInput" + id);
+                    var productSpanMenu = document.getElementById("productSpanMenu" + id);
+                    var index = productsInCart.findIndex(function (element) {
+                        return element.id === id;
+                    });
+                    productsInCart[index].count = inputMenu.value;
+                    input.value = productsInCart[index].count;
+                    span.textContent = productsInCart[index].count;
+                    productSpan.textContent = productsInCart[index].count;
+                    productInput.value = productsInCart[index].count;
+                    productSpanMenu.textContent = productsInCart[index].count;
+                    inputMenu.value = productsInCart[index].count;
+
+                    const jsonString = JSON.stringify(productsInCart);
+                    document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
+
+                    var item = document.getElementById(`cart-body-item${id}`);
+                    var price = item.getElementsByClassName('cart-body-item-controls-price-primary')[0];
+                    price.textContent = (productsInCart[index].count * productsInCart[index].price).toFixed(2) + ' грн';
+                    GetFullPriceForCart();
+                });
+                var price = document.querySelector(`.main-page-product-bottom-price[id="${id}"]`)
+                if (price == null)
+                    price = document.querySelector(`.main-page-product-bottom-price-promo[id="${id}"]`)
+                var parsedPrice = price.textContent.slice(0, -4);
+                parsedPrice = parseFloat(parsedPrice.replace(',', '.'));
+                var title = product.getElementsByClassName('main-page-product-title')[0].textContent;
+
+                var cartProduct = new CartProduct(id, 1, parsedPrice, title);
+                productsInCart.push(cartProduct);
+                const jsonString = JSON.stringify(productsInCart);
+                document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
+                console.log(productsInCart);
+
+
+                var cart = document.getElementsByClassName('cart-body-items')[0];
+                var leftCart = document.getElementById('leftCartItemContainer');
+
+                var itemInfo = productsInCart.find(function (element) {
+                    return element.id === id;
+                });
+                var item = AddHtmlToCart(itemInfo);
+                cart.innerHTML += item;
+
+                item = AddHtmlToLeftCart(itemInfo);
+                leftCart.innerHTML += item;
+
+                CheckIfCartIsEmpty();
+                SetInputs();
+                GetFullPriceForCart();
+            }
+            else {
+                var product = document.querySelector(`.products-view-product[id="${id}"]`);
+                var overlay = document.getElementById(`overlay${id}`);
+                var btns = document.getElementsByClassName('product-menu-buttons')[0];
+                var addToCartBtn = document.getElementsByClassName('product-menu-add-to-cart-btn')[0];
+                var counter = MakeCounter(id);
+                var counterContainer = document.getElementById(`counterContainer${id}`);
+
+                var price = document.querySelector(`.main-page-product-bottom-price[id="${id}"]`)
+                if (price == null)
+                    price = document.querySelector(`.main-page-product-bottom-price-promo[id="${id}"]`)
+                var parsedPrice = price.textContent.slice(0, -4);
+                parsedPrice = parseFloat(parsedPrice.replace(',', '.'));
+                var title = product.getElementsByClassName('main-page-product-title')[0].textContent;
+
+                fetch(`/User/AddUserCartProduct?productId=${id}&userId=${userId}&price=${parsedPrice}&title=${title}&count=${1}`);
+
+                product.classList.add('added');
+                overlay.classList.add('green');
+                addToCartBtn.style.display = 'none';
+                while (counter.firstChild) {
+                    btns.prepend(counter.firstChild);
+                }
+                counterContainer.style.display = 'flex';
+
+                var span = document.getElementById(`productSpan${id}`);
+                span.textContent = 1;
+                var input = document.getElementById(`productInput${id}`);
+                input.value = span.textContent;
+                var spanMenu = document.getElementById(`productSpanMenu${id}`);
+                spanMenu.textContent = 1;
+                var inputMenu = document.getElementById(`productInputMenu${id}`);
+                spanMenu.textContent = 1;
+                inputMenu.value = span.textContent;
+
+                inputMenu.addEventListener('blur', OnBlurSaveUserCartProduct);
+                inputMenu.addEventListener('input', () => {
+                    var id = inputMenu.id.replace(/\D/g, '');
+                    var input = document.getElementById("cartInput" + id);
+                    var span = document.getElementById("cartSpan" + id);
+                    var productSpan = document.getElementById("productSpan" + id);
+                    var productInput = document.getElementById("productInput" + id);
+                    var productSpanMenu = document.getElementById("productSpanMenu" + id);
+
+                    input.value = inputMenu.value;
+                    span.textContent = inputMenu.value;
+                    productSpan.textContent = inputMenu.value;
+                    productInput.value = inputMenu.value;
+                    productSpanMenu.textContent = inputMenu.value;
+                    inputMenu.value = inputMenu.value;
+
+                    var item = document.getElementById(`cart-body-item${id}`);
+                    var price = item.getElementsByClassName('cart-body-item-controls-price-primary')[0];
+                    price.textContent = (inputMenu.value * parsedPrice).toFixed(2) + ' грн';
+                    var sum = UpdateCartValue();
+                    document.querySelector('.cart-text').textContent = sum + ' грн';
+                });
+
+                var itemInfo = new CartProduct(id, 1, parsedPrice, title);
+
+                var cart = document.getElementsByClassName('cart-body-items')[0];
+                var leftCart = document.getElementById('leftCartItemContainer');
+
+                var item = AddHtmlToCart(itemInfo);
+                cart.innerHTML += item;
+
+                item = AddHtmlToLeftCart(itemInfo);
+                leftCart.innerHTML += item;
+
+                CheckIfCartIsEmpty();
+                SetInputs();
+                var sum = UpdateCartValue();
+                if (sum > 0)
+                    document.querySelector('.cart-text').textContent = sum + ' грн';
+            }
         }
-
-        var counterContainer = document.getElementById(`counterContainer${id}`);
-        counterContainer.style.display = 'flex';
-
-        var span = document.getElementById(`productSpan${id}`);
-        span.textContent = 1;
-        var input = document.getElementById(`productInput${id}`);
-        input.value = span.textContent;
-        var spanMenu = document.getElementById(`productSpanMenu${id}`);
-        spanMenu.textContent = 1;
-        var inputMenu = document.getElementById(`productInputMenu${id}`);
-        spanMenu.textContent = 1;
-        inputMenu.value = span.textContent;
-
-
-        inputMenu.addEventListener('input', () => {
-            var id = inputMenu.id.replace(/\D/g, '');
-            var input = document.getElementById("cartInput" + id);
-            var span = document.getElementById("cartSpan" + id);
-            var productSpan = document.getElementById("productSpan" + id);
-            var productInput = document.getElementById("productInput" + id);
-            var productSpanMenu = document.getElementById("productSpanMenu" + id);
-            var index = productsInCart.findIndex(function (element) {
-                return element.id === id;
-            });
-            productsInCart[index].count = inputMenu.value;
-            input.value = productsInCart[index].count;
-            span.textContent = productsInCart[index].count;
-            productSpan.textContent = productsInCart[index].count;
-            productInput.value = productsInCart[index].count;
-            productSpanMenu.textContent = productsInCart[index].count;
-            inputMenu.value = productsInCart[index].count;
-
-            const jsonString = JSON.stringify(productsInCart);
-            document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
-
-            var item = document.getElementById(`cart-body-item${id}`);
-            var price = item.getElementsByClassName('cart-body-item-controls-price-primary')[0];
-            price.textContent = (productsInCart[index].count * productsInCart[index].price).toFixed(2) + ' грн';
-            GetFullPriceForCart();
-        });
-        var price = document.querySelector(`.main-page-product-bottom-price[id="${id}"]`)
-        if (price == null)
-            price = document.querySelector(`.main-page-product-bottom-price-promo[id="${id}"]`)
-        var parsedPrice = price.textContent.slice(0, -4);
-        parsedPrice = parseFloat(parsedPrice.replace(',', '.'));
-        var title = product.getElementsByClassName('main-page-product-title')[0].textContent;
-
-        var cartProduct = new CartProduct(id, 1, parsedPrice, title);
-        productsInCart.push(cartProduct);
-        const jsonString = JSON.stringify(productsInCart);
-        document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
-        console.log(productsInCart);
-
-
-        var cart = document.getElementsByClassName('cart-body-items')[0];
-        var leftCart = document.getElementById('leftCartItemContainer');
-
-        var itemInfo = productsInCart.find(function (element) {
-            return element.id === id;
-        });
-        console.log(`Item info: ${itemInfo}`);
-        var item = AddHtmlToCart(itemInfo);
-        cart.innerHTML += item;
-
-        item = AddHtmlToLeftCart(itemInfo);
-        leftCart.innerHTML += item;
-
-        CheckIfCartIsEmpty();
-        SetInputs();
-        GetFullPriceForCart();
+        lastClickTime = currentTime;
     }
 
     function CloseProductMenu() {
@@ -725,50 +1007,100 @@
     };
 
     function AddToCart(event) {
-        var id = event.target.id;
-        var product = document.querySelector(`.products-view-product[id="${id}"]`);
-        var overlay = product.getElementsByClassName('product-overlay')[0];
-        product.classList.add('added');
-        overlay.classList.add('green');
+        var currentTime = new Date().getTime();
+        if (currentTime - lastClickTime >= 500) {
 
-        var counterContainer = document.getElementById(`counterContainer${id}`);
-        counterContainer.style.display = 'flex';
+            var id = event.target.id;
+            var userId = GetUserId();
 
-        var span = document.getElementById(`productSpan${id}`);
-        span.textContent = 1;
-        var input = document.getElementById(`productInput${id}`);
-        input.value = span.textContent;
+            if (userId === null) {
+                var product = document.querySelector(`.products-view-product[id="${id}"]`);
+                var overlay = product.getElementsByClassName('product-overlay')[0];
+                product.classList.add('added');
+                overlay.classList.add('green');
 
-        var price = document.querySelector(`.main-page-product-bottom-price[id="${id}"]`)
-        if (price == null)
-            price = document.querySelector(`.main-page-product-bottom-price-promo[id="${id}"]`)
-        var parsedPrice = price.textContent.slice(0, -4);
-        parsedPrice = parseFloat(parsedPrice.replace(',', '.'));
-        var title = product.getElementsByClassName('main-page-product-title')[0].textContent;
+                var counterContainer = document.getElementById(`counterContainer${id}`);
+                counterContainer.style.display = 'flex';
 
-        var cartProduct = new CartProduct(id, 1, parsedPrice, title);
-        productsInCart.push(cartProduct);
-        const jsonString = JSON.stringify(productsInCart);
-        document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
-        console.log(productsInCart);
+                var span = document.getElementById(`productSpan${id}`);
+                span.textContent = 1;
+                var input = document.getElementById(`productInput${id}`);
+                input.value = span.textContent;
 
+                var price = document.querySelector(`.main-page-product-bottom-price[id="${id}"]`)
+                if (price == null)
+                    price = document.querySelector(`.main-page-product-bottom-price-promo[id="${id}"]`)
+                var parsedPrice = price.textContent.slice(0, -4);
+                parsedPrice = parseFloat(parsedPrice.replace(',', '.'));
+                var title = product.getElementsByClassName('main-page-product-title')[0].textContent;
 
-        var cart = document.getElementsByClassName('cart-body-items')[0];
-        var leftCart = document.getElementById('leftCartItemContainer');
-        var itemInfo = productsInCart.find(function (element) {
-            return element.id === id;
-        });
-        console.log(`Item info: ${itemInfo}`);
-        var item = AddHtmlToCart(itemInfo);
-        cart.innerHTML += item;
-
-        item = AddHtmlToLeftCart(itemInfo);
-        leftCart.innerHTML += item;
+                var cartProduct = new CartProduct(id, 1, parsedPrice, title);
+                productsInCart.push(cartProduct);
+                const jsonString = JSON.stringify(productsInCart);
+                document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
+                console.log(productsInCart);
 
 
-        CheckIfCartIsEmpty();
-        SetInputs();
-        GetFullPriceForCart();
+                var cart = document.getElementsByClassName('cart-body-items')[0];
+                var leftCart = document.getElementById('leftCartItemContainer');
+                var itemInfo = productsInCart.find(function (element) {
+                    return element.id === id;
+                });
+
+                var item = AddHtmlToCart(itemInfo);
+                cart.innerHTML += item;
+
+                item = AddHtmlToLeftCart(itemInfo);
+                leftCart.innerHTML += item;
+
+
+                CheckIfCartIsEmpty();
+                SetInputs();
+                GetFullPriceForCart();
+            }
+            else {
+                var product = document.querySelector(`.products-view-product[id="${id}"]`);
+                var overlay = product.getElementsByClassName('product-overlay')[0];
+                var counterContainer = document.getElementById(`counterContainer${id}`);
+                var span = document.getElementById(`productSpan${id}`);
+                var input = document.getElementById(`productInput${id}`);
+
+                var price = document.querySelector(`.main-page-product-bottom-price[id="${id}"]`)
+                if (price == null)
+                    price = document.querySelector(`.main-page-product-bottom-price-promo[id="${id}"]`)
+                var parsedPrice = price.textContent.slice(0, -4);
+                parsedPrice = parseFloat(parsedPrice.replace(',', '.'));
+                var title = product.getElementsByClassName('main-page-product-title')[0].textContent;
+
+                fetch(`/User/AddUserCartProduct?productId=${id}&userId=${userId}&price=${parsedPrice}&title=${title}&count=${1}`);
+
+                product.classList.add('added');
+                overlay.classList.add('green');
+                counterContainer.style.display = 'flex';
+                span.textContent = 1;
+                input.value = span.textContent;
+
+
+                var itemInfo = new CartProduct(id, 1, parsedPrice, title);
+
+                var cart = document.getElementsByClassName('cart-body-items')[0];
+                var leftCart = document.getElementById('leftCartItemContainer');
+
+                var item = AddHtmlToCart(itemInfo);
+                cart.innerHTML += item;
+
+                item = AddHtmlToLeftCart(itemInfo);
+                leftCart.innerHTML += item;
+
+
+                CheckIfCartIsEmpty();
+                SetInputs();
+                var sum = UpdateCartValue();
+                if (sum > 0)
+                    document.querySelector('.cart-text').textContent = sum + ' грн';
+            }
+        }
+        lastClickTime = currentTime;
     };
 
 </script>

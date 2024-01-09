@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
 
 namespace Shop_Mvc.Models
@@ -46,7 +47,8 @@ namespace Shop_Mvc.Models
         public string? Aging_in_barrel { get; set; }
         public string? Package_volume { get; set; }
         public decimal? Price { get; set; }
-        public CartProduct inCart = null;
+        [NotMapped]
+        public CartProduct inCart {get; set;}
 
         public override string GetInfo() => $"Product id: {id}\nTitle: {Title}\nPrice: {Price}\nCountry: {Country}\nBrand: {Brand}\n Description: {Description}";
     }

@@ -5,6 +5,7 @@ using Shop_Mvc.Data;
 using Shop_Mvc.Services;
 using Newtonsoft.Json;
 using System.Globalization;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Shop_Mvc.Controllers
 {
@@ -24,6 +25,7 @@ namespace Shop_Mvc.Controllers
         [HttpGet]
         public IActionResult SubcategoriesView(string categoryName)
         {
+            var cartProducts = GetProductsFromCookie();
             var promoProducts = SetFieldIsInCart(_DatabaseServise.GetPromoProducts(6), GetProductsFromCookie());
 
             var model = new SubcategoriesViewModel()
@@ -36,14 +38,14 @@ namespace Shop_Mvc.Controllers
         }
 
         [HttpGet]
-        public IActionResult ProductsView(string subcategoryName, int currentPage = 1, bool isOnlySales = false, string sortedBy = "Стандартно", int pageSize = 40) 
+        public IActionResult ProductsView(string subcategoryName, int currentPage = 1, bool isOnlySales = false, string sortedBy = "Стандартно", int pageSize = 40)
         {
             IEnumerable<Product> products;
 
-            products = SortBy(sortedBy,subcategoryName, isOnlySales, 0 ,0);
+            products = SortBy(sortedBy, subcategoryName, isOnlySales, 0, 0);
             int count = products.Count();
             products = SetFieldIsInCart(products.Skip((currentPage - 1) * pageSize).Take(pageSize), GetProductsFromCookie());
-            
+
 
             var model = new ProductsViewModel()
             {
@@ -81,9 +83,9 @@ namespace Shop_Mvc.Controllers
             return View(model);
         }
 
-        private IEnumerable<Product>SortBy(string sortBy, string subcategory, bool isPromo, int count = 0, int skip = 0)
+        private IEnumerable<Product> SortBy(string sortBy, string subcategory, bool isPromo, int count = 0, int skip = 0)
         {
-            switch (sortBy) 
+            switch (sortBy)
             {
                 case "Стандартно":
                     return _DatabaseServise.GetProductsBySubcategory(subcategory, count, skip, isPromo);
@@ -149,12 +151,21 @@ namespace Shop_Mvc.Controllers
         public List<CartProduct> GetProductsFromCookie()
         {
             var cookieValue = _httpContextAccessor.HttpContext.Request.Cookies["MyCookie"];
-
-            if (!string.IsNullOrEmpty(cookieValue))
+            var userString = _httpContextAccessor.HttpContext.Request.Cookies["UserCookie"];
+            if (!userString.IsNullOrEmpty())
             {
-                var products = JsonConvert.DeserializeObject<List<CartProduct>>(cookieValue);
+                var user = JsonConvert.DeserializeObject<User>(userString);
+                List<CartProduct> cartProducts = _DatabaseServise.GetCartProductsAsync(user.Id).GetAwaiter().GetResult();
+                return cartProducts;
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(cookieValue))
+                {
+                    var products = JsonConvert.DeserializeObject<List<CartProduct>>(cookieValue);
 
-                return products;
+                    return products;
+                }
             }
             return new List<CartProduct>();
         }
