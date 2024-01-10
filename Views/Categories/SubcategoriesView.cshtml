@@ -145,12 +145,12 @@
                 var itemInfo = productsInCart.find(function (element) {
                     return element.id === id;
                 });
-                console.log(`Item info: ${itemInfo}`);
+
                 var item = AddHtmlToCart(itemInfo);
-                cart.innerHTML += item;
+                cart.insertAdjacentHTML('beforeend', item);
 
                 item = AddHtmlToLeftCart(itemInfo);
-                leftCart.innerHTML += item;
+                leftCart.insertAdjacentHTML('beforeend', item);
 
                 CheckIfCartIsEmpty();
                 SetInputs();
@@ -183,11 +183,12 @@
 
                 var cart = document.getElementsByClassName('cart-body-items')[0];
                 var leftCart = document.getElementById('leftCartItemContainer');
+
                 var item = AddHtmlToCart(itemInfo);
-                cart.innerHTML += item;
+                cart.insertAdjacentHTML('beforeend', item);
 
                 item = AddHtmlToLeftCart(itemInfo);
-                leftCart.innerHTML += item;
+                leftCart.insertAdjacentHTML('beforeend', item);
 
                 SetInputs();
                 CheckIfCartIsEmpty();

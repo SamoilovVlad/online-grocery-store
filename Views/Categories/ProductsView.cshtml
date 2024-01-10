@@ -398,25 +398,25 @@
             });
             if (productsInCart[index] == undefined) {
                 counter = `<div class="product-menu-counter-container" id="counterContainerMenu${id}" style="display:flex; position:relative" height: 50px;>
+                                                                                                                        <svg id="${id}" onclick="MinusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                                                                                        <div class="main-page-product-counter-container-count">
+                                                                                                                                <input id="productInputMenu${id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="1" style="margin-top:2px;" class="num-input-product">
+                                                                                                                                    <span id="productSpanMenu${id}" class="cart-body-item-info-count-btn-counter-num">$"1"</span>
+                                                                                                                            <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
+                                                                                                                        </div>
+                                                                                                                                    <svg id="${id}" onclick="PlusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="${id}" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                                                                                    </div>`;
+            }
+            else {
+                counter = `<div class="product-menu-counter-container" id="counterContainerMenu${id}" style="display:flex; position:relative" height: 50px;>
                                                                                                                     <svg id="${id}" onclick="MinusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
                                                                                                                     <div class="main-page-product-counter-container-count">
-                                                                                                                            <input id="productInputMenu${id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="1" style="margin-top:2px;" class="num-input-product">
-                                                                                                                                <span id="productSpanMenu${id}" class="cart-body-item-info-count-btn-counter-num">$"1"</span>
+                                                                                                                            <input id="productInputMenu${id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="${productsInCart[index].count}" style="margin-top:2px;" class="num-input-product">
+                                                                                                                                <span id="productSpanMenu${id}" class="cart-body-item-info-count-btn-counter-num">${productsInCart[index].count}"</span>
                                                                                                                         <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
                                                                                                                     </div>
                                                                                                                                 <svg id="${id}" onclick="PlusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="${id}" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
                                                                                                                 </div>`;
-            }
-            else {
-                counter = `<div class="product-menu-counter-container" id="counterContainerMenu${id}" style="display:flex; position:relative" height: 50px;>
-                                                                                                                <svg id="${id}" onclick="MinusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
-                                                                                                                <div class="main-page-product-counter-container-count">
-                                                                                                                        <input id="productInputMenu${id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="${productsInCart[index].count}" style="margin-top:2px;" class="num-input-product">
-                                                                                                                            <span id="productSpanMenu${id}" class="cart-body-item-info-count-btn-counter-num">${productsInCart[index].count}"</span>
-                                                                                                                    <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
-                                                                                                                </div>
-                                                                                                                            <svg id="${id}" onclick="PlusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="${id}" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
-                                                                                                            </div>`;
             }
             var tempDiv = document.createElement('div');
             tempDiv.innerHTML = counter;
@@ -426,25 +426,25 @@
             console.log(count);
             if (count > 0) {
                 counter = `<div class="product-menu-counter-container" id="counterContainerMenu${id}" style="display:flex; position:relative" height: 50px;>
-                                                                                                                    <svg id="${id}" onclick="MinusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
-                                                                                                                    <div class="main-page-product-counter-container-count">
-                                                                                                                            <input id="productInputMenu${id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="${count}" style="margin-top:2px;" class="num-input-product">
-                                                                                                                                <span id="productSpanMenu${id}" class="cart-body-item-info-count-btn-counter-num">${count}"</span>
-                                                                                                                        <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
-                                                                                                                    </div>
-                                                                                                                                <svg id="${id}" onclick="PlusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="${id}" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
-                                                                                                                </div>`;
-            }
-            else {
-                counter = `<div class="product-menu-counter-container" id="counterContainerMenu${id}" style="display:flex; position:relative" height: 50px;>
                                                                                                                         <svg id="${id}" onclick="MinusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
                                                                                                                         <div class="main-page-product-counter-container-count">
-                                                                                                                                <input id="productInputMenu${id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="1" style="margin-top:2px;" class="num-input-product">
-                                                                                                                                    <span id="productSpanMenu${id}" class="cart-body-item-info-count-btn-counter-num">$"1"</span>
+                                                                                                                                <input id="productInputMenu${id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="${count}" style="margin-top:2px;" class="num-input-product">
+                                                                                                                                    <span id="productSpanMenu${id}" class="cart-body-item-info-count-btn-counter-num">${count}"</span>
                                                                                                                             <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
                                                                                                                         </div>
                                                                                                                                     <svg id="${id}" onclick="PlusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="${id}" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
                                                                                                                     </div>`;
+            }
+            else {
+                counter = `<div class="product-menu-counter-container" id="counterContainerMenu${id}" style="display:flex; position:relative" height: 50px;>
+                                                                                                                            <svg id="${id}" onclick="MinusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                                                                                            <div class="main-page-product-counter-container-count">
+                                                                                                                                    <input id="productInputMenu${id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="1" style="margin-top:2px;" class="num-input-product">
+                                                                                                                                        <span id="productSpanMenu${id}" class="cart-body-item-info-count-btn-counter-num">$"1"</span>
+                                                                                                                                <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
+                                                                                                                            </div>
+                                                                                                                                        <svg id="${id}" onclick="PlusInMenu(event)" width="2.5rem" height="50px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="${id}" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="${id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                                                                                        </div>`;
             }
             var tempDiv = document.createElement('div');
             tempDiv.innerHTML = counter;
@@ -747,11 +747,12 @@
                 var itemInfo = productsInCart.find(function (element) {
                     return element.id === id;
                 });
+
                 var item = AddHtmlToCart(itemInfo);
-                cart.innerHTML += item;
+                cart.insertAdjacentHTML('beforeend', item);
 
                 item = AddHtmlToLeftCart(itemInfo);
-                leftCart.innerHTML += item;
+                leftCart.insertAdjacentHTML('beforeend', item);
 
                 CheckIfCartIsEmpty();
                 SetInputs();
@@ -821,10 +822,10 @@
                 var leftCart = document.getElementById('leftCartItemContainer');
 
                 var item = AddHtmlToCart(itemInfo);
-                cart.innerHTML += item;
+                cart.insertAdjacentHTML('beforeend', item);
 
                 item = AddHtmlToLeftCart(itemInfo);
-                leftCart.innerHTML += item;
+                leftCart.insertAdjacentHTML('beforeend', item);
 
                 CheckIfCartIsEmpty();
                 SetInputs();
@@ -929,27 +930,6 @@
         }
     }
 
-    //function GetPage(event) {
-    //    var subcategoryName = document.getElementsByClassName('products-header')[0].textContent.trim();
-    //    var pageNum = event.target.textContent;
-    //    const pageSize = 40;
-    //    var sortedBy = document.getElementsByClassName('filter-btn-text')[0].textContent.trim();
-
-    //    const url = `/Categories/ProductsView?currentPage=${pageNum}&isOnlySales=${isCheckBox}&sortedBy=${encodeURIComponent(sortedBy)}&pageSize=${pageSize}&subcategoryName=${encodeURIComponent(subcategoryName)}`;
-
-    //    fetch(url)
-    //        .then(response => {
-    //            if (!response.ok) {
-    //                throw new Error(`HTTP error! Status: ${response.status}`);
-    //            }
-    //            console.log('All is OK');
-    //        })
-    //        .catch(error => {
-    //            console.error('Error:', error);
-    //        });
-    //};
-
-
     function OpenCloseFilters() {
         var list = document.getElementsByClassName('filter-drop-down-list')[0];
         var icon = document.getElementsByClassName('filter-btn-icon')[0];
@@ -1048,11 +1028,10 @@
                 });
 
                 var item = AddHtmlToCart(itemInfo);
-                cart.innerHTML += item;
+                cart.insertAdjacentHTML('beforeend', item);
 
                 item = AddHtmlToLeftCart(itemInfo);
-                leftCart.innerHTML += item;
-
+                leftCart.insertAdjacentHTML('beforeend', item);
 
                 CheckIfCartIsEmpty();
                 SetInputs();
@@ -1087,10 +1066,10 @@
                 var leftCart = document.getElementById('leftCartItemContainer');
 
                 var item = AddHtmlToCart(itemInfo);
-                cart.innerHTML += item;
+                cart.insertAdjacentHTML('beforeend', item);
 
                 item = AddHtmlToLeftCart(itemInfo);
-                leftCart.innerHTML += item;
+                leftCart.insertAdjacentHTML('beforeend', item);
 
 
                 CheckIfCartIsEmpty();

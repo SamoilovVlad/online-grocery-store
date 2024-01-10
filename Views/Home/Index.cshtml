@@ -625,11 +625,12 @@
                 var itemInfo = productsInCart.find(function (element) {
                     return element.id === id;
                 });
+
                 var item = AddHtmlToCart(itemInfo);
-                cart.innerHTML += item;
+                cart.insertAdjacentHTML('beforeend', item);
 
                 item = AddHtmlToLeftCart(itemInfo);
-                leftCart.innerHTML += item;
+                leftCart.insertAdjacentHTML('beforeend', item);
 
                 CheckIfCartIsEmpty();
                 SetInputs();
@@ -663,10 +664,13 @@
                 input.value = span.textContent;
 
                 var itemInfo = new CartProduct(id, 1, parsedPrice, title);
+
                 var item = AddHtmlToCart(itemInfo);
-                cart.innerHTML += item;
+                cart.insertAdjacentHTML('beforeend', item);
+
                 item = AddHtmlToLeftCart(itemInfo);
-                leftCart.innerHTML += item;
+                leftCart.insertAdjacentHTML('beforeend', item);
+
                 SetInputs();
                 CheckIfCartIsEmpty();
                 var sum = UpdateCartValue();
