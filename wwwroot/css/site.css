@@ -274,8 +274,8 @@ p {
         white-space: nowrap;
     }
 
-    .user-profile-exit{
-        margin-top:0;
+    .user-profile-exit {
+        margin-top: 0;
     }
 }
 
@@ -1818,6 +1818,11 @@ ul {
     align-items: center;
 }
 
+.favorite-link__heart-icon path.active {
+    fill: #42ac35;
+    stroke: #42ac35;
+}
+
 .main-page-category-text {
     position: absolute;
     font-size: .875rem;
@@ -1883,17 +1888,23 @@ ul {
     .main-page-product:hover .main-page-product-favorite {
         visibility: visible;
         opacity: 1;
+        z-index: 10;
     }
 
-    .main-page-product:hover .main-page-product-cart-btn {
-        bottom: 0;
-        right: 0;
-    }
+.main-page-product-favorite path.active {
+    fill: #42ac35;
+    stroke: #42ac35;
+}
 
-    .main-page-product:hover .main-page-product-counter-container {
-        bottom: 0;
-        right: 0;
-    }
+.main-page-product:hover .main-page-product-cart-btn {
+    bottom: 0;
+    right: 0;
+}
+
+.main-page-product:hover .main-page-product-counter-container {
+    bottom: 0;
+    right: 0;
+}
 
 .other-products-item-cart:hover .main-page-product-counter-container {
     bottom: 0;
@@ -1939,6 +1950,10 @@ ul {
     font-family: 'Open Sans', sans-serif;
     font-size: 12px;
     white-space: normal;
+    min-height:16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .main-page-product-mass {
@@ -1983,6 +1998,7 @@ ul {
     position: absolute;
     right: 10px;
     top: 10px;
+    z-index: 10;
 }
 
 .main-page-product-cart-btn {
@@ -2012,6 +2028,10 @@ ul {
 }
 
 .green {
+    background-color: rgba(66,172,53,0.1);
+}
+
+.selected {
     background-color: rgba(66,172,53,0.1);
 }
 
@@ -2798,10 +2818,24 @@ ul {
     cursor: pointer;
 }
 
-    /* Adjust hover styles for the favorites button */
-    .product-info-add-to-favorites-btn:hover {
-        background-color: #E0F0E5; /* Change color on hover */
+    .product-info-add-to-favorites-btn.active {
+        background-color: #E0F0E5;
     }
+
+        
+    .product-info-add-to-favorites-btn path.active {
+            fill: #42ac35;
+            stroke: #42ac35;
+        }
+
+    .product-info-add-to-favorites-btn:hover {
+        background-color: #E0F0E5;
+    }
+
+        .product-info-add-to-favorites-btn:hover path {
+            fill: #42ac35;
+            stroke: #42ac35;
+        }
 
 .product-about-container {
     padding: 53px 93px 32px 32px;
@@ -3055,8 +3089,8 @@ ul {
     top: calc(50% - 180px);
     justify-content: center;
     opacity: 0;
-    transition:opacity 0.3s ease;
-    overflow:hidden;
+    transition: opacity 0.3s ease;
+    overflow: hidden;
 }
 
     .authorization-container.show {
@@ -3357,12 +3391,12 @@ ul {
     cursor: pointer;
 }
 
-.user-profile-nav-menu-item.active .user-profile-nav-menu-item-icon{
-    color: #42ac35;
-}
+    .user-profile-nav-menu-item.active .user-profile-nav-menu-item-icon {
+        color: #42ac35;
+    }
 
     .user-profile-nav-menu-item.active .user-profile-nav-menu-item-text {
-        font-weight:700;
+        font-weight: 700;
     }
 
 .user-profile-nav-menu-item-icon {
@@ -3442,20 +3476,126 @@ ul {
         background-color: #48bb3a;
     }
 
-.msg-box{
-    position:absolute;
-    padding:0.8rem 0.5rem;
-    background-color:#48bb3a;
+.msg-box {
+    position: absolute;
+    padding: 0.8rem 0.5rem;
+    background-color: #48bb3a;
     color: white;
-    font-weight:700;
-    border-radius:0.5rem 0 0 0.5rem;
-    display:none;
-    flex-direction:column;
-    z-index:1102;
-    max-width:500px;
-    justify-content:center;
-    align-items:center;
-    top:49px;
-    right:-500px;
+    font-weight: 700;
+    border-radius: 0.5rem 0 0 0.5rem;
+    display: none;
+    flex-direction: column;
+    z-index: 1102;
+    max-width: 500px;
+    justify-content: center;
+    align-items: center;
+    top: 49px;
+    right: -500px;
     transition: right 0.3s ease, opacity 0.5s ease;
+}
+
+.favorite-container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 20px 0 1.375rem 0;
+}
+
+.favorite-products {
+    display: grid;
+    grid-template-rows: repeat(auto-fill,minmax(11.875rem,1fr));
+    grid-template-columns: repeat(auto-fill,minmax(10.5rem,10.5rem));
+    grid-auto-rows: minmax(11.875rem,1fr);
+    grid-auto-columns: minmax(10.5rem,10.5rem);
+    grid-auto-flow: column;
+    grid-gap: 0.5rem;
+    gap: 0.5rem;
+    min-height: calc(100% - 2rem);
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin-left: 24px;
+}
+.profile-loader {
+    position: absolute;
+    top: calc(50% - 32.5px);
+    left: calc(50% - 32.5px);
+    width: 75px;
+    height: 75px;
+    border: 15px solid #dddddd;
+    border-top-color: gray;
+    border-radius: 50%;
+    animation: loading 0.75s ease infinite;
+    color:forestgreen;
+}
+.favorites-filters-button {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    height: 100%;
+    padding: 0 1rem;
+    color: #222324;
+    cursor: pointer;
+    border-right: 0.0625rem solid #e8eaef;
+    transition: color .2s ease;
+}
+    .favorites-filters-button.select-all {
+        min-width: 10.4375rem;
+        border-right: none;
+    }
+.favorites-filters-button span{
+    white-space: nowrap;
+    font-size:13px;
+}
+    .favorites-filters-button svg {
+        flex-shrink: 0;
+        width: 1rem;
+        height: 1rem;
+        margin-right: 0.5rem
+    }
+    .favorites-filters-button:hover {
+        color: #5b5d62;
+    }
+    .favorites-filters-button.delete {
+        border-left: 0.0625rem solid #e8eaef;
+    }
+.checkbox {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    z-index: 1001;
+    display: flex;
+    align-items: flex-start;
+    cursor: pointer;
+    box-sizing: content-box;
+}
+.checkbox::before {
+    position: absolute;
+    top: -1.125rem;
+    left: -1.125rem;
+    width: calc(100% + 2.25rem);
+    height: calc(100% + 2.25rem);
+    content: "";
+}
+.checkbox input {
+    position: absolute !important;
+    width: 0.0625rem !important;
+    height: 0.0625rem !important;
+    padding: 0 !important;
+    overflow: hidden;
+    clip: rect(0.0625rem 0.0625rem 0.0625rem 0.0625rem);
+    clip: rect(0.0625rem,0.0625rem,0.0625rem,0.0625rem);
+    border: 0 !important;
+    border-radius: 0;
+}
+    .checkbox svg {
+        box-sizing: border-box;
+        width: 1rem;
+        min-width: 1rem;
+        height: 1rem;
+        border-radius: 0.125rem;
+        fill: transparent;
+    }
+.button-disabled {
+    color: #b1b4b9;
+    pointer-events: none;
 }

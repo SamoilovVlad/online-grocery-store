@@ -54,6 +54,10 @@ namespace Shop_Mvc.Services
         public void DeleteUserCartProduct(int productId, string userId);
         public void AddUserCartProduct(int productId, string userId, decimal price, string title, int count);
         public int GetUserCartProductCount(int productId, string userId);
+        public void AddProductToFavorite(int productId, string userId, string title, decimal price, string country, string brand, string promo);
+        public void RemoveProductFromFavorite(int productId, string userId);
+        public IEnumerable<UserFavoriteProduct> GetUserFavoriteProducts(string userId);
+        public void DeleteUserFavoriteProducts(List<int> idToRemove, string userId);
     }
     public class DatabaseServise : IDatabaseServise
     {
@@ -702,6 +706,41 @@ namespace Shop_Mvc.Services
 
             var count = userCartProduct != null ? userCartProduct.Count : 0;
             return count;
+        }
+        public void AddProductToFavorite(int productId, string userId, string title, decimal price, string country, string brand, string promo)
+        {
+            var favoriteProduct = new UserFavoriteProduct()
+            {
+                product_Id = productId,
+                user_Id = userId,
+                title = title,
+                price = price,
+                country = country,
+                brand = brand,
+                promo = promo
+            };
+            _context.UserFavoriteProducts.Add(favoriteProduct);
+            _context.SaveChanges();
+        }
+        public void RemoveProductFromFavorite(int productId, string userId)
+        {
+            var favoriteProductToRemove = _context
+                                          .UserFavoriteProducts
+                                          .FirstOrDefault(p => p.product_Id == productId && p.user_Id == userId);
+
+            _context.UserFavoriteProducts.Remove(favoriteProductToRemove);
+            _context.SaveChanges();
+        }
+        public IEnumerable<UserFavoriteProduct> GetUserFavoriteProducts(string userId)
+        {
+            var products = _context.UserFavoriteProducts.Where(p => p.user_Id == userId);
+            return products;
+        }
+        public void DeleteUserFavoriteProducts(List<int> idToRemove, string userId)
+        {
+            var productsToRemove = _context.UserFavoriteProducts.Where(p => idToRemove.Contains(p.product_Id) && p.user_Id == userId).ToList();
+            _context.UserFavoriteProducts.RemoveRange(productsToRemove);
+            _context.SaveChanges();
         }
     }
 }

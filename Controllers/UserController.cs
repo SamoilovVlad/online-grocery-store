@@ -9,6 +9,7 @@ using MimeKit;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Newtonsoft.Json;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Shop_Mvc.Controllers
 {
@@ -143,6 +144,27 @@ namespace Shop_Mvc.Controllers
                 return Json(false);
             }
         }
+        private List<CartProduct> GetProductsFromCookie()
+        {
+            var cookieValue = _httpContextAccessor.HttpContext.Request.Cookies["MyCookie"];
+            var userString = _httpContextAccessor.HttpContext.Request.Cookies["UserCookie"];
+            if (!userString.IsNullOrEmpty())
+            {
+                var user = JsonConvert.DeserializeObject<User>(userString);
+                List<CartProduct> cartProducts = _DatabaseServise.GetCartProductsAsync(user.Id).GetAwaiter().GetResult();
+                return cartProducts;
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(cookieValue))
+                {
+                    var products = JsonConvert.DeserializeObject<List<CartProduct>>(cookieValue);
+
+                    return products;
+                }
+            }
+            return new List<CartProduct>();
+        }
 
         [HttpGet]
         public async Task<IActionResult> ConfirmEmail(string userId, string token)
@@ -168,6 +190,21 @@ namespace Shop_Mvc.Controllers
             {
                 return RedirectToAction("Error", "Home");
             }
+        }
+
+        private IEnumerable<UserFavoriteProduct> SetFieldIsInCart(IEnumerable<UserFavoriteProduct> products, List<CartProduct> cartProducts)
+        {
+            var commonIds = cartProducts.Select(p => p.Id).ToList();
+
+            for (var i = 0; i < commonIds.Count; i++)
+            {
+                var id = commonIds[i];
+                foreach (var product in products.Where(p => p.product_Id == id))
+                {
+                    product.inCart = cartProducts[i];
+                }
+            }
+            return products;
         }
 
         [HttpGet]
@@ -241,5 +278,30 @@ namespace Shop_Mvc.Controllers
         public void DeleteUserCartProduct(string userId, int productId) => _DatabaseServise.DeleteUserCartProduct(productId, userId);
         public void AddUserCartProduct(int productId, string userId, decimal price, string title, int count) => _DatabaseServise.AddUserCartProduct(productId, userId, price, title, count);
         public IActionResult GetUserCartProductCount(int productId, string userId) => Json(_DatabaseServise.GetUserCartProductCount(productId, userId));
+        public void RemoveFavoriteProduct(int productId, string userId)
+        {
+            _DatabaseServise.RemoveProductFromFavorite(productId, userId);
+        }
+        public void AddFavoriteProduct(int productId, string userId, string title, decimal price, string country, string brand, string promo)
+        {
+            _DatabaseServise.AddProductToFavorite(productId, userId, title, price, country, brand, promo);
+        }
+
+        public IActionResult GetUserFavoriteProducts(string userId) => Json(_DatabaseServise.GetUserFavoriteProducts(userId));
+
+        public IActionResult UserFavoriteProductsPartialView(string userId)
+        {
+            var model = _DatabaseServise.GetUserFavoriteProducts(userId);
+            var productsInCart = GetProductsFromCookie();
+            model = SetFieldIsInCart(model, productsInCart);
+
+            return PartialView(model);
+        }
+
+        public void DeleteUserFavoriteProducts(string idToRemove, string userId)
+        {
+            List<int> idsToRemove = idToRemove.Split(',').Select(int.Parse).ToList();
+            _DatabaseServise.DeleteUserFavoriteProducts(idsToRemove, userId);
+        }
     }
 }

@@ -519,6 +519,7 @@
                 document.getElementsByClassName('main-page-products')[0].innerHTML = data;
             })
             .then(function () {
+                GetUserFavoriteProducts();
                 SetInputs();
             })
             .catch(error => console.error("Failed to load partial:", error));

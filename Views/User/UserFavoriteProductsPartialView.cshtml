@@ -1,0 +1,97 @@
+﻿@model IEnumerable<UserFavoriteProduct>
+@if (Model.Count() > 0)
+{
+    <div class="favorite-container">
+        <div class="products-filter-container" style="margin-bottom: 1rem; min-height:40px; margin-right:0">
+            <h1 class="products-filter-container-label">Улюблені товари</h1>
+            <div class="products-filter-container-round-count">@Model.Count()</div>
+            <div class="filter-right-side" style="height:100%">
+                <div class="favorites-filters-button delete button-disabled" onclick="DeleteFromFavoriteProducts()">
+                    <svg width="1.000rem" height="1.000rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M2 4H3.33333H14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M4.99976 4V2.66667C4.99976 2.31305 5.14023 1.64005 5.39028 1.39C5.64033 1.13995 5.97947 1 6.33309 1L9.66642 1C10.02 1 10.3592 1.13995 10.6092 1.39C10.8593 1.64005 10.9998 2.31305 10.9998 2.66667V4M12.9998 4V13.6667C12.9998 14.0203 12.8593 14.3594 12.6092 14.6095C12.3592 14.8595 12.02 15 11.6664 15H4.33309C3.97947 15 3.64033 14.8595 3.39028 14.6095C3.14023 14.3594 2.99976 14.0203 2.99976 13.6667V4H12.9998Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M6.5 7.5V11.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.5 7.5V11.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                    <span>Видалити</span>
+                </div>
+                <div class="favorites-filters-button select-all" onclick="SelectAllFavoriteProducts()">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 17" class="" style="transform: scale(1.1);"><circle fill="none" stroke="currentColor" stroke-width="2" cx="8.5" cy="8.5" r="7"></circle><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M11.5,6.5l-4.3,4L5.5,8.9"></path></svg>
+                    <span>Вибрати всі товари</span>
+                </div>
+            </div>
+        </div>
+        <div class="favorite-products">
+            @{
+                foreach (var product in Model)
+                {
+                    <div class="main-page-product" id="@product.product_Id" style="min-width:auto;  max-width:10000px; margin:0; height:calc(100% - 1.25rem)">
+                        <label class="checkbox" id="@product.product_Id" onclick="SelectProduct(event.target.id)">
+                            <svg id="@product.product_Id" style="display:none" width=" 100%" height="100%" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="checkbox__svg checkbox__svg_checked"><rect id="@product.product_Id" width=" 16" height="16" rx="2" fill="#42AC35"></rect> <path id="@product.id" d="M4.5 8.5L6.5 10.5L12 5" stroke="white" stroke-width="2" stroke-linecap="round"></path></svg>
+                            <svg id="@product.product_Id" width="100%" height="100%" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="checkbox__svg checkbox__svg_not-checked"><rect id="@product.product_Id" x="0.5" y="0.5" width="15" height="15" rx="1.5" stroke="currentColor"></rect></svg>
+                        </label>
+                        <div class="main-page-product-cart-btn" id="@product.product_Id">
+                            <i class="fa-solid fa-cart-shopping" style="color: #ffffff;font-size: 1.5rem;" onclick="AddToCart(event)" id="@product.product_Id"></i>
+                        </div>
+                        @{
+                            if (product.inCart == null)
+                            {
+                                <div class="main-page-product-counter-container" id="counterContainer@(product.product_Id)">
+                                    <svg id="@product.product_Id" onclick="Minus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="@product.product_Id" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                    <div class="main-page-product-counter-container-count">
+                                        <input id="productInput@(product.product_Id)" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="" class="num-input-product">
+                                        <span id="productSpan@(product.product_Id)" class="cart-body-item-info-count-btn-counter-num"></span>
+                                        <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
+                                    </div>
+                                    <svg id="@product.product_Id" onclick="Plus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="@product.product_Id" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="@product.product_Id" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="main-page-product-counter-container" id="counterContainer@(product.product_Id)" style="display:flex;">
+                                    <svg id="@product.product_Id" onclick="Minus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="@product.product_Id" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                    <div class="main-page-product-counter-container-count">
+                                        <input id="productInput@(product.product_Id)" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="@product.inCart.Count" class="num-input-product">
+                                        <span id="productSpan@(product.product_Id)" class="cart-body-item-info-count-btn-counter-num">@product.inCart.Count</span>
+                                        <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
+                                    </div>
+                                    <svg id="@product.product_Id" onclick="Plus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="@product.product_Id" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="@product.product_Id" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                </div>
+                            }
+                        }
+                        @if (product.promo != "0")
+                        {
+                            <div class="main-page-product-promo">
+
+                                <p class="main-page-product-promo-text">@string.Format("{0:0.00}", product.promo)</p>
+                            </div>
+                        }
+                        @{
+                            var imagePath = $"/Product_Images/product_{product.product_Id}.jpg";
+                            <img class="main-page-product-img" style="width:90%; height:auto;" src="@imagePath" />
+                        }
+                        <span class="main-page-product-title">@product.title</span>
+                        <span class="main-page-product-mass">@product.brand</span>
+                        <div class="main-page-product-bottom">
+                            @if (product.promo != null)
+                            {
+                                <span class="main-page-product-bottom-price-promo" id="@product.product_Id">@product.price грн</span>
+                            }
+                            else
+                            {
+                                <span class="main-page-product-bottom-price" id="@product.product_Id">@product.price грн</span>
+                            }
+                            <span class="main-page-product-bottom-price-brand">@product.country</span>
+                        </div>
+                        <a asp-controller="Home" asp-action="ProductView" asp-route-id="@product.product_Id" onclick="ShowLoader()">
+                            <div id="overlay@(product.product_Id)" class="product-overlay @(product.inCart != null ? "green" : "")"></div>
+                        </a>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+}
+else{
+    <div class="user-profile-content-empty">
+        <span class="user-profile-content-empty-title">У вас поки що немає збережених товарів</span>
+        <a asp-controller="Home" asp-action="Index" style="text-decoration:none;">
+            <div class="user-profile-content-empty-button">Перейти на головну</div>
+        </a>
+    </div>
+}
