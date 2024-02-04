@@ -10,8 +10,19 @@
                 <div class="products-search-container-details">
                     <span class="products-search-container-item-title">@product.Title</span>
                     <span class="products-search-container-item-brand">@product.Brand</span>
+                    <span class="products-search-container-item-country" style="display:none">@product.Country</span>
                     <div class="products-search-container-item-bottom">
-                        <span class="products-search-container-item-price">@product.Price грн</span>
+                        @if (product.Promo == null)
+                        {
+                            <span class="products-search-container-item-price">@product.Price грн</span>
+                        }
+                        else
+                        {
+                            <div class="main-page-product-promo" id="promo@(product.id)">
+                                <p class="main-page-product-promo-text">@string.Format("{0:0.00}", product.Promo)</p>
+                            </div>
+                            <span class="products-search-container-item-price-promo">@product.Price грн</span>
+                        }
                         @if (product.inCart == null)
                         {
                             <div class="products-search-container-btn" id="searchAddToCartBtn@(product.id)" onclick="AddToCartSearchProduct(event)">Додати в кошик</div>
@@ -31,8 +42,8 @@
                             <div class="main-page-product-counter-container main-page-product-counter-search-container" id="counterSearchContainer@(product.id)" style="display:flex; position:relative; right:auto; bottom:auto; border-radius:0.25rem; height:33px; width:123px; align-items:center;">
                                 <svg id="@product.id" onclick="Minus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="@product.id" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
                                 <div class="main-page-product-counter-container-count" style="height:auto;">
-                                    <input id="productSearchInput@(product.id)" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="@product.inCart.Count" class="num-input-product num-input-product-search" style="top:auto;">
-                                    <span id="productSearchSpan@(product.id)" class="cart-body-item-info-count-btn-counter-num">@product.inCart.Count</span>
+                                    <input id="productSearchInput@(product.id)" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="@product.inCart.count" class="num-input-product num-input-product-search" style="top:auto;">
+                                    <span id="productSearchSpan@(product.id)" class="cart-body-item-info-count-btn-counter-num">@product.inCart.count</span>
                                     <span class="cart-body-item-info-count-btn-counter-text-product" style="margin-top:0;">шт</span>
                                 </div>
                                 <svg id="@product.id" onclick="Plus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="@product.id" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="@product.id" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>

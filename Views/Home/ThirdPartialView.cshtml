@@ -1,1 +1,102 @@
-﻿<p>3</p>
+﻿@model IEnumerable<Cart>
+@{
+    if (Model.Count() > 0)
+    {
+        <section class="personal-shelf" style="padding: 0 1.5rem">
+            <div class="personal-shelf-content">
+                <div class="personal-shelf-header">
+                    <div class="personal-shelf-header-inner">
+                        <div class="title-inner">
+                            <h1>
+                                Особиста полиця
+                            </h1>
+                            <p>
+                                Зверніть увагу, що під час замовлення вашого кошика, ціна та доступність товарів можуть змінюватися в залежності від умов доставки та вказаної адреси.
+                            </p>
+                        </div>
+                        <div class="header-right">
+                            <div class="header-right-inner">
+                                <div class="header-right-content">
+                                    <div class="header-right-item">
+                                        <p class="label" id="cartCount">-</p>
+                                        <p class="value">
+                                            Кількість кошиків
+                                        </p>
+                                    </div>
+                                    <div class="header-right-item">
+                                        <p class="label" id="productCount">-</p>
+                                        <p class="value">
+                                            Кількість товарiв
+                                        </p>
+                                    </div>
+                                    <div class="header-right-item">
+                                        <p class="label" id="inOrdered">-</p>
+                                        <p class="value">
+                                            Кількість замовлених
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="personal-shelf-body">
+                    <div class="title">
+                        <div class="title-inner">
+                            <div class="left-side">
+                                <p>Ваші кошики</p>
+                            </div>
+                            <div class="right-side" onclick="GetProfile('Особиста полиця')">
+                                <a class="btn">Усі кошики</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="shelf">
+
+                        <ul class="shelf-ul" style="padding:0;margin-left: -0.5rem;">
+                            @{
+                                int i = 0;
+                                @foreach (var cart in Model)
+                                {
+                                    if (i < 3)
+                                    {
+                                        <li class="shelf-item" id="@cart.id">
+                                            <div class="item-inner">
+                                                <div class="card-header" onclick="GetProfile(`UserCart${@cart.id}`)"><p>@cart.cartName</p></div>
+                                                <div class="card-body">
+                                                    <div style="flex:1; display:flex; flex-direction:column; height:0.0625rem;">
+                                                        <ul class="card-list" style="padding:0">
+                                                            <div class="profile-loader mini"></div>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <div class="card-footer-inner">
+                                                        <div class="footer-left-side">
+                                                            <h1>1,234.34 грн</h1>
+                                                            <p>5 товарів</p>
+                                                        </div>
+                                                        <div class="footer-right-side">
+                                                            <div class="btn">Замовити</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        i++;
+                                    }
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+    else
+    {
+        <h1>Особиста полиця</h1>
+        <p>Нова функція, яка дозволяє зручно робити повторні покупки.</p>
+        <p>Знайомся з новою функцією Особистих кошиків від NOVUS.online. Формуйте особисті кошики на будь-які випадки життя та замовляй лише в один клік.</p>
+    }
+}

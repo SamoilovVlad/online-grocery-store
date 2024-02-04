@@ -1,68 +1,31 @@
-﻿@model User
+﻿@model string
 <div class="user-profile-page">
-    <div class="user-profile-nav-bar">
-        <div class="user-profile-nav-bar-top">
-            <div class="user-profile-nav-bar-icon">
-                <svg style="fill:transparent" width="1.5rem" height="1.5rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><rect x="5" y="1" width="6" height="7" rx="3" stroke="currentColor" stroke-width="2"></rect><path d="M1.5714 15.3714C1.77655 15.8842 2.35853 16.1336 2.8713 15.9285C3.38408 15.7233 3.63345 15.1413 3.42831 14.6286L1.5714 15.3714ZM12.5717 14.6285C12.3666 15.1413 12.616 15.7233 13.1287 15.9285C13.6415 16.1336 14.2235 15.8842 14.4286 15.3715L12.5717 14.6285ZM3.42831 14.6286C3.01835 13.6038 3.20266 13.0402 3.48154 12.7245C3.81679 12.3449 4.56205 12 5.85715 12V10C4.29514 10 2.86166 10.4051 1.9825 11.4005C1.04696 12.4598 0.981178 13.8962 1.5714 15.3714L3.42831 14.6286ZM5.85715 12H10.1429V10H5.85715V12ZM10.1429 12C11.438 12 12.1833 12.3449 12.5185 12.7245C12.7974 13.0402 12.9817 13.6038 12.5717 14.6285L14.4286 15.3715C15.0189 13.8962 14.9531 12.4598 14.0176 11.4005C13.1384 10.4051 11.7049 10 10.1429 10V12Z" fill="currentColor"></path></svg>
-            </div>
-            <div style="display:flex; flex-direction:column;">
-                <span class="user-profile-nav-bar-name">@Model.Name</span>
-                <span class="user-profile-nav-bar-mail">@Model.Email</span>
-            </div>
-        </div>
-        <div class="user-profile-nav-menu">
-            <div class="user-profile-nav-menu-item active" onclick="NavMenuSwitcher(event.target)" id="1">
-                <div class="user-profile-nav-menu-item-icon" id="1"><svg id="1" style="fill:transparent;" width="1.063rem" height="1.000rem" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><circle id="1" cx="4" cy="3.5" r="2.5" stroke="currentColor" stroke-width="2"></circle><rect id="1" x="10.5" y="1" width="5" height="5" rx="1" stroke="currentColor" stroke-width="2"></rect><path id="1" d="M11.0062 12.9504C10.3313 12.2755 10.3313 11.1812 11.0062 10.5062C11.6812 9.83126 12.7755 9.83126 13.4504 10.5062L14.9938 12.0496C15.6687 12.7245 15.6687 13.8188 14.9938 14.4938C14.3188 15.1687 13.2245 15.1687 12.5496 14.4938L11.0062 12.9504Z" stroke="currentColor" stroke-width="2"></path><path d="M1.55823 14.3693L3.78842 10.1607C3.8292 10.0837 3.87302 10.0465 3.90369 10.0279C3.93613 10.0082 3.96903 10 4 10C4.03097 10 4.06387 10.0082 4.0963 10.0279C4.12698 10.0465 4.1708 10.0837 4.21158 10.1607L6.44177 14.3693C6.52296 14.5225 6.51531 14.6984 6.44307 14.8368C6.37193 14.9732 6.28552 15 6.23019 15H1.76981C1.71448 15 1.62807 14.9732 1.55693 14.8368C1.48469 14.6984 1.47704 14.5225 1.55823 14.3693Z" stroke="currentColor" stroke-width="2"></path></svg></div>
-                <div class="user-profile-nav-menu-item-text" id="1">Замовлення</div>
-            </div>
-            <div class="user-profile-nav-menu-item" id="2" onclick="NavMenuSwitcher(event.target)">
-                <div class="user-profile-nav-menu-item-icon" id="2"><svg id="2" style="fill:transparent;" width="1.000rem" height="1.000rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path id="2" d="M5 2.5H14.75" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path id="2" d="M5 8H14.75" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path id="2" d="M5 13.5H14.75" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path id="2" d="M1.25 2.5H1.2575" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path id="2" d="M1.25 8H1.2575" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path id="2" d="M1.25 13.5H1.2575" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
-                <div class="user-profile-nav-menu-item-text" id="2">Особиста полиця</div>
-            </div>
-            <div class="user-profile-nav-menu-item" onclick="NavMenuSwitcher(event.target)" id="3">
-                <div class="user-profile-nav-menu-item-icon" id="3"><svg id="3" style="fill:transparent;" width="1.000rem" height="0.938rem" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path id="3" d="M14.1915 7.56097L14.218 7.52031L14.2405 7.47727C14.6216 6.74672 15 5.85591 15 4.9799C15 2.71644 13.5355 1.33759 11.8732 1.07637C10.4691 0.780647 8.956 1.35222 8.01756 2.56858C7.09624 1.31855 5.53247 0.883302 4.17204 1.06957L4.17203 1.06952L4.16182 1.07103C2.48513 1.31826 1 2.70055 1 4.9799C1 5.85591 1.37843 6.74672 1.75955 7.47727L1.782 7.52031L1.80851 7.56097C2.279 8.28247 2.86715 9.13148 3.56752 9.89897C4.82205 11.286 6.35624 12.5732 7.42816 13.3204L8.035 13.7434L8.61708 13.2869C8.64265 13.2668 8.66858 13.2465 8.69484 13.2259C9.69949 12.4384 11.1982 11.2636 12.4324 9.89901C13.1328 9.13152 13.721 8.28248 14.1915 7.56097Z" stroke="currentColor" stroke-width="2"></path></svg></div>
-                <div class="user-profile-nav-menu-item-text" id="3">Улюблені товари</div>
-            </div>
-            <div class="user-profile-nav-menu-item" onclick="NavMenuSwitcher(event.target)" id="4">
-                <div class="user-profile-nav-menu-item-icon" id="4"><svg style="fill:transparent;" width="1.000rem" height="1.000rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="" id="4"><path d="M3.00098 10.0899C3.00098 10.0304 2.99102 9.97134 2.97153 9.91516V9.91516C2.79988 9.42041 2.44504 9.01714 2.08757 8.63445C0.167495 6.5789 1.9346 2.90653 5.00102 3.50003C5.58746 0.958788 8.89064 0.285766 10.4246 2.39497L10.501 2.50003C12.8104 1.98684 15.001 3.74412 15.001 6.1098V6.20269C15.001 7.45172 14.375 8.60564 13.3545 9.28984C13.1139 9.45113 12.9462 9.71039 12.9462 10V10V15H3.00098V10.0899Z" stroke="currentColor" stroke-width="2"></path><path d="M5.00086 3.5C5 5 5 5.5 5 5.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path><path d="M3.5 12H12.5" stroke="currentColor" stroke-linecap="round" id="4"></path></svg></div>
-                <div class="user-profile-nav-menu-item-text" id="4">Улюблені рецепти</div>
-            </div>
-            <div class="user-profile-nav-menu-item" onclick="NavMenuSwitcher(event.target)" id="5">
-                <div class="user-profile-nav-menu-item-icon" id="5"><svg id="5" style="fill:transparent;" width="1.000rem" height="1.000rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path id="5" d="M14 8V15H2V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path id="5" d="M15 4H1V8H15V4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path id="5" d="M8 15V4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path id="5" d="M8 4H4.78571C4.31211 4 3.85791 3.84196 3.52302 3.56066C3.18814 3.27936 3 2.89782 3 2.5C3 2.10218 3.18814 1.72064 3.52302 1.43934C3.85791 1.15804 4.31211 1 4.78571 1C7.28571 1 8 4 8 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path id="5" d="M8 4H11.2143C11.6879 4 12.1421 3.84196 12.477 3.56066C12.8119 3.27936 13 2.89782 13 2.5C13 2.10218 12.8119 1.72064 12.477 1.43934C12.1421 1.15804 11.6879 1 11.2143 1C8.71429 1 8 4 8 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
-                <div class="user-profile-nav-menu-item-text" id="5">Бонуси</div>
-            </div>
-            <div class="user-profile-nav-menu-item" onclick="NavMenuSwitcher(event.target)" id="6">
-                <div class="user-profile-nav-menu-item-icon"><svg id="6" style="fill:transparent;" width="1.000rem" height="1.000rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path id="6" d="M8 10C9.10457 10 10 9.10457 10 8C10 6.89543 9.10457 6 8 6C6.89543 6 6 6.89543 6 8C6 9.10457 6.89543 10 8 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path id="6" d="M12.7091 9.90909C12.6244 10.101 12.5991 10.3139 12.6365 10.5204C12.674 10.7268 12.7724 10.9173 12.9191 11.0673L12.9573 11.1055C13.0756 11.2237 13.1695 11.364 13.2335 11.5185C13.2976 11.673 13.3305 11.8387 13.3305 12.0059C13.3305 12.1732 13.2976 12.3388 13.2335 12.4933C13.1695 12.6478 13.0756 12.7882 12.9573 12.9064C12.8391 13.0247 12.6987 13.1186 12.5442 13.1826C12.3897 13.2467 12.2241 13.2796 12.0568 13.2796C11.8896 13.2796 11.7239 13.2467 11.5694 13.1826C11.4149 13.1186 11.2746 13.0247 11.1564 12.9064L11.1182 12.8682C10.9682 12.7215 10.7777 12.6231 10.5713 12.5856C10.3649 12.5482 10.1519 12.5735 9.96 12.6582C9.77178 12.7388 9.61126 12.8728 9.4982 13.0435C9.38513 13.2143 9.32445 13.4143 9.32364 13.6191V13.7273C9.32364 14.0648 9.18955 14.3885 8.95086 14.6272C8.71218 14.8659 8.38846 15 8.05091 15C7.71336 15 7.38964 14.8659 7.15096 14.6272C6.91227 14.3885 6.77818 14.0648 6.77818 13.7273V13.67C6.77325 13.4594 6.70508 13.2551 6.58251 13.0837C6.45994 12.9123 6.28865 12.7818 6.09091 12.7091C5.89897 12.6244 5.68606 12.5991 5.47963 12.6365C5.27319 12.674 5.0827 12.7724 4.93273 12.9191L4.89455 12.9573C4.77634 13.0756 4.63598 13.1695 4.48147 13.2335C4.32696 13.2976 4.16135 13.3305 3.99409 13.3305C3.82683 13.3305 3.66122 13.2976 3.50671 13.2335C3.35221 13.1695 3.21184 13.0756 3.09364 12.9573C2.9753 12.8391 2.88143 12.6987 2.81738 12.5442C2.75333 12.3897 2.72036 12.2241 2.72036 12.0568C2.72036 11.8896 2.75333 11.7239 2.81738 11.5694C2.88143 11.4149 2.9753 11.2746 3.09364 11.1564L3.13182 11.1182C3.27852 10.9682 3.37694 10.7777 3.41437 10.5713C3.4518 10.3649 3.42653 10.1519 3.34182 9.96C3.26115 9.77178 3.12721 9.61126 2.95648 9.4982C2.78575 9.38513 2.58568 9.32445 2.38091 9.32364H2.27273C1.93518 9.32364 1.61146 9.18955 1.37277 8.95086C1.13409 8.71218 1 8.38846 1 8.05091C1 7.71336 1.13409 7.38964 1.37277 7.15096C1.61146 6.91227 1.93518 6.77818 2.27273 6.77818H2.33C2.54063 6.77325 2.74491 6.70508 2.91628 6.58251C3.08765 6.45994 3.21818 6.28865 3.29091 6.09091C3.37562 5.89897 3.40089 5.68606 3.36346 5.47963C3.32603 5.27319 3.22761 5.0827 3.08091 4.93273L3.04273 4.89455C2.92439 4.77634 2.83052 4.63598 2.76647 4.48147C2.70242 4.32696 2.66945 4.16135 2.66945 3.99409C2.66945 3.82683 2.70242 3.66122 2.76647 3.50671C2.83052 3.35221 2.92439 3.21184 3.04273 3.09364C3.16093 2.9753 3.3013 2.88143 3.4558 2.81738C3.61031 2.75333 3.77593 2.72036 3.94318 2.72036C4.11044 2.72036 4.27605 2.75333 4.43056 2.81738C4.58507 2.88143 4.72543 2.9753 4.84364 3.09364L4.88182 3.13182C5.0318 3.27852 5.22228 3.37694 5.42872 3.41437C5.63515 3.4518 5.84806 3.42653 6.04 3.34182H6.09091C6.27913 3.26115 6.43965 3.12721 6.55271 2.95648C6.66578 2.78575 6.72646 2.58568 6.72727 2.38091V2.27273C6.72727 1.93518 6.86136 1.61146 7.10005 1.37277C7.33873 1.13409 7.66245 1 8 1C8.33755 1 8.66127 1.13409 8.89995 1.37277C9.13864 1.61146 9.27273 1.93518 9.27273 2.27273V2.33C9.27354 2.53477 9.33422 2.73484 9.44729 2.90557C9.56035 3.0763 9.72087 3.21024 9.90909 3.29091C10.101 3.37562 10.3139 3.40089 10.5204 3.36346C10.7268 3.32603 10.9173 3.22761 11.0673 3.08091L11.1055 3.04273C11.2237 2.92439 11.364 2.83052 11.5185 2.76647C11.673 2.70242 11.8387 2.66945 12.0059 2.66945C12.1732 2.66945 12.3388 2.70242 12.4933 2.76647C12.6478 2.83052 12.7882 2.92439 12.9064 3.04273C13.0247 3.16093 13.1186 3.3013 13.1826 3.4558C13.2467 3.61031 13.2796 3.77593 13.2796 3.94318C13.2796 4.11044 13.2467 4.27605 13.1826 4.43056C13.1186 4.58507 13.0247 4.72543 12.9064 4.84364L12.8682 4.88182C12.7215 5.0318 12.6231 5.22228 12.5856 5.42872C12.5482 5.63515 12.5735 5.84806 12.6582 6.04V6.09091C12.7388 6.27913 12.8728 6.43965 13.0435 6.55271C13.2143 6.66578 13.4143 6.72646 13.6191 6.72727H13.7273C14.0648 6.72727 14.3885 6.86136 14.6272 7.10005C14.8659 7.33873 15 7.66245 15 8C15 8.33755 14.8659 8.66127 14.6272 8.89995C14.3885 9.13864 14.0648 9.27273 13.7273 9.27273H13.67C13.4652 9.27354 13.2652 9.33422 13.0944 9.44729C12.9237 9.56035 12.7898 9.72087 12.7091 9.90909V9.90909Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
-                <div class="user-profile-nav-menu-item-text" id="6">Налаштування</div>
-            </div>
-            <div class="user-profile-exit">
-                <div class="user-profile-nav-menu-item-icon"><svg style="fill:transparent" width="0.750rem" height="0.750rem" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M7 2.5L7 2C7 1.44772 7.44772 1 8 1L10 1C10.5523 1 11 1.44772 11 2L11 10C11 10.5523 10.5523 11 10 11L8 11C7.44772 11 7 10.5523 7 10.0001C7 9.83924 7 9.66576 7 9.48487" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path><path d="M1 6H5.88889" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M3.55469 3.55545L5.99913 5.99989L3.55469 8.44434" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
-                <a asp-action="LogOut" asp-controller="User" style="text-decoration:none"><div class="user-profile-nav-menu-item-text">Вийти</div></a>
-            </div>
-        </div>
-    </div>
-    <div class="user-profile-content-main">
-        <div class="user-profile-content-empty">
-            <span class="user-profile-content-empty-title">У вас поки що немає історії замовлення. Зробіть своє перше замовлення та отримайте бонуси</span>
-            <a asp-controller="Home" asp-action="Index" style="text-decoration:none;">
-                <div class="user-profile-content-empty-button">Перейти до замовлення</div>
-            </a>
-        </div>
-    </div>
 </div>
 
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        document.getElementsByClassName('footer-container')[0].style.display = 'none';
-    });
+        fetch(`/User/UserProfileSwitcherPartialView`)
+            .then(response => response.text())
+            .then(response => {
+                var container = document.querySelector('.user-profile-page');
+                container.innerHTML += response;
 
-    //class FavoriteProduct {
-    //    constructor(user_Id, product_Id, title, price, country, promo, brand) {
-    //        this.id = id
-    //        this.name = name;
-    //        this.price = price;
-    //    }
+                const contentName = "@Html.Raw(@Model)";
+                if (!contentName.includes('UserCart')) {
+                    const btns = document.querySelectorAll('.user-profile-nav-menu-item');
+                    btns.forEach(btn => {
+                        var text = btn.querySelector('.user-profile-nav-menu-item-text').textContent;
+                        if (text === contentName) NavMenuSwitcher(btn);
+                    });
+                    document.getElementsByClassName('footer-container')[0].style.display = 'none';
+                }
+                else {
+                    GetUserCart(contentName.slice(8));
+                    SetUserCartProductsInputs();
+                }
+            });
+    });
 
     function NavMenuSwitcher(target) {
         const navArray = Array.from(document.getElementsByClassName('user-profile-nav-menu-item'));
@@ -75,9 +38,68 @@
         var userId = GetUserId();
         switch (text) {
             case 'Замовлення':
+                var container = document.querySelector('.user-profile-content-main');
+                container.innerHTML = '';
+                container.innerHTML += '<div class="profile-loader"></div>';
+                fetch(`/User/UserOrderedProductsPartialView`)
+                    .then(response => response.text())
+                    .then(data => {
+                        container.innerHTML = '';
+                        container.innerHTML += data;
+                        SetInputs();
+                    })
                 break;
             case 'Особиста полиця':
-
+                var container = document.querySelector('.user-profile-content-main');
+                container.innerHTML = '';
+                container.innerHTML += '<div class="profile-loader"></div>';
+                fetch(`/User/UserPersonalShelfPartialView?userId=${userId}`)
+                    .then(response => response.text())
+                    .then(data => {
+                        container.innerHTML = '';
+                        container.innerHTML += data;
+                        SetInputs();
+                    })
+                    .then(() => {
+                        const carts = document.querySelectorAll('.profile-shelf-item');
+                        const fullCartCountSpan = document.querySelector('#cartCount');
+                        const fullProductCountSpan = document.querySelector('#productCount');
+                        fullCartCountSpan.textContent = carts.length;
+                        var fullProductCount = 0;
+                        carts.forEach(cart => {
+                            fetch(`/Home/GetUserProductsForCart?userId=${userId}&cartId=${cart.id}`)
+                                .then(response => response.json())
+                                .then((data) => {
+                                    var sum = 0;
+                                    fullProductCount += data.length;
+                                    fullProductCountSpan.textContent = fullProductCount;
+                                    const imgContainer = cart.querySelector('.item-inner-body-images');
+                                    const price = cart.querySelector('.foot-inner-left-price');
+                                    const count = cart.querySelector('.foot-inner-left-count');
+                                    var loader = cart.querySelector('.profile-loader');
+                                    loader.parentNode.removeChild(loader);
+                                    if (data.length > 2) {
+                                        for (var i = 0; i < 3; i++) {
+                                            imgContainer.insertAdjacentHTML('beforeend', MakeImgElement(data[i].product_Id));
+                                            sum += (data[i].price * data[i].count);
+                                        }
+                                        for (var i = 3; i < data.length; i++) {
+                                            sum += (data[i].price * data[i].count);
+                                        }
+                                        price.textContent = sum.toFixed(2) + ' грн';
+                                        count.textContent = data.length + ' товарів';
+                                    }
+                                    else {
+                                        for (var i = 0; i < data.length; i++) {
+                                            imgContainer.insertAdjacentHTML('beforeend', MakeImgElement(data[i].product_Id));
+                                            sum += (data[i].price * data[i].count);
+                                        }
+                                        price.textContent = sum.toFixed(2) + ' грн';
+                                        count.textContent = data.length + ' товарів';
+                                    }
+                                })
+                        });
+                    })
                 break;
             case 'Улюблені товари':
                 var container = document.querySelector('.user-profile-content-main');
@@ -90,6 +112,8 @@
                         container.innerHTML += data;
                         SetInputs();
                     })
+                break;
+            case 'Налаштування':
                 break;
             default:
         }
@@ -236,9 +260,9 @@
             });
             deleteFavoriteBtn.classList.remove('button-disabled');
             selectBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="" style="" width="1.000rem" height="1.000rem" fill="none"><path d="M2 2L14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M14 2L2 14"></path></svg>
-                                   <span>Зняти відмітки</span>`;
+                                                                   <span>Зняти відмітки</span>`;
         }
-        else{
+        else {
             products.forEach(product => {
                 const checkBoxOff = product.querySelector('.checkbox__svg_not-checked');
                 const checkBoxOn = product.querySelector('.checkbox__svg_checked');
@@ -249,11 +273,11 @@
             });
             deleteFavoriteBtn.classList.add('button-disabled');
             selectBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 17" class="" style="transform: scale(1.1);"><circle fill="none" stroke="currentColor" stroke-width="2" cx="8.5" cy="8.5" r="7"></circle><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M11.5,6.5l-4.3,4L5.5,8.9"></path></svg>
-                                   <span>Вибрати всі товари</span>`;
+                                                                   <span>Вибрати всі товари</span>`;
         }
     }
 
-    function DeleteFromFavoriteProducts(){
+    function DeleteFromFavoriteProducts() {
         var userId = GetUserId();
         const productOverlays = document.querySelectorAll('.selected');
         var Ids = [];
@@ -264,19 +288,237 @@
         const idString = Ids.join(',');
         fetch(`/User/DeleteUserFavoriteProducts?idToRemove=${idString}&userId=${userId}`);
         const products = document.querySelectorAll('.main-page-product');
-        if(products.length == 0){
+        if (products.length == 0) {
             document.querySelector('.heart-icon path').classList.remove('active');
             const container = document.querySelector('.user-profile-content-main')
             container.innerHTML = `
-                <div class="user-profile-content-empty">
-                    <span class="user-profile-content-empty-title">У вас поки що немає збережених товарів</span>
-                <a href="/" style="text-decoration:none;">
-                    <div class="user-profile-content-empty-button">Перейти на головну</div>
-                </a>
-                </div>
-            `;
+                                                <div class="user-profile-content-empty">
+                                                    <span class="user-profile-content-empty-title">У вас поки що немає збережених товарів</span>
+                                                <a href="/" style="text-decoration:none;">
+                                                    <div class="user-profile-content-empty-button">Перейти на головну</div>
+                                                </a>
+                                                </div>
+                                            `;
         }
         else
             document.querySelector('.products-filter-container-round-count').textContent = products.length;
+    }
+
+    function MakeImgElement(id) {
+        return `<img src="/Product_Images/product_${id}.jpg" />`
+    }
+
+    function DeleteUserCart(cartId) {
+        var userId = GetUserId();
+        fetch(`/User/DeleteUserCart?cartId=${cartId}&userId=${userId}`);
+        document.querySelector('#cartCount').textContent -= 1;
+        var deletedCart = document.querySelector(`.profile-shelf-item#${CSS.escape(cartId)}`)
+        document.querySelector('#productCount').textContent -= deletedCart.querySelector('.foot-inner-left-count').textContent.slice(0, -8);
+        deletedCart.parentNode.removeChild(deletedCart);
+    }
+
+    function GetUserCart(cartId) {
+        const btns = document.querySelectorAll('.user-profile-nav-menu-item');
+        btns.forEach(btn => {
+            var text = btn.querySelector('.user-profile-nav-menu-item-text').textContent;
+            if (text === 'Особиста полиця') {
+                btn.classList.add('active');
+            }
+            else {
+                btn.classList.remove('active');
+            }
+        });
+        document.getElementsByClassName('footer-container')[0].style.display = 'none';
+        var container = document.querySelector('.user-profile-content-main');
+        container.innerHTML = '';
+        container.innerHTML += '<div class="profile-loader"></div>';
+        const loader = document.querySelector('.profile-loader');
+        const userId = GetUserId();
+
+        fetch(`/User/UserCartPartialView?cartId=${cartId}`)
+            .then(response => response.text())
+            .then(response => {
+                loader.parentNode.removeChild(loader);
+                container.innerHTML = response;
+                var list = document.querySelector('.cart-body-products-list');
+                list.innerHTML += '<div class="profile-loader"></div>';
+                var loaderMini = list.querySelector('.profile-loader');
+
+                var fetchPromises = [];
+
+                fetchPromises.push(fetch(`/Home/GetUserProductsForCart?userId=${userId}&cartId=${cartId}`)
+                    .then(response => response.json())
+                    .then(products => {
+                        SetPriceAndCoutInUserCart(products);
+                        loaderMini.parentNode.removeChild(loaderMini);
+                        products.forEach(product => {
+                            var el = MakeHtmlForUserCartProduct(product);
+                            list.insertAdjacentHTML('beforeend', el);
+                        });
+                    }));
+
+                Promise.all(fetchPromises)
+                    .then(() => {
+                        SetUserCartProductsInputs();
+                    });
+            });
+
+    }
+
+    function MakeHtmlForUserCartProduct(prod) {
+        return `
+                                <li class="products-list-item" id="cartProduct${prod.product_Id}">
+                                                ${prod.promo && prod.promo !== 'null' ? `<div style="z-index:2;" class="main-page-product-promo" id="promo${prod.id}">
+                                                                        <p class="main-page-product-promo-text">${prod.promo}</p>
+                                                                    </div>` : ''}
+
+                                                <div class="products-list-item-inner">
+                                                    <div class="product-item-inner-body">
+                                                        <div class="item-inner-body-image">
+                                                            <img src="/Product_Images/product_${prod.product_Id}.jpg" />
+                                                        </div>
+                                                        <div class="item-inner-body-info">
+                                                            <div class="inner-body-info-inner">
+                                                                    <a class="product-link" href="/Home/ProductView/${prod.product_Id}" style="text-decoration:none !important; color:black">${prod.title}</a>
+                                                                    <div id="${prod.product_Id}" class="cart-body-item-info-count-btn">
+                                                                                <svg onclick="UserCartMinus(event.target.id)" id="${prod.product_Id}"  width="2.000rem" height="2.000rem" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="${prod.product_Id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                                    <div style="height:100%; width:60px; position:relative; display:flex; align-items:center; justify-content:center;">
+                                                                                    <input id="userCartInput${prod.product_Id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" class="num-input user-cart-input" value="${prod.count}">
+                                                                            <span id="userCartSpan${prod.product_Id}" class="cart-body-item-info-count-btn-counter-num">${prod.count}</span>
+                                                                        <span class="cart-body-item-info-count-btn-counter-text">шт</span>
+                                                                    </div>
+                                                                                    <svg onclick="UserCartPlus(event.target.id)" id="${prod.product_Id}" width="2.000rem" height="2.000rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="${prod.product_Id}" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="${prod.product_Id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="item-inner-body-other">
+                                                            <div class="inner-body-other-price">
+                                                                                ${prod.promo && prod.promo !== 'null' ? `<p class="total-price" style="color:red">${(prod.price * prod.count).toFixed(2)} грн</p>` : `<p class="total-price">${(prod.price * prod.count).toFixed(2)} грн</p>`}
+                                                                            <p class="price-per-product">${prod.price} грн за шт</p>
+                                                            </div>
+                                                            <div class="inner-body-other-btns">
+                                                                                        <div class="btn" onclick="DeleteUserCartProduct(event.target.id)" id="${prod.product_Id}"><svg id="${prod.product_Id}" width="1.000rem" height="1.000rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path id="${prod.product_Id}" d="M2 4H3.33333H14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path id="${prod.product_Id}" d="M4.99976 4V2.66667C4.99976 2.31305 5.14023 1.64005 5.39028 1.39C5.64033 1.13995 5.97947 1 6.33309 1L9.66642 1C10.02 1 10.3592 1.13995 10.6092 1.39C10.8593 1.64005 10.9998 2.31305 10.9998 2.66667V4M12.9998 4V13.6667C12.9998 14.0203 12.8593 14.3594 12.6092 14.6095C12.3592 14.8595 12.02 15 11.6664 15H4.33309C3.97947 15 3.64033 14.8595 3.39028 14.6095C3.14023 14.3594 2.99976 14.0203 2.99976 13.6667V4H12.9998Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path id="${prod.product_Id}" d="M6.5 7.5V11.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path><path id="${prod.product_Id}" d="M9.5 7.5V11.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                            `
+    }
+
+    function SetPriceAndCoutInUserCart(products) {
+        sum = 0;
+        products.forEach(product => {
+            sum -= -(product.count * product.price).toFixed(2);
+        });
+        document.querySelector('.info-price').textContent = sum.toFixed(2) + ' грн';
+        document.querySelector('.info-count').textContent = products.length + ' товарів';
+    }
+
+    var lastClickTime = 0;
+
+    function UserCartPlus(id) {
+        var currentTime = new Date().getTime();
+        if (currentTime - lastClickTime >= 500) {
+            const input = document.getElementById('userCartInput' + id);
+            const span = document.getElementById('userCartSpan' + id);
+            if (input.value < 999) {
+                const cartId = document.querySelector('.profile-user-cart').id;
+                span.textContent -= - 1;
+                input.value = span.textContent;
+                fetch(`/User/UpdateProfileUserCartProduct?cartId=${cartId}&productId=${id}&count=${input.value}`);
+            }
+            UpdateCartProductTotalPrice('cartProduct' + id, span.textContent);
+            UpdateCartProductsTotalPrice();
+            lastClickTime = currentTime;
+        }
+    }
+
+    function UserCartMinus(id) {
+        var currentTime = new Date().getTime();
+        if (currentTime - lastClickTime >= 500) {
+            const input = document.getElementById('userCartInput' + id);
+            const span = document.getElementById('userCartSpan' + id);
+            const cartId = document.querySelector('.profile-user-cart').id;
+            if (input.value > 1) {
+                const cartId = document.querySelector('.profile-user-cart').id;
+                span.textContent -= 1;
+                input.value = span.textContent;
+                fetch(`/User/UpdateProfileUserCartProduct?cartId=${cartId}&productId=${id}&count=${input.value}`);
+                UpdateCartProductTotalPrice('cartProduct' + id, span.textContent);
+            }
+            else {
+                fetch(`/User/DeleteProfileUserCartProduct?cartId=${cartId}&productId=${id}`);
+                const product = document.getElementById('cartProduct' + id);
+                product.parentNode.removeChild(product);
+                UpdateCartProductsCount();
+            }
+            UpdateCartProductsTotalPrice();
+            lastClickTime = currentTime;
+        }
+    }
+
+    function SetUserCartProductsInputs() {
+        const inputs = document.querySelectorAll('.user-cart-input');
+        inputs.forEach(input => {
+            var id = input.id.slice(13);
+            var span = document.getElementById('userCartSpan'+id);
+            input.addEventListener('input', function(){
+                span.textContent = input.value;
+                UpdateCartProductTotalPrice('cartProduct' + id, span.textContent);
+                UpdateCartProductsTotalPrice();
+            });
+            input.addEventListener('blur', function(){
+                const cartId = document.querySelector('.profile-user-cart').id;
+                if(input.value === ''){
+                    input.value = 1;
+                    span.textContent = 1;
+                }
+                fetch(`/User/UpdateProfileUserCartProduct?cartId=${cartId}&productId=${id}&count=${input.value}`);
+            });
+        });
+    }
+
+    function UpdateCartProductTotalPrice(id, count) {
+        var product = document.getElementById(id);
+        const price = product.querySelector('.total-price');
+        const pricePerProduct = product.querySelector('.price-per-product').textContent.slice(0, -10);
+        price.textContent = (pricePerProduct * count).toFixed(2) + ' грн';
+    }
+
+    function UpdateCartProductsCount(){
+        var products = document.querySelectorAll('.products-list-item');
+        var count = document.querySelector('.info-count');
+        count.textContent = products.length + ' товарів';
+    }
+
+    function UpdateCartProductsTotalPrice() {
+        const products = document.querySelectorAll('.products-list-item');
+        var sum = 0;
+        products.forEach(product => {
+            var price = product.querySelector('.total-price').textContent;
+            price = price.slice(0, -4);
+            sum -= - price;
+        });
+        document.querySelector('.info-price').textContent = sum.toFixed(2) + ' грн';
+    }
+
+    function DeleteUserCartProduct(id){
+        const cartId = document.querySelector('.profile-user-cart').id;
+        fetch(`/User/DeleteProfileUserCartProduct?cartId=${cartId}&productId=${id}`);
+        const product = document.getElementById('cartProduct' + id);
+        product.parentNode.removeChild(product);
+        UpdateCartProductsTotalPrice();
+        UpdateCartProductsCount();
+    }
+
+    function DeleteUserCartCartView(){
+        var userId = GetUserId();
+        var cartId = document.querySelector('.profile-user-cart').id;
+        ShowLoader();
+        fetch(`/User/DeleteUserCart?cartId=${cartId}&userId=${userId}`)
+        .then(()=>{
+            GetProfile('Особиста полиця');
+        })
     }
 </script>

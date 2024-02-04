@@ -10,7 +10,7 @@
 <body>
     <div id="loader-green" class="loader"></div>
     <div id="loader-black" class="loader"></div>
-    <div id="overlayDark" class="overlay-dark"></div>
+    <div id="overlayDark" class="overlay-dark" onclick="CloseCartMaker()"></div>
     <div class="msg-box">
         <svg width="0.800rem" height="0.800rem" viewBox="0 0 16 16" fill="none" onclick="CloseMsgBox()" xmlns="http://www.w3.org/2000/svg" style="cursor:pointer; position:absolute; top:10px; left:10px;" class=""><path b-o8qoazfa8l="" d="M2 2L14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path b-o8qoazfa8l="" d="M14 2L2 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
         <span id="msgBoxTitle" style="margin-bottom:auto.5rem;"></span>
@@ -76,6 +76,24 @@
             </div>
         </div>
     </div>
+    <div class="cart-maker-container">
+        <svg width="1.000rem" height="1.000rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="" onclick="CloseCartMaker()"><path d="M2 2L14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M14 2L2 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        <h1>Зберегти кошик</h1>
+        <div class="input-form">
+            <input class="input-form-input" inputmode="email" onblur="GetPasiveInput(event)" value="Мій кошик" maxlength="15" onfocus="GetActiveInput(event), formInput9OnActive()" id="formInput9">
+            <span class="input-form-placeholder" id="formPlaceholder9"></span>
+            <span class="input-form-label" id="formLabel9">Назва кошика</span>
+            <span class="error-span" id="errorSpan9">назва не може бути пустою</span>
+        </div>
+        <div class="cart-maker-container-content">
+            <p>Кількість товарів:<strong id="cartMakerCount"></strong></p>
+            <p>Сума:<strong id="cartMakerPrice"></strong>грн</p>
+        </div>
+        <div class="btns">
+            <div class="btn cancel" onclick="CloseCartMaker()">Відмінити</div>
+            <div class="btn accept" onclick="CreateCart()">Підтвердити</div>
+        </div>
+    </div>
     <header class="header">
         <div class="header-top">
             <div class="header-left-side">
@@ -120,10 +138,10 @@
 
             <div class="header-right-side">
                 <div class="header-icons">
-                    <div class="heart-icon" onclick="GetProfile()">
+                    <div class="heart-icon" onclick="GetProfile('Улюблені товари')">
                         <svg width="1.000rem" height="0.938rem" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg" class="favorite-link__heart-icon"><path d="M14.1915 7.56097L14.218 7.52031L14.2405 7.47727C14.6216 6.74672 15 5.85591 15 4.9799C15 2.71644 13.5355 1.33759 11.8732 1.07637C10.4691 0.780647 8.956 1.35222 8.01756 2.56858C7.09624 1.31855 5.53247 0.883302 4.17204 1.06957L4.17203 1.06952L4.16182 1.07103C2.48513 1.31826 1 2.70055 1 4.9799C1 5.85591 1.37843 6.74672 1.75955 7.47727L1.782 7.52031L1.80851 7.56097C2.279 8.28247 2.86715 9.13148 3.56752 9.89897C4.82205 11.286 6.35624 12.5732 7.42816 13.3204L8.035 13.7434L8.61708 13.2869C8.64265 13.2668 8.66858 13.2465 8.69484 13.2259C9.69949 12.4384 11.1982 11.2636 12.4324 9.89901C13.1328 9.13152 13.721 8.28248 14.1915 7.56097Z" stroke="currentColor" stroke-width="2"></path></svg>
                     </div>
-                    <div class="profile-icon" onclick="GetProfile()">
+                    <div class="profile-icon" onclick="GetProfile('Замовлення')">
                         <svg width="1.000rem" height="1.000rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="cabinet-link__cabinet-icon"><rect x="5" y="1" width="6" height="7" rx="3" stroke="currentColor" stroke-width="2"></rect><path d="M1.5714 15.3714C1.77655 15.8842 2.35853 16.1336 2.8713 15.9285C3.38408 15.7233 3.63345 15.1413 3.42831 14.6286L1.5714 15.3714ZM12.5717 14.6285C12.3666 15.1413 12.616 15.7233 13.1287 15.9285C13.6415 16.1336 14.2235 15.8842 14.4286 15.3715L12.5717 14.6285ZM3.42831 14.6286C3.01835 13.6038 3.20266 13.0402 3.48154 12.7245C3.81679 12.3449 4.56205 12 5.85715 12V10C4.29514 10 2.86166 10.4051 1.9825 11.4005C1.04696 12.4598 0.981178 13.8962 1.5714 15.3714L3.42831 14.6286ZM5.85715 12H10.1429V10H5.85715V12ZM10.1429 12C11.438 12 12.1833 12.3449 12.5185 12.7245C12.7974 13.0402 12.9817 13.6038 12.5717 14.6285L14.4286 15.3715C15.0189 13.8962 14.9531 12.4598 14.0176 11.4005C13.1384 10.4051 11.7049 10 10.1429 10V12Z" fill="currentColor"></path></svg>
                     </div>
                 </div>
@@ -286,6 +304,10 @@
                 </button>
             </div>
             <div class="cart-body">
+                <div class="cart-btns">
+                    <div class="cart-btns-btn" onclick="ShowCartMaker()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" class="cart__toggles-button-svg"><rect fill="none" width="12" height="12"></rect><path fill="currentColor" d="M6,0L6,0c0.6,0,1,0.4,1,1v10c0,0.6-0.4,1-1,1l0,0c-0.6,0-1-0.4-1-1V1C5,0.4,5.4,0,6,0z"></path><path fill="currentColor" d="M12,6L12,6c0,0.6-0.4,1-1,1H1C0.4,7,0,6.6,0,6l0,0c0-0.6,0.4-1,1-1h10C11.6,5,12,5.4,12,6z"></path></svg> Зберегти</div>
+                    <div class="cart-btns-btn" onclick="DeleteAllCartProducts()"><svg width="0.750rem" height="0.750rem" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class="cart__toggles-button-svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M6 12C9.31371 12 12 9.31371 12 6C12 2.68629 9.31371 0 6 0C2.68629 0 0 2.68629 0 6C0 9.31371 2.68629 12 6 12ZM8.29934 2.28662L9.71355 3.70083L7.41411 6.00027L9.71096 8.29712L8.29674 9.71133L5.9999 7.41449L3.70083 9.71355L2.28662 8.29934L4.58568 6.00027L2.28856 3.70315L3.70278 2.28894L5.9999 4.58606L8.29934 2.28662Z" fill="currentColor"></path></svg> Очистити</div>
+                </div>
                 <div class="cart-body-items">
                 </div>
             </div>
@@ -323,13 +345,13 @@
                 <div class="burger-menu-logo">
                     <img src="~/Images/logo.png">
                 </div>
-                <div class="burger-menu-header-favorite">
+                <div class="burger-menu-header-favorite" onclick="GetProfile('Улюблені товари')">
                     <div class="burger-menu-body-heart-icon">
                         <svg width="1.000rem" height="0.938rem" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg" class="favorite-link__heart-icon"><path d="M14.1915 7.56097L14.218 7.52031L14.2405 7.47727C14.6216 6.74672 15 5.85591 15 4.9799C15 2.71644 13.5355 1.33759 11.8732 1.07637C10.4691 0.780647 8.956 1.35222 8.01756 2.56858C7.09624 1.31855 5.53247 0.883302 4.17204 1.06957L4.17203 1.06952L4.16182 1.07103C2.48513 1.31826 1 2.70055 1 4.9799C1 5.85591 1.37843 6.74672 1.75955 7.47727L1.782 7.52031L1.80851 7.56097C2.279 8.28247 2.86715 9.13148 3.56752 9.89897C4.82205 11.286 6.35624 12.5732 7.42816 13.3204L8.035 13.7434L8.61708 13.2869C8.64265 13.2668 8.66858 13.2465 8.69484 13.2259C9.69949 12.4384 11.1982 11.2636 12.4324 9.89901C13.1328 9.13152 13.721 8.28248 14.1915 7.56097Z" stroke="currentColor" stroke-width="2"></path></svg>
                     </div>
                     <p class="favorite-link">Улюблене</p>
                 </div>
-                <div class="burger-menu-header-profile">
+                <div class="burger-menu-header-profile" onclick="GetProfile('Замовлення')">
                     <div class="burger-menu-body-profile-icon">
                         <svg width="1.000rem" height="1.000rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="cabinet-link__cabinet-icon"><rect x="5" y="1" width="6" height="7" rx="3" stroke="currentColor" stroke-width="2"></rect><path d="M1.5714 15.3714C1.77655 15.8842 2.35853 16.1336 2.8713 15.9285C3.38408 15.7233 3.63345 15.1413 3.42831 14.6286L1.5714 15.3714ZM12.5717 14.6285C12.3666 15.1413 12.616 15.7233 13.1287 15.9285C13.6415 16.1336 14.2235 15.8842 14.4286 15.3715L12.5717 14.6285ZM3.42831 14.6286C3.01835 13.6038 3.20266 13.0402 3.48154 12.7245C3.81679 12.3449 4.56205 12 5.85715 12V10C4.29514 10 2.86166 10.4051 1.9825 11.4005C1.04696 12.4598 0.981178 13.8962 1.5714 15.3714L3.42831 14.6286ZM5.85715 12H10.1429V10H5.85715V12ZM10.1429 12C11.438 12 12.1833 12.3449 12.5185 12.7245C12.7974 13.0402 12.9817 13.6038 12.5717 14.6285L14.4286 15.3715C15.0189 13.8962 14.9531 12.4598 14.0176 11.4005C13.1384 10.4051 11.7049 10 10.1429 10V12Z" fill="currentColor"></path></svg>
                     </div>
@@ -471,11 +493,12 @@
 
 
         class CartProduct {
-            constructor(id, count, price, title) {
+            constructor(id, count, price, title, promo) {
                 this.id = id;
                 this.count = count;
                 this.price = price;
                 this.title = title;
+                this.promo = promo !== undefined && promo !== null ? promo : null;
             }
         }
 
@@ -504,6 +527,12 @@
         function ShowLoaderBlack() {
             $('#loader-black').show();
         };
+        function CloseLoader() {
+            $('#loader-green').hide();
+        };
+        function CloseLoaderBlack() {
+            $('#loader-black').hide();
+        };
 
         function SetCart() {
             var userId = GetUserId();
@@ -527,9 +556,10 @@
                     .then(response => response.json())
                     .then(data => {
                         for (var i = 0; i < data.length; i++) {
-                            var item = AddHtmlToCart(data[i]);
+                            var cartProduct = new CartProduct(data[i].product_Id, data[i].count, data[i].price, data[i].title, data[i].promo);
+                            var item = AddHtmlToCart(cartProduct);
                             cart.innerHTML += item;
-                            item = AddHtmlToLeftCart(data[i]);
+                            item = AddHtmlToLeftCart(cartProduct);
                             leftcart.innerHTML += item;
                         }
                     }).
@@ -1229,7 +1259,7 @@
                 const jsonString = decodeURIComponent(cookieValue.split('=')[1]);
                 try {
                     const productsArray = JSON.parse(jsonString);
-                    productsInCart = productsArray.map(product => new CartProduct(product.id, product.count, product.price, product.title));
+                    productsInCart = productsArray.map(product => new CartProduct(product.id, product.count, product.price, product.title, product.promo));
                 } catch (error) {
                     console.error('Error parsing JSON:', error);
                 }
@@ -1239,48 +1269,55 @@
         function AddHtmlToCart(itemInfo) {
             var totalPrice = (itemInfo.price * itemInfo.count).toFixed(2);
             var item = `<div class="cart-body-item" id="cart-body-item${itemInfo.id}">
-                                                                                                                                             <img src="/Product_Images/product_${itemInfo.id}.jpg" />
-                                                                                                                                             <div class="cart-body-item-info">
-                                                                                                                                                 <div class="cart-body-item-info-label">${itemInfo.title}</div>
-                                                                                                                                                     <div id="${itemInfo.id}" class="cart-body-item-info-count-btn">
-                                                                                                                                                             <svg id="${itemInfo.id}" onclick="Minus(event)" width="2.000rem" height="2.000rem" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="${itemInfo.id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
-                                                                                                                                                     <div style="height:100%; width:60px; position:relative; display:flex; align-items:center; justify-content:center;">
-                                                                                                                                                             <input id="cartInput${itemInfo.id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" class="num-input" value="${itemInfo.count}">
-                                                                                                                                                                     <span id="cartSpan${itemInfo.id}" class="cart-body-item-info-count-btn-counter-num">${itemInfo.count}</span>
-                                                                                                                                                         <span class="cart-body-item-info-count-btn-counter-text">шт</span>
-                                                                                                                                                     </div>
-                                                                                                                                                                 <svg id="${itemInfo.id}" onclick="Plus(event)" width="2.000rem" height="2.000rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="${itemInfo.id}" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="${itemInfo.id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
-                                                                                                                                                 </div>
-                                                                                                                                             </div>
-                                                                                                                                             <div class="cart-body-item-controls">
-                                                                                                                                                 <div class="cart-body-item-controls-icons">
-                                                                                                                                                     <svg width="1.000rem" height="1.000rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="cart-body-item-controls-icons-icon"><path d="M14.5455 7.63692C14.548 8.59682 14.3237 9.54374 13.8909 10.4006C13.3778 11.4273 12.5889 12.2909 11.6127 12.8946C10.6365 13.4983 9.51145 13.8183 8.36364 13.8187C7.40373 13.8212 6.45681 13.597 5.6 13.1642L1.45455 14.546L2.83636 10.4006C2.40359 9.54374 2.17932 8.59682 2.18182 7.63692C2.18226 6.4891 2.50226 5.36408 3.10598 4.38786C3.70969 3.41164 4.57328 2.62278 5.6 2.10964C6.45681 1.67687 7.40373 1.4526 8.36364 1.4551H8.72727C10.2432 1.53873 11.6749 2.17856 12.7485 3.25209C13.822 4.32561 14.4618 5.75739 14.5455 7.27328V7.63692Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                                                                                                                                                     <svg width="1.000rem" height="1.000rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="cart-body-item-controls-icons-icon"><path d="M2 4H3.33333H14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M4.99976 4V2.66667C4.99976 2.31305 5.14023 1.64005 5.39028 1.39C5.64033 1.13995 5.97947 1 6.33309 1L9.66642 1C10.02 1 10.3592 1.13995 10.6092 1.39C10.8593 1.64005 10.9998 2.31305 10.9998 2.66667V4M12.9998 4V13.6667C12.9998 14.0203 12.8593 14.3594 12.6092 14.6095C12.3592 14.8595 12.02 15 11.6664 15H4.33309C3.97947 15 3.64033 14.8595 3.39028 14.6095C3.14023 14.3594 2.99976 14.0203 2.99976 13.6667V4H12.9998Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M6.5 7.5V11.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.5 7.5V11.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                                                                                                                                                 </div>
-                                                                                                                                                 <div class="cart-body-item-controls-price">
-                                                                                                                                                         <div class="cart-body-item-controls-price-secondary">${itemInfo.price} грн за шт</div>
-                                                                                                                                                                 <div class="cart-body-item-controls-price-primary">${totalPrice} грн</div>
-                                                                                                                                                 </div>
-                                                                                                                                             </div>`
+                                                                                            ${itemInfo.promo && itemInfo.promo !== 'null' ? `<div class="main-page-product-promo" id="promo${itemInfo.id}">
+                                                                                            <p class="main-page-product-promo-text">${itemInfo.promo}</p>
+                                                                                        </div>` : ''}
+                                                                                                                                                                                                                              <img src="/Product_Images/product_${itemInfo.id}.jpg" />
+                                                                                                                                                                                                                     <div class="cart-body-item-info">
+                                                                                                                                                                                                                         <div class="cart-body-item-info-label">${itemInfo.title}</div>
+                                                                                                                                                                                                                                     <div id="${itemInfo.id}" class="cart-body-item-info-count-btn">
+                                                                                                                                                                                                                                             <svg id="${itemInfo.id}" onclick="Minus(event)" width="2.000rem" height="2.000rem" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="${itemInfo.id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                                                                                                                                                                                             <div style="height:100%; width:60px; position:relative; display:flex; align-items:center; justify-content:center;">
+                                                                                                                                                                                                                                             <input id="cartInput${itemInfo.id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" class="num-input" value="${itemInfo.count}">
+                                                                                                                                                                                                                                                     <span id="cartSpan${itemInfo.id}" class="cart-body-item-info-count-btn-counter-num">${itemInfo.count}</span>
+                                                                                                                                                                                                                                 <span class="cart-body-item-info-count-btn-counter-text">шт</span>
+                                                                                                                                                                                                                             </div>
+                                                                                                                                                                                                                                                                 <svg id="${itemInfo.id}" onclick="Plus(event)" width="2.000rem" height="2.000rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="${itemInfo.id}" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="${itemInfo.id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                                                                                                                                                                                         </div>
+                                                                                                                                                                                                                     </div>
+                                                                                                                                                                                                                     <div class="cart-body-item-controls">
+                                                                                                                                                                                                                         <div class="cart-body-item-controls-icons">
+                                                                                                                                                                                                                             <svg width="1.000rem" height="1.000rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="cart-body-item-controls-icons-icon"><path d="M14.5455 7.63692C14.548 8.59682 14.3237 9.54374 13.8909 10.4006C13.3778 11.4273 12.5889 12.2909 11.6127 12.8946C10.6365 13.4983 9.51145 13.8183 8.36364 13.8187C7.40373 13.8212 6.45681 13.597 5.6 13.1642L1.45455 14.546L2.83636 10.4006C2.40359 9.54374 2.17932 8.59682 2.18182 7.63692C2.18226 6.4891 2.50226 5.36408 3.10598 4.38786C3.70969 3.41164 4.57328 2.62278 5.6 2.10964C6.45681 1.67687 7.40373 1.4526 8.36364 1.4551H8.72727C10.2432 1.53873 11.6749 2.17856 12.7485 3.25209C13.822 4.32561 14.4618 5.75739 14.5455 7.27328V7.63692Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                                                                                                                                                                                                                             <svg width="1.000rem" height="1.000rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="cart-body-item-controls-icons-icon"><path d="M2 4H3.33333H14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M4.99976 4V2.66667C4.99976 2.31305 5.14023 1.64005 5.39028 1.39C5.64033 1.13995 5.97947 1 6.33309 1L9.66642 1C10.02 1 10.3592 1.13995 10.6092 1.39C10.8593 1.64005 10.9998 2.31305 10.9998 2.66667V4M12.9998 4V13.6667C12.9998 14.0203 12.8593 14.3594 12.6092 14.6095C12.3592 14.8595 12.02 15 11.6664 15H4.33309C3.97947 15 3.64033 14.8595 3.39028 14.6095C3.14023 14.3594 2.99976 14.0203 2.99976 13.6667V4H12.9998Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M6.5 7.5V11.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.5 7.5V11.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                                                                                                                                                                                                                         </div>
+                                                                                                                                                                                                                         <div class="cart-body-item-controls-price">
+                                                                                                                                                                                                                                                         ${itemInfo.promo && itemInfo.promo !== 'null' ? `<div class="cart-body-item-controls-price-secondary" style="color:#ff5631;">${itemInfo.price} грн за шт</div>` : `<div class="cart-body-item-controls-price-secondary">${itemInfo.price} грн за шт</div>`}
+                                                                                                                                                                                                                                 <div class="cart-body-item-controls-price-primary">${totalPrice} грн</div>
+                                                                                                                                                                                                                         </div>
+                                                                                                                                                                                                                     </div>`
             return item;
         }
 
         function AddHtmlToLeftCart(itemInfo) {
             var item = `<div class="burger-menu-body-cart-item" id="leftCartItem${itemInfo.id}">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <svg id="close-icon" class="burger-menu-body-cart-item-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <style type="text/css">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                #close-icon {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    fill: #000000
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }</style>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </svg>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <img class="burger-menu-body-cart-item-img" src="/Product_Images/product_${itemInfo.id}.jpg" />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <p class="burger-menu-body-cart-item-label">${itemInfo.title}</p>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <div class="burger-menu-body-cart-item-details">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <p class="burger-menu-body-cart-item-price">${itemInfo.price} грн</p>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <p class="burger-menu-body-cart-item-weight"></p>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>`;
+                                                                                    ${itemInfo.promo && itemInfo.promo !== 'null' ? `<div class="main-page-product-promo" id="promo${itemInfo.id}">
+                                                                    <p class="main-page-product-promo-text">${itemInfo.promo}</p>
+                                                                </div>` : ''}
+
+                                                                     <svg id="close-icon" class="burger-menu-body-cart-item-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                                                                         <style type="text/css">
+                                                                             #close-icon {
+                                                                                 fill: #000000
+                                                                             }</style>
+                                                                         <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
+                                                                     </svg>
+                                                                     <img class="burger-menu-body-cart-item-img" src="/Product_Images/product_${itemInfo.id}.jpg" />
+                                                                     <p class="burger-menu-body-cart-item-label">${itemInfo.title}</p>
+                                                                     <div class="burger-menu-body-cart-item-details">
+                                                                                         ${itemInfo.promo && itemInfo.promo !== 'null' ? `<p class="burger-menu-body-cart-item-price" style="color:#ff5631;">${itemInfo.price} грн</p>` : `<p class="burger-menu-body-cart-item-price">${itemInfo.price} грн</p>`}
+                                                                         <p class="burger-menu-body-cart-item-weight"></p>
+                                                                     </div>
+                                                                 </div>`;
             return item;
         }
 
@@ -1483,7 +1520,6 @@
                     }
 
                     var counterContainer = document.getElementById(`counterContainer${id}`);
-                    console.log(counterContainer);
                     if (counterContainer != null)
                         counterContainer.style.display = 'flex';
 
@@ -1519,11 +1555,15 @@
 
                     var searchProduct = document.getElementById(`searchProduct${id}`);
                     var price = searchProduct.getElementsByClassName('products-search-container-item-price')[0];
+                    if (!price) price = searchProduct.getElementsByClassName('products-search-container-item-price-promo')[0];
                     var parsedPrice = price.textContent.slice(0, -4);
                     parsedPrice = parseFloat(parsedPrice.replace(',', '.'));
                     var title = searchProduct.getElementsByClassName('products-search-container-item-title')[0].textContent;
+                    const promoDiv = document.querySelector(`#promo${id}`);
+                    var promo = null;
+                    if (promoDiv) promo = promoDiv.textContent.trim();
 
-                    var cartProduct = new CartProduct(id, 1, parsedPrice, title);
+                    var cartProduct = new CartProduct(id, 1, parsedPrice, title, promo);
                     productsInCart.push(cartProduct);
                     const jsonString = JSON.stringify(productsInCart);
                     document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
@@ -1551,16 +1591,22 @@
                 else {
                     var searchProduct = document.getElementById(`searchProduct${id}`);
                     var price = searchProduct.getElementsByClassName('products-search-container-item-price')[0];
+                    if (!price) price = searchProduct.getElementsByClassName('products-search-container-item-price-promo')[0];
                     var parsedPrice = price.textContent.slice(0, -4);
                     parsedPrice = parseFloat(parsedPrice.replace(',', '.'));
                     var title = searchProduct.getElementsByClassName('products-search-container-item-title')[0].textContent;
+                    const promoDiv = document.querySelector(`#promo${id}`);
+                    var promo = null;
+                    if (promoDiv) promo = promoDiv.textContent.trim();
+                    const brand = searchProduct.querySelector('.products-search-container-item-brand').textContent;
+                    const country = searchProduct.querySelector('.products-search-container-item-country').textContent;
 
-                    fetch(`/User/AddUserCartProduct?productId=${id}&userId=${userId}&price=${parsedPrice}&title=${title}&count=${1}`);
+                    fetch(`/User/AddUserCartProduct?productId=${id}&userId=${userId}&price=${parsedPrice}&title=${title}&count=${1}&promo=${promo}&brand=${brand}&country=${country}`);
 
                     var cart = document.getElementsByClassName('cart-body-items')[0];
                     var leftCart = document.getElementById('leftCartItemContainer');
 
-                    var itemInfo = new CartProduct(id, 1, parsedPrice, title);
+                    var itemInfo = new CartProduct(id, 1, parsedPrice, title, promo);
 
                     var item = AddHtmlToCart(itemInfo);
                     cart.insertAdjacentHTML('beforeend', item);
@@ -2082,10 +2128,10 @@
             return null;
         }
 
-        function GetProfile(target = null) {
+        function GetProfile(contentName) {
             const userCookieValue = getCookie('UserCookie');
             if (userCookieValue != null) {
-                window.location.href = `/User/UserProfileView`;
+                window.location.href = `/User/UserProfileView?contentName=${contentName}`;
             }
             else {
                 ShowAuthorization();
@@ -2218,7 +2264,80 @@
                     }
                 })
         }
+        function DeleteAllCartProducts() {
+            var userId = GetUserId();
+            if (userId === null) {
+                document.cookie = 'MyCookie=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; Secure; SameSite=None';
+                var cartContainer = document.querySelector('.cart-body-items');
+                cartContainer.innerHTML = '';
+                CheckIfCartIsEmpty();
+                const products = document.querySelectorAll('.green');
+                products.forEach(product => {
+                    product.classList.remove('green');
+                    var parent = product.parentNode.parentNode;
+                    var counter = parent.querySelector('.main-page-product-counter-container');
+                    var btn = parent.querySelector('.main-page-product-cart-btn');
+                    counter.style.display = 'none';
+                });
+            }
+            else {
+                fetch(`/User/DeleteUserCartProducts?userId=${userId}`);
+                var cartContainer = document.querySelector('.cart-body-items');
+                cartContainer.innerHTML = '';
+                CheckIfCartIsEmpty();
+                const products = document.querySelectorAll('.green');
+                products.forEach(product => {
+                    product.classList.remove('green');
+                    var parent = product.parentNode.parentNode;
+                    var counter = parent.querySelector('.main-page-product-counter-container');
+                    var btn = parent.querySelector('.main-page-product-cart-btn');
+                    counter.style.display = 'none';
+                });
+            }
+        }
+        function ShowCartMaker() {
+            const count = document.querySelector('#cartMakerCount');
+            const price = document.querySelector('#cartMakerPrice');
+            count.textContent = document.querySelectorAll('.cart-body-item').length;
+            price.textContent = document.querySelector('.cart-text-not-empty').textContent.slice(0, -4);
+            const container = document.querySelector('.cart-maker-container');
+            container.classList.add('active');
+            const overlay = document.querySelector('#overlayDark');
+            overlay.classList.add('active');
+            overlay.style.opacity = '0.8';
+            container.style.opacity = '1';
+        }
+        function CloseCartMaker() {
+            const container = document.querySelector('.cart-maker-container');
+            const overlay = document.querySelector('#overlayDark');
+            overlay.style.opacity = '0';
+            container.style.opacity = '0';
+            setTimeout(function () {
+                container.classList.remove('active');
+                overlay.classList.remove('active');
+            }, 500);
+        }
+       
+        function CreateCart() {
+            const userId = GetUserId();
+            const cartName = document.getElementById('formInput9').value.trim();
+            if (cartName.length > 0) {
+                fetch(`/User/CreateUserCart?user_Id=${userId}&cartName=${cartName}`);
+                CloseCartMaker();
+                CloseCart();
+            }
+            else {
+                const errorSpan = document.getElementById('errorSpan9');
+                const cartMaker = document.querySelector('.cart-maker-container-content');
+                errorSpan.style.display = 'block';
+                cartMaker.style.marginTop = '19px';
+            }
 
+        }
+        function formInput9OnActive() {
+            const cartMaker = document.querySelector('.cart-maker-container-content');
+            cartMaker.style.marginTop = '35px';
+        }
     </script>
 </body>
 </html>

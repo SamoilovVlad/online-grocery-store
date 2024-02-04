@@ -41,7 +41,7 @@
                         {
                             <div class="other-products-item">
                                 <div class="other-products-item-cart" id="@product.id">
-                                    <div class="main-page-product-promo" style="z-index:2">
+                                    <div class="main-page-product-promo" id="promo@(product.id)" style="z-index:2">
                                         <p class="main-page-product-promo-text">@product.Promo</p>
                                     </div>
                                     <a asp-controller="Home" asp-action="ProductView" asp-route-id="@product.id" style="width:100%; height:100%; position:absolute; top:0; left:0; z-index:4;" onclick="ShowLoader()">
@@ -83,8 +83,8 @@
                                             <div class="main-page-product-counter-container" id="counterContainer@(product.id)" style="display:flex">
                                                 <svg id="@product.id" onclick="Minus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="@product.id" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
                                                 <div class="main-page-product-counter-container-count">
-                                                    <input id="productInput@(product.id)" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="@product.inCart.Count" class="num-input-product">
-                                                    <span id="productSpan@(product.id)" class="cart-body-item-info-count-btn-counter-num">@product.inCart.Count</span>
+                                                    <input id="productInput@(product.id)" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="@product.inCart.count" class="num-input-product">
+                                                    <span id="productSpan@(product.id)" class="cart-body-item-info-count-btn-counter-num">@product.inCart.count</span>
                                                     <span class="cart-body-item-info-count-btn-counter-text-product">шт</span>
                                                 </div>
                                                 <svg id="@product.id" onclick="Plus(event)" width="2.5rem" height="2.5rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="@product.id" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="@product.id" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
@@ -132,8 +132,11 @@
                 var parsedPrice = price.textContent.slice(0, -4);
                 parsedPrice = parseFloat(parsedPrice.replace(',', '.'));
                 var title = product.getElementsByClassName('main-page-product-title')[0].textContent;
+                const promoDiv = document.querySelector(`#promo${id}`);
+                var promo = null;
+                if (promoDiv) promo = promoDiv.textContent.trim();
 
-                var cartProduct = new CartProduct(id, 1, parsedPrice, title);
+                var cartProduct = new CartProduct(id, 1, parsedPrice, title, promo);
                 productsInCart.push(cartProduct);
                 const jsonString = JSON.stringify(productsInCart);
                 document.cookie = `MyCookie=${encodeURIComponent(jsonString)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; Secure; SameSite=None`;
@@ -168,8 +171,13 @@
                 var parsedPrice = price.textContent.slice(0, -4);
                 parsedPrice = parseFloat(parsedPrice.replace(',', '.'));
                 var title = product.getElementsByClassName('main-page-product-title')[0].textContent;
+                const promoDiv = document.querySelector(`#promo${id}`);
+                var promo = null;
+                if (promoDiv) promo = promoDiv.textContent.trim();
+                const brand = product.querySelector('.main-page-product-mass').textContent;
+                const country = product.querySelector('.main-page-product-bottom-price-brand').textContent;
 
-                fetch(`/User/AddUserCartProduct?productId=${id}&userId=${userId}&price=${parsedPrice}&title=${title}&count=${1}`);
+                fetch(`/User/AddUserCartProduct?productId=${id}&userId=${userId}&price=${parsedPrice}&title=${title}&count=${1}&promo=${promo}&brand=${brand}&country=${country}`);
 
                 product.classList.add('added');
                 overlay.classList.add('green');
@@ -178,7 +186,7 @@
                 input.value = span.textContent;
 
 
-                var itemInfo = new CartProduct(id, 1, parsedPrice, title);
+                var itemInfo = new CartProduct(id, 1, parsedPrice, title, promo);
 
 
                 var cart = document.getElementsByClassName('cart-body-items')[0];

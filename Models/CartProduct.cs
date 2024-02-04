@@ -7,27 +7,13 @@ namespace Shop_Mvc.Models
         [Key]
         public int PK_id { get; set; }
 
-        private int id;
-        public int Id
-        {
-            get => id;
-            set { if (value > 0) id = value; }
-        }
-        private int count;
-        public int Count
-        {
-            set { if (value > 0) count = value; }
-            get => count;
-        }
-        private decimal price;
-        public decimal Price
-        {
-            set { if (value > 0) price = value; }
-            get => price;
-        }
+        public int product_Id {get; set; }        
+        public int count {get; set;}
+        public decimal price { get; set;}
         public string title { get; set; }
-       
-
-        public string user_id { get; set; }
+        public string user_Id { get; set; }
+        public string? promo { get; set;}
+        public string? brand { get; set; }
+        public string? country { get; set; }
     }
 }

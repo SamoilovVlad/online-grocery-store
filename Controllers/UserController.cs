@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Newtonsoft.Json;
 using Microsoft.IdentityModel.Tokens;
+using System.Reflection.Metadata;
 
 namespace Shop_Mvc.Controllers
 {
@@ -113,7 +114,7 @@ namespace Shop_Mvc.Controllers
                     {
                         List<CartProduct> products = JsonConvert.DeserializeObject<List<CartProduct>>(cartProductsString);
                         foreach (var product in products)
-                            product.user_id = user.Id;
+                            product.user_Id = user.Id;
                         _DatabaseServise.DeleteUserCartProducts(user.Id);
                         await _DatabaseServise.SetCartProductsAsync(products);
                     }
@@ -194,7 +195,7 @@ namespace Shop_Mvc.Controllers
 
         private IEnumerable<UserFavoriteProduct> SetFieldIsInCart(IEnumerable<UserFavoriteProduct> products, List<CartProduct> cartProducts)
         {
-            var commonIds = cartProducts.Select(p => p.Id).ToList();
+            var commonIds = cartProducts.Select(p => p.product_Id).ToList();
 
             for (var i = 0; i < commonIds.Count; i++)
             {
@@ -208,16 +209,19 @@ namespace Shop_Mvc.Controllers
         }
 
         [HttpGet]
-        public IActionResult UserProfileView(string email)
+        public IActionResult UserProfileView(string contentName) => View("UserProfileView", contentName);
+
+        [HttpGet]
+        public IActionResult UserProfileSwitcherPartialView()
         {
             var userString = Request.Cookies["UserCookie"];
             if (userString != null)
             {
                 var user = JsonConvert.DeserializeObject<User>(userString);
-                return View(user);
+                return PartialView(user);
             }
 
-            return View();
+            return PartialView();
         }
 
         public IActionResult IsUserExist(string email, string password)
@@ -276,7 +280,7 @@ namespace Shop_Mvc.Controllers
         }
 
         public void DeleteUserCartProduct(string userId, int productId) => _DatabaseServise.DeleteUserCartProduct(productId, userId);
-        public void AddUserCartProduct(int productId, string userId, decimal price, string title, int count) => _DatabaseServise.AddUserCartProduct(productId, userId, price, title, count);
+        public void AddUserCartProduct(int productId, string userId, decimal price, string title, int count, string promo, string brand, string country) => _DatabaseServise.AddUserCartProduct(productId, userId, price, title, count, promo, brand, country);
         public IActionResult GetUserCartProductCount(int productId, string userId) => Json(_DatabaseServise.GetUserCartProductCount(productId, userId));
         public void RemoveFavoriteProduct(int productId, string userId)
         {
@@ -288,6 +292,14 @@ namespace Shop_Mvc.Controllers
         }
 
         public IActionResult GetUserFavoriteProducts(string userId) => Json(_DatabaseServise.GetUserFavoriteProducts(userId));
+
+        public IActionResult UserOrderedProductsPartialView() => PartialView();
+
+        public IActionResult UserPersonalShelfPartialView(string userId)
+        {
+            var model = _DatabaseServise.GetUserCarts(userId);
+            return PartialView("UserPersonalShelfPartialView", model);
+        }
 
         public IActionResult UserFavoriteProductsPartialView(string userId)
         {
@@ -303,5 +315,16 @@ namespace Shop_Mvc.Controllers
             List<int> idsToRemove = idToRemove.Split(',').Select(int.Parse).ToList();
             _DatabaseServise.DeleteUserFavoriteProducts(idsToRemove, userId);
         }
+        public IActionResult UserCartPartialView(int cartId)
+        {
+            var cart = _DatabaseServise.GetCartById(cartId);
+            return PartialView(cart);
+        }
+        public void DeleteUserCartProducts(string userId) => _DatabaseServise.DeleteUserCartProducts(userId);
+
+        public void CreateUserCart(string user_Id, string cartName) => _DatabaseServise.CreateUserCart(user_Id, cartName);
+        public void DeleteUserCart(int cartId, string userId) => _DatabaseServise.DeleteUserCart(cartId, userId);
+        public void UpdateProfileUserCartProduct(int cartId, int productId, int count) => _DatabaseServise.UpdateUserCartProduct(cartId, productId, count);
+        public void DeleteProfileUserCartProduct(int cartId, int productId) => _DatabaseServise.DeleteProfileUserCartProduct(cartId, productId);
     }
 }

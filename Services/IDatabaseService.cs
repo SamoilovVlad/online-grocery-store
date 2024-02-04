@@ -52,12 +52,19 @@ namespace Shop_Mvc.Services
         public void DeleteUserCartProducts(string UserId);
         public void UpdateCartProduct(int productId, string userId, int counts);
         public void DeleteUserCartProduct(int productId, string userId);
-        public void AddUserCartProduct(int productId, string userId, decimal price, string title, int count);
+        public void AddUserCartProduct(int productId, string userId, decimal price, string title, int count, string promo, string brand, string country);
         public int GetUserCartProductCount(int productId, string userId);
         public void AddProductToFavorite(int productId, string userId, string title, decimal price, string country, string brand, string promo);
         public void RemoveProductFromFavorite(int productId, string userId);
         public IEnumerable<UserFavoriteProduct> GetUserFavoriteProducts(string userId);
         public void DeleteUserFavoriteProducts(List<int> idToRemove, string userId);
+        public void CreateUserCart(string userId, string cartName);
+        public IEnumerable<Cart> GetUserCarts(string userId);
+        public IEnumerable<UserCartProduct> GetProductsForCart(string userId, int cartId);
+        public void DeleteUserCart(int cartId, string userId);
+        public Cart GetCartById(int cartId);
+        public void UpdateUserCartProduct(int cartId, int productId, int count);
+        public void DeleteProfileUserCartProduct(int cartId, int productId);
     }
     public class DatabaseServise : IDatabaseServise
     {
@@ -650,7 +657,7 @@ namespace Shop_Mvc.Services
 
         public async Task<List<CartProduct>> GetCartProductsAsync(string userId)
         {
-            var userCartProducts = await _context.UserCartProducts.Where(p => p.user_id == userId).ToListAsync();
+            var userCartProducts = await _context.UserCartProducts.Where(p => p.user_Id == userId).ToListAsync();
             return userCartProducts;
         }
 
@@ -661,25 +668,26 @@ namespace Shop_Mvc.Services
         }
 
         public CartProduct GetCartProduct(int productId, string UserId) => _context.UserCartProducts
-                                                                           .Where(p => p.Id == productId && p.user_id == UserId)
+                                                                           .Where(p => p.product_Id == productId && p.user_Id == UserId)
                                                                            .First();
 
         public void UpdateCartProduct(int productId, string userId, int count)
         {
-            var product = _context.UserCartProducts.Where(p => p.Id == productId && p.user_id == userId).First();
-            product.Count = count;
+            var product = _context.UserCartProducts.Where(p => p.product_Id == productId && p.user_Id == userId).First();
+            product.count = count;
             _context.SaveChanges();
         }
 
         public void DeleteUserCartProducts(string UserId)
         {
-            var products = _context.UserCartProducts.Where(p => p.user_id == UserId);
+            var products = _context.UserCartProducts.Where(p => p.user_Id == UserId);
             _context.UserCartProducts.RemoveRange(products);
+            _context.SaveChanges();
             return;
         }
         public void DeleteUserCartProduct(int productId, string userId)
         {
-            var cartProduct = _context.UserCartProducts.First(p => p.Id == productId && p.user_id == userId);
+            var cartProduct = _context.UserCartProducts.First(p => p.product_Id == productId && p.user_Id == userId);
             if (cartProduct != null)
             {
                 _context.UserCartProducts.Remove(cartProduct);
@@ -687,14 +695,17 @@ namespace Shop_Mvc.Services
             }
             return;
         }
-        public void AddUserCartProduct(int productId, string userId, decimal price, string title, int count)
+        public void AddUserCartProduct(int productId, string userId, decimal price, string title, int count, string promo, string brand, string country)
         {
             CartProduct cartProduct = new CartProduct();
-            cartProduct.user_id = userId;
-            cartProduct.Id = productId;
-            cartProduct.Price = price;
+            cartProduct.user_Id = userId;
+            cartProduct.product_Id = productId;
+            cartProduct.price = price;
             cartProduct.title = title;
-            cartProduct.Count = count;
+            cartProduct.count = count;
+            cartProduct.promo = promo;
+            cartProduct.brand = brand;
+            cartProduct.country = country;
             _context.UserCartProducts.Add(cartProduct);
             _context.SaveChanges();
             return;
@@ -702,9 +713,9 @@ namespace Shop_Mvc.Services
         public int GetUserCartProductCount(int productId, string userId)
         {
             var userCartProduct = _context.UserCartProducts
-                                   .FirstOrDefault(p => p.Id == productId && p.user_id == userId);
+                                   .FirstOrDefault(p => p.product_Id == productId && p.user_Id == userId);
 
-            var count = userCartProduct != null ? userCartProduct.Count : 0;
+            var count = userCartProduct != null ? userCartProduct.count : 0;
             return count;
         }
         public void AddProductToFavorite(int productId, string userId, string title, decimal price, string country, string brand, string promo)
@@ -740,6 +751,70 @@ namespace Shop_Mvc.Services
         {
             var productsToRemove = _context.UserFavoriteProducts.Where(p => idToRemove.Contains(p.product_Id) && p.user_Id == userId).ToList();
             _context.UserFavoriteProducts.RemoveRange(productsToRemove);
+            _context.SaveChanges();
+        }
+        public void CreateUserCart(string userId, string cartName)
+        {
+            int maxCartId = 0;
+            try
+            {
+                maxCartId = _context.Carts.Max(c => c.id);
+            }
+            catch (Exception ex) { }
+            maxCartId++;
+            var cart = new Cart()
+            {
+                id = maxCartId,
+                cartName = cartName,
+                user_Id = userId,
+            };
+            List<UserCartProduct> userCartProducts = new List<UserCartProduct>();
+            var cartProducts = _context.UserCartProducts.Where(p => p.user_Id == userId);
+            foreach(var product in cartProducts)
+            {
+                var p = new UserCartProduct()
+                {
+                    cart_Id = maxCartId,
+                    product_Id = product.product_Id,
+                    user_Id = userId,
+                    count = product.count,
+                    promo = product.promo,
+                    title = product.title,
+                    price = product.price,
+                    country = product.country,
+                    brand = product.brand
+                };
+                userCartProducts.Add(p);
+            }
+            _context.Carts.Add(cart);
+            _context.CartProducts.AddRange(userCartProducts);
+            _context.SaveChanges();
+        }
+        public IEnumerable<Cart> GetUserCarts(string userId) => _context
+                                                                .Carts
+                                                                .Where(c => c.user_Id == userId);
+        public IEnumerable<UserCartProduct> GetProductsForCart(string userId, int cartId) => _context
+                                                                                             .CartProducts
+                                                                                             .Where(p => p.cart_Id == cartId && p.user_Id == userId);
+        public void DeleteUserCart(int cartId, string userId)
+        {
+            Cart cartToDelete = _context.Carts.First(c => c.id == cartId && c.user_Id == userId);
+            var productsToDelete = _context.CartProducts.Where(p => p.cart_Id == cartId && p.user_Id == userId);
+            _context.CartProducts.RemoveRange(productsToDelete);
+            _context.Carts.Remove(cartToDelete);
+            _context.SaveChanges();
+        }
+        public Cart GetCartById(int cartId) => _context.Carts.FirstOrDefault(c => c.id == cartId);
+        public void UpdateUserCartProduct(int cartId, int productId, int count)
+        {
+            var product = _context.CartProducts.FirstOrDefault(p => p.cart_Id == cartId && p.product_Id == productId);
+            product.count = count;
+            _context.SaveChanges();
+        }
+        public void DeleteProfileUserCartProduct(int cartId, int productId)
+        {
+            var product = _context.CartProducts.FirstOrDefault(p => p.cart_Id == cartId && p.product_Id == productId);
+            _context.CartProducts.Remove(product);
             _context.SaveChanges();
         }
     }

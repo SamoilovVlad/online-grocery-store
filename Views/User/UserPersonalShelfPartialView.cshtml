@@ -1,0 +1,90 @@
+﻿@model IEnumerable<Cart>
+<div class="profile-personal-shelf">
+    <div class="profile-personal-shelf-header">
+        <div class="profile-personal-shelf-header-inner">
+            <div class="profile-title-inner">
+                <h1>
+                    Особиста полиця
+                </h1>
+                <p id="title">
+                    Зверніть увагу, що під час замовлення вашого кошика, ціна та доступність товарів можуть змінюватися в залежності від умов доставки та вказаної адреси.
+                </p>
+            </div>
+            <div class="profile-header-right">
+                <div class="profile-header-right-inner">
+                    <div class="profile-header-right-content">
+                        <div class="profile-header-right-item">
+                            <p class="label" id="cartCount">-</p>
+                            <p class="value">
+                                Кількість кошиків
+                            </p>
+                        </div>
+                        <div class="profile-header-right-item">
+                            <p class="label" id="productCount">-</p>
+                            <p class="value">
+                                Кількість товарiв
+                            </p>
+                        </div>
+                        <div class="profile-header-right-item">
+                            <p class="label" id="inOrdered">0</p>
+                            <p class="value">
+                                Кількість замовлених
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="profile-shelf-list">
+        <ul class="profile-shelf-list-inner">
+            @{
+                foreach(var cart in Model)
+                {
+                    <li class="profile-shelf-item item-complete" id="@cart.id">
+                        <div class="profile-loader mini"></div>
+                        <div class="shelf-list-item-inner">
+                            <div class="shelf-item-inner-head">
+                                <div class="shelf-item-head-inner">
+                                    <div class="shelf-head-inner-title">
+                                        <a class="title" onclick="GetUserCart(@cart.id)">@cart.cartName</a>
+                                    </div>
+                                    <div class="shelf-head-inner-options">
+                                        <div class="options">
+                                            <div class="option" id="@cart.id" onclick="DeleteUserCart(event.target.id)">
+                                                <div class="btn" id="@cart.id">
+                                                    <svg id="@cart.id" width="1.000rem" height="1.000rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path id="@cart.id" d="M2 4H3.33333H14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path id="@cart.id" d="M4.99976 4V2.66667C4.99976 2.31305 5.14023 1.64005 5.39028 1.39C5.64033 1.13995 5.97947 1 6.33309 1L9.66642 1C10.02 1 10.3592 1.13995 10.6092 1.39C10.8593 1.64005 10.9998 2.31305 10.9998 2.66667V4M12.9998 4V13.6667C12.9998 14.0203 12.8593 14.3594 12.6092 14.6095C12.3592 14.8595 12.02 15 11.6664 15H4.33309C3.97947 15 3.64033 14.8595 3.39028 14.6095C3.14023 14.3594 2.99976 14.0203 2.99976 13.6667V4H12.9998Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path id="@cart.id" d="M6.5 7.5V11.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path><path id="@cart.id" d="M9.5 7.5V11.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                                                </div>
+                                            </div>
+                                            <div class="option" style="margin-left:5px;" onclick="GetProfile(`UserCart${@cart.id}`)">
+                                                <div class="btn">
+                                                    <svg width="1.000rem" height="1.000rem" xmlns="http://www.w3.org/2000/svg" style="fill:black" viewBox="0 0 24 24"><g data-name="20.Arrow Right"><path d="M12 24a12 12 0 1 1 12-12 12.013 12.013 0 0 1-12 12zm0-22a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2z" /><path d="m13.707 16.707-1.414-1.414L15.586 12l-3.293-3.293 1.414-1.414L18.414 12l-4.707 4.707z" /><path d="M6 11h11v2H6z" /></g></svg>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="shelf-item-inner-body">
+                                <div class="item-inner-body-images">
+                                    
+                                </div>
+                            </div>
+                            <div class="shelf-item-inner-foot">
+                                <div class="shelf-inner-foot-inner">
+                                    <div class="inner-foot-inner-left">
+                                        <p class="foot-inner-left-price"></p>
+                                        <p class="foot-inner-left-count"></p>
+                                    </div>
+                                    <div class="inner-foot-inner-right">
+                                        <div class="btn"> Замовити </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+</div>

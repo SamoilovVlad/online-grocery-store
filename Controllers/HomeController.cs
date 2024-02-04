@@ -183,6 +183,8 @@ namespace Shop_Mvc.Controllers
         public IActionResult GetMainPartialView()
         {
             var mainPartialViewModel = _memoryCache.Get("MainPartialViewModel_key") as MainPartialViewModel;
+            var productsInCart = GetProductsFromCookie();
+            mainPartialViewModel.products = SetFieldIsInCart(mainPartialViewModel.products, productsInCart);
             return PartialView("MainPartialView", mainPartialViewModel);
         }
 
@@ -198,9 +200,10 @@ namespace Shop_Mvc.Controllers
         {
             return PartialView("SecondPartialView");
         }
-        public IActionResult GetThirdPartialView()
+        public IActionResult GetThirdPartialView(string user_Id)
         {
-            return PartialView("ThirdPartialView");
+            var model = _DatabaseServise.GetUserCarts(user_Id); 
+            return PartialView("ThirdPartialView", model);
         }
 
         public IActionResult GetFourthPartialView()
@@ -334,14 +337,21 @@ namespace Shop_Mvc.Controllers
 
         private IEnumerable<Product> SetFieldIsInCart(IEnumerable<Product> products, List<CartProduct> cartProducts)
         {
-            var commonIds = cartProducts.Select(p => p.Id).ToList();
+            var commonIds = cartProducts.Select(p => p.product_Id).ToList();
 
             for (var i = 0; i < commonIds.Count; i++)
             {
                 var id = commonIds[i];
-                foreach (var product in products.Where(p => p.id == id))
+                foreach (var product in products)
                 {
-                    product.inCart = cartProducts[i];
+                    if (commonIds.Contains(product.id))
+                    {
+                        product.inCart = cartProducts.FirstOrDefault(cp => cp.product_Id == product.id);
+                    }
+                    else
+                    {
+                        product.inCart = null;
+                    }
                 }
             }
             return products;
@@ -368,6 +378,7 @@ namespace Shop_Mvc.Controllers
             return View("ProductView", productViewModel);
         }
 
+        public IActionResult GetUserProductsForCart(string userId, int cartId) => Json(_DatabaseServise.GetProductsForCart(userId, cartId));
        
     }
 }

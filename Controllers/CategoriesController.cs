@@ -135,7 +135,7 @@ namespace Shop_Mvc.Controllers
 
         private IEnumerable<Product> SetFieldIsInCart(IEnumerable<Product> products, List<CartProduct> cartProducts)
         {
-            var commonIds = cartProducts.Select(p => p.Id).ToList();
+            var commonIds = cartProducts.Select(p => p.product_Id).ToList();
 
             for (var i = 0; i < commonIds.Count; i++)
             {

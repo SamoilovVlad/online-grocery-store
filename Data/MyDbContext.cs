@@ -13,5 +13,7 @@ namespace Shop_Mvc.Data
         public DbSet<Subcategory> Subcategories { get; set; }
         public DbSet<CartProduct> UserCartProducts { get; set; }
         public DbSet<UserFavoriteProduct> UserFavoriteProducts { get; set; }
+        public DbSet<UserCartProduct> CartProducts { get; set; }
+        public DbSet<Cart> Carts { get; set; }
     }
 }

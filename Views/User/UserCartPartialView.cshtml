@@ -1,0 +1,50 @@
+﻿@model Cart
+<div class="profile-user-cart" id="@Model.id">
+    <div class="profile-user-cart-wrapper">
+        <div class="user-cart-wrapper-head">
+            <div class="user-cart-head-top">
+                <div class="title" onclick="GetProfile('Особиста полиця')">
+                    <svg width="0.750rem" height="0.750rem" viewBox="0 0 16 16" fill="none" style="margin-right:12px;" xmlns="http://www.w3.org/2000/svg" class=""><path d="M11 1L4 8L11 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                    <span class="text">@Model.cartName</span>
+                </div>
+                <div class="cart-head-top-btns">
+                    <div class="btn" style="margin-right:1rem;">
+                        <svg width="0.750rem" height="0.750rem" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"style="margin-right:0.5rem;"><g opacity="1"><path d="M8.5 1.50003C8.63132 1.36871 8.78722 1.26454 8.9588 1.19347C9.13038 1.1224 9.31428 1.08582 9.5 1.08582C9.68572 1.08582 9.86962 1.1224 10.0412 1.19347C10.2128 1.26454 10.3687 1.36871 10.5 1.50003C10.6313 1.63135 10.7355 1.78725 10.8066 1.95883C10.8776 2.13041 10.9142 2.31431 10.9142 2.50003C10.9142 2.68575 10.8776 2.86964 10.8066 3.04123C10.7355 3.21281 10.6313 3.36871 10.5 3.50003L3.75 10.25L1 11L1.75 8.25003L8.5 1.50003Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></g></svg>
+                        Змінити
+                    </div>
+                    <div class="btn" onclick="DeleteUserCartCartView()">
+                        <svg width="0.750rem" height="0.750rem" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right:0.5rem;"><path fill-rule="evenodd" clip-rule="evenodd" d="M6 12C9.31371 12 12 9.31371 12 6C12 2.68629 9.31371 0 6 0C2.68629 0 0 2.68629 0 6C0 9.31371 2.68629 12 6 12ZM8.29934 2.28662L9.71355 3.70083L7.41411 6.00027L9.71096 8.29712L8.29674 9.71133L5.9999 7.41449L3.70083 9.71355L2.28662 8.29934L4.58568 6.00027L2.28856 3.70315L3.70278 2.28894L5.9999 4.58606L8.29934 2.28662Z" fill="currentColor"></path></svg>
+                        Видалити
+                    </div>
+                </div>
+            </div>
+            <div class="user-cart-head-body">
+                <div class="cart-head-body-inner">
+                    <div class="cart-head-body-left">
+                        <p class="text">
+                            Зверніть увагу, що під час замовлення вашого кошика, ціна та доступність товарів можуть змінюватися в залежності від умов доставки та вказаної адреси.
+                        </p>
+                    </div>
+                    <div class="cart-head-body-right">
+                        <div class="info">
+                            <p class="info-price">-</p>
+                            <p class="info-count">-</p>
+                        </div>
+                        <div class="btns">
+                            <div class="cart-btn" style="margin-right:0.5rem;">
+                                <svg width="1.000rem" height="1.000rem" viewBox="0 0 16 16" fill="none"style="fill:none; margin-right:0.5rem;" xmlns="http://www.w3.org/2000/svg" class=""><path d="M1 1H2.92593L4.5 10H13.037L14 3H13.037" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="4.5" cy="14.5" r="1" fill="currentColor" stroke="currentColor"></circle><circle cx="12.5" cy="14.5" r="1" fill="currentColor" stroke="currentColor"></circle><rect x="8" width="1" height="6" fill="currentColor"></rect><path d="M6 4L8.5 6.5L11 4" stroke="currentColor"></path></svg>
+                                <span class="btn-text">Замовити кошик</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="user-cart-body">
+            <div class="user-cart-body-products">
+                <ul class="cart-body-products-list">
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
