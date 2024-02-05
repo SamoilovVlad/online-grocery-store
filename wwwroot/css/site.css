@@ -4145,7 +4145,7 @@ ul {
     .cart-maker-container svg {
         position: absolute;
         cursor: pointer;
-        top: 0.5rem;
+        top: 1rem;
         right: 1rem;
     }
 

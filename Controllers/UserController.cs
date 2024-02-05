@@ -326,5 +326,6 @@ namespace Shop_Mvc.Controllers
         public void DeleteUserCart(int cartId, string userId) => _DatabaseServise.DeleteUserCart(cartId, userId);
         public void UpdateProfileUserCartProduct(int cartId, int productId, int count) => _DatabaseServise.UpdateUserCartProduct(cartId, productId, count);
         public void DeleteProfileUserCartProduct(int cartId, int productId) => _DatabaseServise.DeleteProfileUserCartProduct(cartId, productId);
+        public void RenameUserCart(int cartId, string cartName) => _DatabaseServise.RenameUserCart(cartId, cartName);
     }
 }

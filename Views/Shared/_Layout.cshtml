@@ -10,7 +10,7 @@
 <body>
     <div id="loader-green" class="loader"></div>
     <div id="loader-black" class="loader"></div>
-    <div id="overlayDark" class="overlay-dark" onclick="CloseCartMaker()"></div>
+    <div id="overlayDark" class="overlay-dark" onclick="CloseCartMaker(), CloseCartEditor()"></div>
     <div class="msg-box">
         <svg width="0.800rem" height="0.800rem" viewBox="0 0 16 16" fill="none" onclick="CloseMsgBox()" xmlns="http://www.w3.org/2000/svg" style="cursor:pointer; position:absolute; top:10px; left:10px;" class=""><path b-o8qoazfa8l="" d="M2 2L14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path b-o8qoazfa8l="" d="M14 2L2 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
         <span id="msgBoxTitle" style="margin-bottom:auto.5rem;"></span>
@@ -2336,6 +2336,11 @@
         }
         function formInput9OnActive() {
             const cartMaker = document.querySelector('.cart-maker-container-content');
+            cartMaker.style.marginTop = '35px';
+        }
+        function formInput10OnActive() {
+            const cartEditor = document.querySelector('#cartEditor');
+            const cartMaker = cartEditor.querySelector('.cart-maker-container-content');
             cartMaker.style.marginTop = '35px';
         }
     </script>

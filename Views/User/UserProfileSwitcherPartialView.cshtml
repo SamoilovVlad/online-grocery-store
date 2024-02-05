@@ -1,4 +1,22 @@
 ﻿@model User
+<div class="cart-maker-container" id="cartEditor">
+    <svg width="1.000rem" height="1.000rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="" onclick="CloseCartEditor()" style="top:10px; right:10px;"><path b-o8qoazfa8l="" d="M2 2L14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path b-o8qoazfa8l="" d="M14 2L2 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    <h1>Редагувати назву кошика</h1>
+    <div class="input-form">
+        <input class="input-form-input" inputmode="text" placeholder="Назва кошика" value="" maxlength="15" onblur="GetPasiveInput(event)" onfocus="GetActiveInput(event), formInput10OnActive()" id="formInput10">
+        <span class="input-form-placeholder" id="formPlaceholder10"></span>
+        <span class="input-form-label" id="formLabel10">Назва кошика</span>
+        <span class="error-span" id="errorSpan10">назва не може бути пустою</span>
+    </div>
+    <div class="cart-maker-container-content">
+        <p>Кількість товарів:<strong id="cartMakerCount">3</strong></p>
+        <p>Сума:<strong id="cartMakerPrice">4013.93</strong>грн</p>
+    </div>
+    <div style="display:flex; justify-content:space-between; margin-top:auto; margin-bottom: 10px; width:100%;">
+        <div class="btn cancel" onclick="CloseCartEditor()">Відмінити</div>
+        <div class="btn accept" onclick="UpdateCart()">Підтвердити</div>
+    </div>
+</div>
 <div class="user-profile-nav-bar">
     <div class="user-profile-nav-bar-top">
         <div class="user-profile-nav-bar-icon">

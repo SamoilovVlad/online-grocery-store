@@ -65,6 +65,7 @@ namespace Shop_Mvc.Services
         public Cart GetCartById(int cartId);
         public void UpdateUserCartProduct(int cartId, int productId, int count);
         public void DeleteProfileUserCartProduct(int cartId, int productId);
+        public void RenameUserCart(int cartId, string cartName);
     }
     public class DatabaseServise : IDatabaseServise
     {
@@ -815,6 +816,12 @@ namespace Shop_Mvc.Services
         {
             var product = _context.CartProducts.FirstOrDefault(p => p.cart_Id == cartId && p.product_Id == productId);
             _context.CartProducts.Remove(product);
+            _context.SaveChanges();
+        }
+        public void RenameUserCart(int cartId, string cartName)
+        {
+            var cart = _context.Carts.FirstOrDefault(c => c.id == cartId);
+            cart.cartName = cartName;
             _context.SaveChanges();
         }
     }

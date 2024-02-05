@@ -260,7 +260,7 @@
             });
             deleteFavoriteBtn.classList.remove('button-disabled');
             selectBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="" style="" width="1.000rem" height="1.000rem" fill="none"><path d="M2 2L14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M14 2L2 14"></path></svg>
-                                                                   <span>Зняти відмітки</span>`;
+                                                                               <span>Зняти відмітки</span>`;
         }
         else {
             products.forEach(product => {
@@ -273,7 +273,7 @@
             });
             deleteFavoriteBtn.classList.add('button-disabled');
             selectBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 17" class="" style="transform: scale(1.1);"><circle fill="none" stroke="currentColor" stroke-width="2" cx="8.5" cy="8.5" r="7"></circle><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M11.5,6.5l-4.3,4L5.5,8.9"></path></svg>
-                                                                   <span>Вибрати всі товари</span>`;
+                                                                               <span>Вибрати всі товари</span>`;
         }
     }
 
@@ -292,13 +292,13 @@
             document.querySelector('.heart-icon path').classList.remove('active');
             const container = document.querySelector('.user-profile-content-main')
             container.innerHTML = `
-                                                <div class="user-profile-content-empty">
-                                                    <span class="user-profile-content-empty-title">У вас поки що немає збережених товарів</span>
-                                                <a href="/" style="text-decoration:none;">
-                                                    <div class="user-profile-content-empty-button">Перейти на головну</div>
-                                                </a>
-                                                </div>
-                                            `;
+                                                            <div class="user-profile-content-empty">
+                                                                <span class="user-profile-content-empty-title">У вас поки що немає збережених товарів</span>
+                                                            <a href="/" style="text-decoration:none;">
+                                                                <div class="user-profile-content-empty-button">Перейти на головну</div>
+                                                            </a>
+                                                            </div>
+                                                        `;
         }
         else
             document.querySelector('.products-filter-container-round-count').textContent = products.length;
@@ -367,43 +367,43 @@
 
     function MakeHtmlForUserCartProduct(prod) {
         return `
-                                <li class="products-list-item" id="cartProduct${prod.product_Id}">
-                                                ${prod.promo && prod.promo !== 'null' ? `<div style="z-index:2;" class="main-page-product-promo" id="promo${prod.id}">
-                                                                        <p class="main-page-product-promo-text">${prod.promo}</p>
-                                                                    </div>` : ''}
+                                            <li class="products-list-item" id="cartProduct${prod.product_Id}">
+                                                            ${prod.promo && prod.promo !== 'null' ? `<div style="z-index:2;" class="main-page-product-promo" id="promo${prod.id}">
+                                                                                    <p class="main-page-product-promo-text">${prod.promo}</p>
+                                                                                </div>` : ''}
 
-                                                <div class="products-list-item-inner">
-                                                    <div class="product-item-inner-body">
-                                                        <div class="item-inner-body-image">
-                                                            <img src="/Product_Images/product_${prod.product_Id}.jpg" />
-                                                        </div>
-                                                        <div class="item-inner-body-info">
-                                                            <div class="inner-body-info-inner">
-                                                                    <a class="product-link" href="/Home/ProductView/${prod.product_Id}" style="text-decoration:none !important; color:black">${prod.title}</a>
-                                                                    <div id="${prod.product_Id}" class="cart-body-item-info-count-btn">
-                                                                                <svg onclick="UserCartMinus(event.target.id)" id="${prod.product_Id}"  width="2.000rem" height="2.000rem" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="${prod.product_Id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
-                                                                    <div style="height:100%; width:60px; position:relative; display:flex; align-items:center; justify-content:center;">
-                                                                                    <input id="userCartInput${prod.product_Id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" class="num-input user-cart-input" value="${prod.count}">
-                                                                            <span id="userCartSpan${prod.product_Id}" class="cart-body-item-info-count-btn-counter-num">${prod.count}</span>
-                                                                        <span class="cart-body-item-info-count-btn-counter-text">шт</span>
+                                                            <div class="products-list-item-inner">
+                                                                <div class="product-item-inner-body">
+                                                                    <div class="item-inner-body-image">
+                                                                        <img src="/Product_Images/product_${prod.product_Id}.jpg" />
                                                                     </div>
-                                                                                    <svg onclick="UserCartPlus(event.target.id)" id="${prod.product_Id}" width="2.000rem" height="2.000rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="${prod.product_Id}" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="${prod.product_Id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                                    <div class="item-inner-body-info">
+                                                                        <div class="inner-body-info-inner">
+                                                                                <a class="product-link" href="/Home/ProductView/${prod.product_Id}" style="text-decoration:none !important; color:black">${prod.title}</a>
+                                                                                <div id="${prod.product_Id}" class="cart-body-item-info-count-btn">
+                                                                                            <svg onclick="UserCartMinus(event.target.id)" id="${prod.product_Id}"  width="2.000rem" height="2.000rem" viewBox="0 0 32 32" fill="none" cursor="pointer" xmlns="http://www.w3.org/2000/svg" class=""><rect id="${prod.product_Id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                                                <div style="height:100%; width:60px; position:relative; display:flex; align-items:center; justify-content:center;">
+                                                                                                <input id="userCartInput${prod.product_Id}" type="text" inputmode="numeric" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '');" class="num-input user-cart-input" value="${prod.count}">
+                                                                                        <span id="userCartSpan${prod.product_Id}" class="cart-body-item-info-count-btn-counter-num">${prod.count}</span>
+                                                                                    <span class="cart-body-item-info-count-btn-counter-text">шт</span>
+                                                                                </div>
+                                                                                                <svg onclick="UserCartPlus(event.target.id)" id="${prod.product_Id}" width="2.000rem" height="2.000rem" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" cursor="pointer" style="justify-self:end;"><rect id="${prod.product_Id}" x="15" y="10" width="2" height="12" rx="1" fill="currentColor"></rect><rect id="${prod.product_Id}" x="22" y="15" width="2" height="12" rx="1" transform="rotate(90 22 15)" fill="currentColor"></rect></svg>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="item-inner-body-other">
+                                                                        <div class="inner-body-other-price">
+                                                                                            ${prod.promo && prod.promo !== 'null' ? `<p class="total-price" style="color:red">${(prod.price * prod.count).toFixed(2)} грн</p>` : `<p class="total-price">${(prod.price * prod.count).toFixed(2)} грн</p>`}
+                                                                                        <p class="price-per-product">${prod.price} грн за шт</p>
+                                                                        </div>
+                                                                        <div class="inner-body-other-btns">
+                                                                                                    <div class="btn" onclick="DeleteUserCartProduct(event.target.id)" id="${prod.product_Id}"><svg id="${prod.product_Id}" width="1.000rem" height="1.000rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path id="${prod.product_Id}" d="M2 4H3.33333H14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path id="${prod.product_Id}" d="M4.99976 4V2.66667C4.99976 2.31305 5.14023 1.64005 5.39028 1.39C5.64033 1.13995 5.97947 1 6.33309 1L9.66642 1C10.02 1 10.3592 1.13995 10.6092 1.39C10.8593 1.64005 10.9998 2.31305 10.9998 2.66667V4M12.9998 4V13.6667C12.9998 14.0203 12.8593 14.3594 12.6092 14.6095C12.3592 14.8595 12.02 15 11.6664 15H4.33309C3.97947 15 3.64033 14.8595 3.39028 14.6095C3.14023 14.3594 2.99976 14.0203 2.99976 13.6667V4H12.9998Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path id="${prod.product_Id}" d="M6.5 7.5V11.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path><path id="${prod.product_Id}" d="M9.5 7.5V11.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="item-inner-body-other">
-                                                            <div class="inner-body-other-price">
-                                                                                ${prod.promo && prod.promo !== 'null' ? `<p class="total-price" style="color:red">${(prod.price * prod.count).toFixed(2)} грн</p>` : `<p class="total-price">${(prod.price * prod.count).toFixed(2)} грн</p>`}
-                                                                            <p class="price-per-product">${prod.price} грн за шт</p>
-                                                            </div>
-                                                            <div class="inner-body-other-btns">
-                                                                                        <div class="btn" onclick="DeleteUserCartProduct(event.target.id)" id="${prod.product_Id}"><svg id="${prod.product_Id}" width="1.000rem" height="1.000rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path id="${prod.product_Id}" d="M2 4H3.33333H14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path id="${prod.product_Id}" d="M4.99976 4V2.66667C4.99976 2.31305 5.14023 1.64005 5.39028 1.39C5.64033 1.13995 5.97947 1 6.33309 1L9.66642 1C10.02 1 10.3592 1.13995 10.6092 1.39C10.8593 1.64005 10.9998 2.31305 10.9998 2.66667V4M12.9998 4V13.6667C12.9998 14.0203 12.8593 14.3594 12.6092 14.6095C12.3592 14.8595 12.02 15 11.6664 15H4.33309C3.97947 15 3.64033 14.8595 3.39028 14.6095C3.14023 14.3594 2.99976 14.0203 2.99976 13.6667V4H12.9998Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path id="${prod.product_Id}" d="M6.5 7.5V11.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path><path id="${prod.product_Id}" d="M9.5 7.5V11.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                            `
+                                                        </li>
+                                        `
     }
 
     function SetPriceAndCoutInUserCart(products) {
@@ -462,15 +462,15 @@
         const inputs = document.querySelectorAll('.user-cart-input');
         inputs.forEach(input => {
             var id = input.id.slice(13);
-            var span = document.getElementById('userCartSpan'+id);
-            input.addEventListener('input', function(){
+            var span = document.getElementById('userCartSpan' + id);
+            input.addEventListener('input', function () {
                 span.textContent = input.value;
                 UpdateCartProductTotalPrice('cartProduct' + id, span.textContent);
                 UpdateCartProductsTotalPrice();
             });
-            input.addEventListener('blur', function(){
+            input.addEventListener('blur', function () {
                 const cartId = document.querySelector('.profile-user-cart').id;
-                if(input.value === ''){
+                if (input.value === '') {
                     input.value = 1;
                     span.textContent = 1;
                 }
@@ -486,7 +486,7 @@
         price.textContent = (pricePerProduct * count).toFixed(2) + ' грн';
     }
 
-    function UpdateCartProductsCount(){
+    function UpdateCartProductsCount() {
         var products = document.querySelectorAll('.products-list-item');
         var count = document.querySelector('.info-count');
         count.textContent = products.length + ' товарів';
@@ -503,7 +503,7 @@
         document.querySelector('.info-price').textContent = sum.toFixed(2) + ' грн';
     }
 
-    function DeleteUserCartProduct(id){
+    function DeleteUserCartProduct(id) {
         const cartId = document.querySelector('.profile-user-cart').id;
         fetch(`/User/DeleteProfileUserCartProduct?cartId=${cartId}&productId=${id}`);
         const product = document.getElementById('cartProduct' + id);
@@ -512,13 +512,62 @@
         UpdateCartProductsCount();
     }
 
-    function DeleteUserCartCartView(){
+    function DeleteUserCartCartView() {
         var userId = GetUserId();
         var cartId = document.querySelector('.profile-user-cart').id;
         ShowLoader();
         fetch(`/User/DeleteUserCart?cartId=${cartId}&userId=${userId}`)
-        .then(()=>{
-            GetProfile('Особиста полиця');
-        })
+            .then(() => {
+                GetProfile('Особиста полиця');
+            })
+    }
+
+    function ShowCartEditor() {
+        var cartEditor = document.getElementById('cartEditor');
+        var overlay = document.querySelector('#overlayDark');
+        var cartName = document.querySelector('.user-cart-head-top span').textContent;
+        var input = cartEditor.querySelector('#formInput10');
+        input.value = cartName;
+        var price = document.querySelector('.info-price').textContent;
+        var count = document.querySelector('.info-count').textContent;
+        var cartPrice = cartEditor.querySelector('#cartMakerPrice');
+        var cartCount = cartEditor.querySelector('#cartMakerCount');
+        cartPrice.textContent = price.slice(0, -3);
+        cartCount.textContent = count.slice(0, -8);
+        cartEditor.classList.add('active');
+        cartEditor.style.opacity = '1';
+        overlay.classList.add('active');
+        overlay.style.opacity = '0.8';
+    }
+    function CloseCartEditor() {
+        var cartEditor = document.getElementById('cartEditor');
+        if (cartEditor) {
+            var overlay = document.querySelector('#overlayDark');
+            cartEditor.style.opacity = '0';
+            overlay.style.opacity = '0';
+            setTimeout(function () {
+                cartEditor.classList.remove('active');
+                overlay.classList.remove('active');
+            }, 500);
+        }
+    }
+    function UpdateCart() {
+        const cartEditor = document.querySelector('#cartEditor');
+        var input = cartEditor.querySelector('#formInput10');
+        if (input.value.length === 0) {
+            input.style.border = '0.12rem solid #ff5631';
+            var errorSpan = cartEditor.querySelector('#errorSpan10');
+            errorSpan.style.display = 'block';
+            const cartMaker = cartEditor.querySelector('.cart-maker-container-content');
+            cartMaker.style.marginTop = '19px';
+
+        }
+        else {
+            var cartName = input.value;
+            document.querySelector('.user-cart-head-top .title .text').textContent = cartName;
+            var cartId = document.querySelector('.profile-user-cart').id;
+            fetch(`/User/RenameUserCart?cartId=${cartId}&cartName=${cartName}`);
+            CloseCartEditor();
+        }
     }
 </script>
