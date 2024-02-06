@@ -2701,7 +2701,7 @@ ul {
 .product-link {
     display: flex;
     padding: 0 2rem;
-    text-decoration:none;
+    text-decoration: none;
 }
 
 .product-link-item {
@@ -3843,7 +3843,7 @@ ul {
     display: flex;
     justify-content: space-between;
     padding: 1.25rem 1.25rem 1rem;
-    cursor:pointer;
+    cursor: pointer;
 }
 
     .item-inner .card-header p {
@@ -4549,7 +4549,7 @@ ul {
         align-items: center;
         margin-right: 0.9375rem;
         color: #222324;
-        cursor:pointer;
+        cursor: pointer;
     }
 
     .user-cart-head-top .text {
@@ -4695,7 +4695,7 @@ ul {
     padding: 0;
     margin: 0;
     list-style: none;
-    position:relative;
+    position: relative;
 }
 
 .products-list-item {
@@ -4765,7 +4765,7 @@ ul {
         font-family: CeraPro,-apple-system,BlinkMacSystemFont,Arial,sans-serif;
         font-weight: 400;
         padding: 0;
-        text-decoration:none;
+        text-decoration: none;
     }
 
 .item-inner-body-other {
@@ -4773,16 +4773,19 @@ ul {
     align-items: center;
     justify-content: space-between;
 }
+
 .inner-body-other-price {
     display: flex;
     flex-direction: column;
 }
+
     .inner-body-other-price .total-price {
         font-size: 1rem;
         font-weight: 700;
         color: #222324;
         white-space: nowrap;
     }
+
     .inner-body-other-price .price-per-product {
         margin-top: 0.375rem;
         color: #222324;
@@ -4793,11 +4796,12 @@ ul {
         font-family: CeraPro,-apple-system,BlinkMacSystemFont,Arial,sans-serif;
         font-weight: 400;
     }
-        .inner-body-other-btns {
-            display: flex;
-            justify-content: flex-end;
-            width: 100%;
-        }
+
+.inner-body-other-btns {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
 
 @media (min-width: 1280px) {
     .item-inner-body-other {
@@ -4817,11 +4821,13 @@ ul {
         align-self: flex-end;
         justify-content: flex-end;
     }
+
     .item-inner-body-other {
         flex-direction: column-reverse;
         align-items: flex-end;
         align-self: auto;
     }
+
         .item-inner-body-other .btn {
             flex-shrink: 0;
             width: 1rem;
@@ -4829,8 +4835,9 @@ ul {
             color: #222324;
             cursor: pointer;
             transition: color .1s;
-            cursor:pointer;
-        } 
+            cursor: pointer;
+        }
+
     .inner-body-other-price {
         width: auto;
         margin-top: 1.5rem;
@@ -4843,6 +4850,7 @@ ul {
     .item-inner-body-image {
         margin-right: 0;
     }
+
     .inner-body-other-btns {
         margin-top: 0.375rem;
     }
@@ -4858,10 +4866,140 @@ ul {
     .item-inner-body-info {
         margin-right: 1.375rem;
     }
-    .inner-body-other-price .total-price{
-        font-size:0.875rem;
+
+    .inner-body-other-price .total-price {
+        font-size: 0.875rem;
     }
-    .inner-body-other-price .price-per-product{
+
+    .inner-body-other-price .price-per-product {
         margin-top: 0.125rem;
     }
 }
+
+.user-settings-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 26.0625rem;
+    padding: 1.5rem;
+    overflow: auto;
+    background-color: #fff;
+    border-radius: 0.25rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(34,35,36,.2);
+}
+
+.settings-container-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 0.0625rem solid rgba(0,0,0,.1);
+}
+
+    .settings-container-head p {
+        font-size: 1.5rem;
+        line-height: 110%;
+        font-family: CeraPro,-apple-system,BlinkMacSystemFont,Arial,sans-serif;
+        font-weight: 700;
+    }
+
+.settings-body-data-list {
+    max-width: 31.25rem;
+}
+
+.settings-body-data-list-inner {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -1rem -2rem;
+    transition: 0.5s ease;
+}
+
+.data-list-inner-item {
+    width: calc(50% - 2rem);
+    padding: 0 1rem;
+    margin-bottom: 2rem;
+    font-size: .875rem;
+    line-height: 160%;
+    font-family: CeraPro,-apple-system,BlinkMacSystemFont,Arial,sans-serif;
+    font-weight: 400;
+}
+
+    .data-list-inner-item .label {
+        margin-bottom: 0.125rem;
+        color: #797b80;
+    }
+
+    .data-list-inner-item .text {
+        word-break: break-word;
+    }
+
+.settings-body-data-editor-list-inner {
+    display: none;
+    flex-wrap: wrap;
+    margin: 0 -1rem -2rem;
+    transition: 0.5s ease;
+    opacity:0;
+}
+
+.settings-editor-btns {
+    display: none;
+    margin-top: 2rem;
+    transition: 0.5s ease;
+    opacity:0;
+}
+
+.settings-editor-btn-cancel {
+    padding: 0.8125rem 1.5rem;
+    margin-right: 0.5rem;
+    color: #222324;
+    border: 0.0625rem solid #b1b4b9;
+    transition: border-color .1s;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 1.5rem;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 0.25rem;
+}
+
+    .settings-editor-btn-cancel .text {
+        font-size: .875rem;
+        line-height: 160%;
+        font-family: CeraPro,-apple-system,BlinkMacSystemFont,Arial,sans-serif;
+        font-weight: 700;
+    }
+
+    .settings-editor-btn-cancel:hover {
+        border-color: black;
+    }
+
+.settings-editor-btn-submit {
+    width: 10rem;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    color: #fff;
+    background: #42ac35;
+    align-items: center;
+    height: 1.5rem;
+    padding: 0.8125rem 1rem;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    transition: 0.2s;
+}
+
+    .settings-editor-btn-submit:hover {
+        background-color: #48bb3a;
+    }
+
+    .settings-editor-btn-submit .text {
+        font-size: .875rem;
+        line-height: 160%;
+        font-family: CeraPro,-apple-system,BlinkMacSystemFont,Arial,sans-serif;
+        font-weight: 700;
+    }

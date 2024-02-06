@@ -66,6 +66,8 @@ namespace Shop_Mvc.Services
         public void UpdateUserCartProduct(int cartId, int productId, int count);
         public void DeleteProfileUserCartProduct(int cartId, int productId);
         public void RenameUserCart(int cartId, string cartName);
+        public User GetUserById(string userId);
+        public void UpdateUserPersonalData(string userId, string name, string surname, string secondName, string phoneNumber);
     }
     public class DatabaseServise : IDatabaseServise
     {
@@ -822,6 +824,16 @@ namespace Shop_Mvc.Services
         {
             var cart = _context.Carts.FirstOrDefault(c => c.id == cartId);
             cart.cartName = cartName;
+            _context.SaveChanges();
+        }
+        public User GetUserById(string userId) => _context.Users.FirstOrDefault(u => u.Id == userId);
+        public void UpdateUserPersonalData(string userId, string name, string surname, string secondName, string phoneNumber)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Id == userId);
+            user.Name = name;
+            user.Surname = surname;
+            user.SecondName = secondName;
+            user.PhoneNumber = phoneNumber;
             _context.SaveChanges();
         }
     }

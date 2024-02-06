@@ -327,5 +327,11 @@ namespace Shop_Mvc.Controllers
         public void UpdateProfileUserCartProduct(int cartId, int productId, int count) => _DatabaseServise.UpdateUserCartProduct(cartId, productId, count);
         public void DeleteProfileUserCartProduct(int cartId, int productId) => _DatabaseServise.DeleteProfileUserCartProduct(cartId, productId);
         public void RenameUserCart(int cartId, string cartName) => _DatabaseServise.RenameUserCart(cartId, cartName);
+        public IActionResult UserSettingsPartialView(string userId)
+        {
+            var user = _DatabaseServise.GetUserById(userId);
+            return PartialView(user);
+        }
+        public void UpdateUserPersonalData(string userId, string name, string surname, string secondName, string phoneNumber) => _DatabaseServise.UpdateUserPersonalData(userId, name, surname, secondName, phoneNumber);
     }
 }
