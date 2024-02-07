@@ -12,16 +12,12 @@
             <div class="header-bottom-item-dot active" onclick="GetMainPartialOnClick(event), ShowLoader()"></div>
         </div>
         <div class="header-bottom-item">
-            <p class="header-bottom-item-text" onclick="GetSecondPartial(event), ShowLoader()">Доставка</p>
+            <p class="header-bottom-item-text" onclick="GetSecondPartial(event), ShowLoader()">Всі акції</p>
             <div class="header-bottom-item-dot" onclick="GetSecondPartial(event), ShowLoader()"></div>
         </div>
         <div class="header-bottom-item">
             <p class="header-bottom-item-text" onclick="GetThirdPartial(event), ShowLoader()">Особиста полиця</p>
             <div class="header-bottom-item-dot" onclick="GetThirdPartial(event), ShowLoader()"></div>
-        </div>
-        <div class="header-bottom-item">
-            <p class="header-bottom-item-text" onclick="GetFourthPartial(event), ShowLoader()">Всі акції</p>
-            <div class="header-bottom-item-dot" onclick="GetFourthPartial(event), ShowLoader()"></div>
         </div>
     </div>
     <div id="partialContainer" style="height:calc(100% - 7rem);">@Html.Partial("MainPartialView", Model.mainPartialViewModel)</div>

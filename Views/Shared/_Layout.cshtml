@@ -157,30 +157,9 @@
             <div class="catalog-menu-wrapper">
                 <ul class="catalog-menu-items">
                     <li class="catalog-menu-item">
-                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Кулінарія" onclick="ShowLoader()">
-                            <img class="catalog-menu-img" src="~/Images/Sale.webp" />
-                            <span class="catalog-menu-item-text">Акційні товари</span>
-                            <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
-                        </a>
-                    </li>
-                    <li class="catalog-menu-item">
                         <a class="catalog-menu-item-link" onclick="ShowLoader();" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Солодощі, снеки">
                             <img class="catalog-menu-img" src="~/Images/Donat.webp" />
                             <span class="catalog-menu-item-text">Солодощі, снеки</span>
-                            <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
-                        </a>
-                    </li>
-                    <li class="catalog-menu-item">
-                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Кулінарія" onclick="ShowLoader();">
-                            <img class="catalog-menu-img" src="~/Images/Heart.webp" />
-                            <span class="catalog-menu-item-text">Серце</span>
-                            <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
-                        </a>
-                    </li>
-                    <li class="catalog-menu-item">
-                        <a class="catalog-menu-item-link" asp-controller="Categories" asp-action="SubcategoriesView" asp-route-categoryName="Кулінарія" onclick="ShowLoader();">
-                            <img class="catalog-menu-img" src="~/Images/Sport.webp" />
-                            <span class="catalog-menu-item-text">Для спротсменів</span>
                             <img style="margin-right:0.5rem;" src="https://novus.online/svg/arrow-thin-right-white.svg" />
                         </a>
                     </li>
@@ -376,7 +355,7 @@
                         </svg>
                         <p style="margin:0;">Каталог товарів</p>
                     </button>
-                    <div class="burger-menu-body-cart-mini">
+                    @*<div class="burger-menu-body-cart-mini">
                         <div class="burger-menu-body-cart-head">
                             <div class="cart-icon">
                                 <svg width="1.5rem" height="1.5rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="cart-button__icon-svg"><path d="M1 1H2.92593L4.5 10H13L14 3H5.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="4.5" cy="14.5" r="1" fill="currentColor" stroke="currentColor"></circle><circle cx="12.5" cy="14.5" r="1" fill="currentColor" stroke="currentColor"></circle></svg>
@@ -385,7 +364,7 @@
                                 Кошик
                             </p>
                         </div>
-                    </div>
+                    </div>*@
                     <div class="burger-menu-body-left-side-items">
                         <p class="burger-menu-body-left-side-item">Акції</p>
                         <p class="burger-menu-body-left-side-item">Про компанію</p>
