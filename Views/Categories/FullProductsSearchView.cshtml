@@ -194,10 +194,6 @@
         }
     </div>
 </div>
-
-
-
-
 <script>
     var isFilterOpen = false;
     var isCheckBox = !@Model.onlySales.ToString().ToLower();
@@ -213,40 +209,11 @@
     arrowBtns = Array.from(arrowBtns);
     var overlay = document.querySelector('body');
 
-    //overlay.addEventListener('click', function (event) {
-    //    var menu = document.querySelector('.product-menu');
-    //    var products = document.querySelector('.products-view-products-container');
-    //    if (!menu.contains(event.target) && !products.contains(event.target)) {
-    //        overlay.classList.remove('.overlay');
-    //        CloseProductMenu();
-    //    }
-    //});
-
-    //function LOAD() {
-    //    $('#skeleton').show();
-
-    //    setTimeout(function () {
-    //        $('#skeleton').hide();
-    //        location.reload();
-    //    }, 3000);
-    //}
-
     document.addEventListener('DOMContentLoaded', function () {
         CheckBoxPromoProducts()
         SetPagenatedBtns();
         SetPageNumbers();
         SetPagenatedArrowBtns();
-        //for(var i = 0; i < choosenFilter.length; i++)
-        //{
-        //    console.log(choosenFilter[i].textContent.trim().toLowerCase());
-        //    console.log(decodeURIComponent('@Html.Raw(Model.sortedBy)').trim().toLowerCase());
-        //    console.log(choosenFilter[i].textContent.trim().toLowerCase() === decodeURIComponent('@Html.Raw(Model.sortedBy)').trim().toLowerCase());
-
-        //    if (choosenFilter[i].textContent.trim().toLowerCase() === decodeURIComponent('@Html.Raw(Model.sortedBy)').trim().toLowerCase()) {
-        //        console.log(decodeURIComponent('@Html.Raw(Model.sortedBy)'))
-        //        choosenFilter[i].style.fontWeight = '700';
-        //    }
-        //}
         $('#skeleton').hide();
     });
 
