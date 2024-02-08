@@ -40,20 +40,14 @@ git clone https://github.com/j0zeff/online-grocery-store.git
 cd your-project-directory
 ```
 
-## 3. Update appsettings.json file:
-Open the appsettings.json file and add the following connection string to connect to the database:
-Here you can see and rewrite connection string:
-
-![Connection String](Project_images/connection%20string.jpg)
-
-## 4. Install Dependencies:
+## 3. Install Dependencies:
 Ensure you have .NET Core SDK installed. Then, restore the project dependencies using:
 ```
 
 dotnet restore
 ```
 
-## 5. Run the Application:
+##4. Run the Application:
 ```
 
 dotnet run
