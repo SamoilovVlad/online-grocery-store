@@ -62,7 +62,8 @@ dotnet run
 ```
 
 # Technologies Used:
-+ **Asp.Net Core MVC**
++ **.NET**
+  + **Asp.Net Core MVC**
   + **C#**
   + **Entity Framework**
   + **Identity Framework**
