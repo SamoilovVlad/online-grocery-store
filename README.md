@@ -44,7 +44,13 @@ cd your-project-directory
 Open the appsettings.json file and add the following connection string to connect to the database:
 ```
 Set this string to your connection string in appsettings.json
+var server = "aws.connect.psdb.cloud";
+var database = "storedb";
+var user = "cp8wfr8nhc1cuzoahsq1";
+var password = "pscale_pw_8ORxLPd27NPFe5Y4WC4M24uGefeHnVYReg9jMy5boKN";
+var sslMode = "VerifyFull";
 
+your connection string should be like  "MyDbContext": "Server=" + server + ";Database=" + database + ";user=" + user + ";password=" + password + ";SslMode=" + sslMode + ";"
 ```
 
 ## 4. Install Dependencies:
