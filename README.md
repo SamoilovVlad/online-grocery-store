@@ -43,7 +43,7 @@ cd your-project-directory
 ## 3. Update appsettings.json file:
 Open the appsettings.json file and add the following connection string to connect to the database:
 ```
-Set this string to your connection string in appsettings.jsonServer=aws.connect.psdb.cloud;Database=storedb;user=pn2c10fltqk5s8bepnxi;password=pscale_pw_68r9VbsLOA1a21uSc9bDYb1LPVN2bJry7fq5ulHe5AR;SslMode=VerifyFull;
+Set this string to your connection string in appsettings.json"Serv+er=aws.con+nect.psdb.cloud;Database=stored+b;user=5yvelu02tsnump11f70r;+password=pscale_pw_rYjHsAwMJRSS9R0AJUHTgJ0i8aOmjOaul5IIYF8d0PU;SslMode=VerifyFull;"
 ```
 
 ## 4. Install Dependencies:
