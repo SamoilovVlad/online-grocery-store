@@ -42,16 +42,8 @@ cd your-project-directory
 
 ## 3. Update appsettings.json file:
 Open the appsettings.json file and add the following connection string to connect to the database:
-```
-Set this string to your connection string in appsettings.json
-server = "//aws.connect.psdb.cloud//"
-database = "//storedb//"
-user = "//2f5o92sudlxgu7noww1l//"
-password = "//pscale_pw_E1gG56h9M9fcQy51lBvY2Fdqs1K0qDE32DNqyx39zh3//"
-ssl_mode = "//VerifyFull//"
-
-your connection string should be like  "MyDbContext": "Server=" + server + ";Database=" + database + ";user=" + user + ";password=" + password + ";SslMode=" + sslMode + ";"
-```
+Here you can see and rewrite connection string:
+![connection string]("Project_images/connection string.jpg")
 
 ## 4. Install Dependencies:
 Ensure you have .NET Core SDK installed. Then, restore the project dependencies using:
