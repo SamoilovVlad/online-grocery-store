@@ -44,7 +44,7 @@ cd your-project-directory
 Open the appsettings.json file and add the following connection string under MyDbContext to connect to the database:
 ```
 "ConnectionStrings": {
-    "MyDbContext": "server=aws.connect.psdb.cloud;user=623yona9shgvtgzulwyc;database=storedb;port=3306;password=pscale_pw_zzHSSFXlFnGGy9RRgD4fns72kmAGMUbzI5BZ9hnVI0O;SslMode=VerifyFull"
+    "MyDbContext": "Server=aws.connect.psdb.cloud;Database=storedb;user=40r49lvfja55nnnat337;password=pscale_pw_m7f8XEioYso1U64d5zTjrVIN7ejcBqzRSyYSkG5OQAC;SslMode=VerifyFull;"
   },
 ```
 
