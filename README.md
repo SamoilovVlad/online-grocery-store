@@ -43,7 +43,7 @@ cd your-project-directory
 ## 3. Update appsettings.json file:
 Open the appsettings.json file and add the following connection string to connect to the database:
 Here you can see and rewrite connection string:
-![connection string]("Project_images/connection string.jpg")
+![Connection String](Project_images/connection string.jpg)
 
 ## 4. Install Dependencies:
 Ensure you have .NET Core SDK installed. Then, restore the project dependencies using:
