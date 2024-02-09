@@ -16,8 +16,8 @@
             <div class="header-bottom-item-dot" onclick="GetSecondPartial(event), ShowLoader()"></div>
         </div>
         <div class="header-bottom-item">
-            <p class="header-bottom-item-text" onclick="GetThirdPartial(event), ShowLoader()">Особиста полиця</p>
-            <div class="header-bottom-item-dot" onclick="GetThirdPartial(event), ShowLoader()"></div>
+            <p class="header-bottom-item-text" onclick="ShowLoader(), GetThirdPartial(event)">Особиста полиця</p>
+            <div class="header-bottom-item-dot" onclick="ShowLoader(), GetThirdPartial(event)"></div>
         </div>
     </div>
     <div id="partialContainer" style="height:calc(100% - 7rem);">@Html.Partial("MainPartialView", Model.mainPartialViewModel)</div>
@@ -39,13 +39,6 @@
         slides = document.querySelectorAll('.slider-img');
         slider.style.gridTemplateColumns = `repeat(${slides.length}, 100%)`;
 
-
-        //data.forEach(sliderImage => {
-        //    const img = document.createElement('img');
-        //    img.src = 'data:image/png;base64,' + sliderImage.image;
-        //    img.classList.add('slider-img');
-        //    slider.appendChild(img);
-        //});
         slides = document.querySelectorAll('.slider-img');
         categories = Array.from(document.querySelectorAll('.main-page-category'));
         dotsContainer = document.querySelector('.slider-dots-container');
@@ -64,19 +57,6 @@
         }
         dotsContainer.firstElementChild.classList.add('active-dot');
         dotsArray = Array.from(dotsContainer.children);
-
-        //const productInputsArray = Array.from(document.getElementsByClassName('num-input-product'));
-        //productInputsArray.forEach(productInput => {
-        //    productInput.addEventListener('input', () => {
-        //        const id = productInput.id.match(/\d+/);
-        //        const productSpan = document.getElementById("productSpan" + id);
-        //        const span = document.getElementById("cartSpan" + id);
-        //        const input = document.getElementById("cartInput" + id);
-        //        productSpan.textContent = productInput.value;
-        //        span.textContent = productInput.value;
-        //        input.value = span.textContent;
-        //    });
-        //});
     }
 
     function GetMainPartialOnClick(event) {
@@ -110,8 +90,9 @@
     }
 
     function GetThirdPartial(event) {
-        BottomHeaderMenuSwicher(event);
         var userId = GetUserId();
+        if(userId !== null){
+        BottomHeaderMenuSwicher(event);
         var prodCountSpan;
         var cartCountSpan;
         var inOrderedCountSpan;
@@ -154,6 +135,11 @@
                 });
             })
             .catch(error => console.error("Failed to load partial:", error));
+         }
+         else{
+             CloseLoader();
+             ShowAuthorization();
+         }
     }
 
     function GetFourthPartial(event) {

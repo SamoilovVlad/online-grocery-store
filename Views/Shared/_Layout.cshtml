@@ -3,7 +3,11 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewData["Title"] - Shop_Mvc</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="./Images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./Images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./Images/favicon-16x16.png">
+    <link rel="manifest" href="./Images/site.webmanifest">
+    <title>Promus - online</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <script src="https://kit.fontawesome.com/3ab9474f39.js" crossorigin="anonymous"></script>
 </head>
@@ -1244,6 +1248,20 @@
             }
         }
 
+       function DeleteProductFromCurrentCart(btn){
+           var product_Id = btn.parentNode.id;
+           var userId = GetUserId();
+           fetch(`/User/DeleteUserCartProduct?userId=${userId}&productId=${product_Id}`);
+           var product = document.querySelector(`#cart-body-item`+product_Id);
+           product.parentNode.removeChild(product);
+           CheckIfCartIsEmpty();
+
+           var sum = UpdateCartValue();
+
+           var cartText = document.querySelector('.cart-text');
+           cartText.textContent = sum + ' грн';
+        }
+
         function AddHtmlToCart(itemInfo) {
             var totalPrice = (itemInfo.price * itemInfo.count).toFixed(2);
             var item = `<div class="cart-body-item" id="cart-body-item${itemInfo.id}">
@@ -1264,9 +1282,8 @@
                                                                                                                                                                                                                                          </div>
                                                                                                                                                                                                                                      </div>
                                                                                                                                                                                                                                      <div class="cart-body-item-controls">
-                                                                                                                                                                                                                                         <div class="cart-body-item-controls-icons">
-                                                                                                                                                                                                                                             <svg width="1.000rem" height="1.000rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="cart-body-item-controls-icons-icon"><path d="M14.5455 7.63692C14.548 8.59682 14.3237 9.54374 13.8909 10.4006C13.3778 11.4273 12.5889 12.2909 11.6127 12.8946C10.6365 13.4983 9.51145 13.8183 8.36364 13.8187C7.40373 13.8212 6.45681 13.597 5.6 13.1642L1.45455 14.546L2.83636 10.4006C2.40359 9.54374 2.17932 8.59682 2.18182 7.63692C2.18226 6.4891 2.50226 5.36408 3.10598 4.38786C3.70969 3.41164 4.57328 2.62278 5.6 2.10964C6.45681 1.67687 7.40373 1.4526 8.36364 1.4551H8.72727C10.2432 1.53873 11.6749 2.17856 12.7485 3.25209C13.822 4.32561 14.4618 5.75739 14.5455 7.27328V7.63692Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                                                                                                                                                                                                                                             <svg width="1.000rem" height="1.000rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="cart-body-item-controls-icons-icon"><path d="M2 4H3.33333H14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M4.99976 4V2.66667C4.99976 2.31305 5.14023 1.64005 5.39028 1.39C5.64033 1.13995 5.97947 1 6.33309 1L9.66642 1C10.02 1 10.3592 1.13995 10.6092 1.39C10.8593 1.64005 10.9998 2.31305 10.9998 2.66667V4M12.9998 4V13.6667C12.9998 14.0203 12.8593 14.3594 12.6092 14.6095C12.3592 14.8595 12.02 15 11.6664 15H4.33309C3.97947 15 3.64033 14.8595 3.39028 14.6095C3.14023 14.3594 2.99976 14.0203 2.99976 13.6667V4H12.9998Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M6.5 7.5V11.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.5 7.5V11.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                                                                                                                                                                                                                                         <div id="${itemInfo.id}" class="cart-body-item-controls-icons">
+                                                                                                                                                                                                                                             <svg id="${itemInfo.id}" onclick="DeleteProductFromCurrentCart(event.target)" width="1.000rem" height="1.000rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="cart-body-item-controls-icons-icon"><path d="M2 4H3.33333H14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M4.99976 4V2.66667C4.99976 2.31305 5.14023 1.64005 5.39028 1.39C5.64033 1.13995 5.97947 1 6.33309 1L9.66642 1C10.02 1 10.3592 1.13995 10.6092 1.39C10.8593 1.64005 10.9998 2.31305 10.9998 2.66667V4M12.9998 4V13.6667C12.9998 14.0203 12.8593 14.3594 12.6092 14.6095C12.3592 14.8595 12.02 15 11.6664 15H4.33309C3.97947 15 3.64033 14.8595 3.39028 14.6095C3.14023 14.3594 2.99976 14.0203 2.99976 13.6667V4H12.9998Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M6.5 7.5V11.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.5 7.5V11.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg>
                                                                                                                                                                                                                                          </div>
                                                                                                                                                                                                                                          <div class="cart-body-item-controls-price">
                                                                                                                                                                                                                                                                          ${itemInfo.promo && itemInfo.promo !== 'null' ? `<div class="cart-body-item-controls-price-secondary" style="color:#ff5631;">${itemInfo.price} грн за шт</div>` : `<div class="cart-body-item-controls-price-secondary">${itemInfo.price} грн за шт</div>`}

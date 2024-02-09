@@ -325,6 +325,23 @@
         var deletedCart = document.querySelector(`.profile-shelf-item#${CSS.escape(cartId)}`)
         document.querySelector('#productCount').textContent -= deletedCart.querySelector('.foot-inner-left-count').textContent.slice(0, -8);
         deletedCart.parentNode.removeChild(deletedCart);
+        CheckIfCartExist();
+    }
+
+    function CheckIfCartExist(){
+        var list = document.querySelector('.profile-shelf-list');
+        var cart = list.querySelector('.profile-shelf-item');
+        if(!cart){
+            list.style.display = 'none';
+            var el = `<div class="user-profile-content-empty">
+    <span class="user-profile-content-empty-title">У вас поки що немає історії замовлення. Зробіть своє перше замовлення та отримайте бонуси</span>
+    <a style="text-decoration:none;" href="/">
+        <div class="user-profile-content-empty-button">Перейти до замовлення</div>
+    </a>
+</div>`
+            list.parentNode.insertAdjacentHTML('beforeend', el);
+            
+        }
     }
 
     function GetUserCart(cartId) {

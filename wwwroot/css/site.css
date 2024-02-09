@@ -1527,6 +1527,8 @@ ul {
 }
 
 .cart-body-item-controls-icons {
+    display: flex;
+    justify-content: end;
 }
 
 .cart-body-item-controls-icons-icon {
@@ -5130,4 +5132,54 @@ ul {
     height: 100%;
     border-radius: 0.5rem;
     cursor:pointer;
+}
+.empty-personal-shelf-title {
+    font-size: 2rem;
+    line-height: 100%;
+    font-family: CeraPro,-apple-system,BlinkMacSystemFont,Arial,sans-serif;
+    font-weight: 700;
+    text-align:center;
+    margin-top:1.5rem;
+}
+.empty-personal-shelf-text {
+    margin-top: 0.75rem;
+    font-size: 1rem;
+    line-height: 110%;
+    font-family: CeraPro,-apple-system,BlinkMacSystemFont,Arial,sans-serif;
+    font-weight: 700;
+    text-align: center;
+    color:gray;
+}
+.empty-personal-shelf-btn {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    color: #fff;
+    background: #42ac35;
+    align-items: center;
+    height: 1.5rem;
+    padding: 0.8125rem 1rem;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    transition: .2s;
+    width:fit-content;
+    margin-top:1.5rem;
+    text-decoration:none;
+}
+.empty-personal-shelf-btn:hover{
+    background-color:#48bb3a;
+}
+@media (max-width:767.98px) {
+    .empty-personal-shelf {
+        font-size: 2.25rem;
+    }
+    .empty-personal-shelf-text {
+        font-size: 1rem;
+    }
+}
+@media (min-width:767.98px) {
+    .empty-personal-shelf {
+        max-width: 18.8125rem;
+    }
 }
